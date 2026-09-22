@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "historyFrom": 1990,
+  "countries": [
+    {
+      "id": "PER",
+      "name": "Perú",
+      "aggregate": false
+    },
+    {
+      "id": "CHL",
+      "name": "Chile",
+      "aggregate": false
+    },
+    {
+      "id": "COL",
+      "name": "Colombia",
+      "aggregate": false
+    },
+    {
+      "id": "BRA",
+      "name": "Brasil",
+      "aggregate": false
+    },
+    {
+      "id": "MEX",
+      "name": "México",
+      "aggregate": false
+    },
+    {
+      "id": "ARG",
+      "name": "Argentina",
+      "aggregate": false
+    },
+    {
+      "id": "USA",
+      "name": "Estados Unidos",
+      "aggregate": false
+    },
+    {
+      "id": "CHN",
+      "name": "China",
+      "aggregate": false
+    },
+    {
+      "id": "DEU",
+      "name": "Alemania",
+      "aggregate": false
+    },
+    {
+      "id": "IND",
+      "name": "India",
+      "aggregate": false
+    },
+    {
+      "id": "JPN",
+      "name": "Japón",
+      "aggregate": false
+    },
+    {
+      "id": "WLD",
+      "name": "Mundo",
+      "aggregate": true
+    },
+    {
+      "id": "LCN",
+      "name": "América Latina y el Caribe",
+      "aggregate": true
+    }
+  ],
+  "indicators": [
+    {
+      "id": "gdp_pc_nominal",
+      "code": "NY.GDP.PCAP.CD",
+      "name": "PBI per cápita nominal",
+      "unit": "USD corrientes",
+      "description": "PBI dividido por población. No mide el ingreso individual ni su distribución.",
+      "primarySource": "Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "gdp_pc_real",
+      "code": "NY.GDP.PCAP.KD",
+      "name": "PBI real per cápita",
+      "unit": "USD constantes de 2015",
+      "description": "Volumen de producción por habitante a precios constantes de 2015.",
+      "primarySource": "Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/NY.GDP.PCAP.KD",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "gdp_pc_ppp",
+      "code": "NY.GDP.PCAP.PP.KD",
+      "name": "PBI per cápita PPA",
+      "unit": "USD internacionales constantes de 2021",
+      "description": "PBI por habitante ajustado por paridad de poder adquisitivo, a precios constantes de 2021. Permite comparar volúmenes reales entre economías.",
+      "primarySource": "Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "population",
+      "code": "SP.POP.TOTL",
+      "name": "Población total",
+      "unit": "personas",
+      "description": "Estimaciones demográficas de la población de facto a mitad de año. No es un recuento censal anual.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.POP.TOTL",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "age_young",
+      "code": "SP.POP.0014.TO.ZS",
+      "name": "0–14 años",
+      "unit": "% de población",
+      "description": "Población de 0 a 14 años como porcentaje de la población total. Estimaciones de Naciones Unidas.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.POP.0014.TO.ZS",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "age_working",
+      "code": "SP.POP.1564.TO.ZS",
+      "name": "15–64 años",
+      "unit": "% de población",
+      "description": "Población de 15 a 64 años como porcentaje de la población total. Es una banda de edad; no equivale a población ocupada.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.POP.1564.TO.ZS",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "age_older",
+      "code": "SP.POP.65UP.TO.ZS",
+      "name": "65 años o más",
+      "unit": "% de población",
+      "description": "Población de 65 años o más como porcentaje de la población total. Estimaciones de Naciones Unidas.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.POP.65UP.TO.ZS",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "fertility",
+      "code": "SP.DYN.TFRT.IN",
+      "name": "Fecundidad",
+      "unit": "hijos por mujer",
+      "description": "Número de hijos que tendría una mujer si experimentara las tasas de fecundidad por edad del año observado durante su vida reproductiva.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.DYN.TFRT.IN",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "life_expectancy",
+      "code": "SP.DYN.LE00.IN",
+      "name": "Esperanza de vida",
+      "unit": "años",
+      "description": "Esperanza de vida al nacer bajo las tasas de mortalidad del año observado.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.DYN.LE00.IN",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "urban",
+      "code": "SP.URB.TOTL.IN.ZS",
+      "name": "Población urbana",
+      "unit": "% de población",
+      "description": "Población en áreas urbanas según definiciones nacionales; las definiciones no son idénticas entre países.",
+      "primarySource": "ONU / Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/SP.URB.TOTL.IN.ZS",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "price_level",
+      "code": "PA.NUS.PRVT.PLI",
+      "name": "Nivel de precios del consumo",
+      "unit": "EE.UU. = 100",
+      "description": "Índice de precios del consumo final de hogares e instituciones sin fines de lucro. PPA del consumo dividida por tipo de cambio de mercado y expresada con Estados Unidos = 100. No es una previsión del tipo de cambio.",
+      "primarySource": "Banco Mundial",
+      "sourceUrl": "https://data.worldbank.org/indicator/PA.NUS.PRVT.PLI",
+      "license": "CC BY 4.0"
+    }
+  ],
+  "bigMac": {
+    "provider": "The Economist",
+    "sourceUrl": "https://github.com/TheEconomist/big-mac-data",
+    "apiUrl": "https://raw.githubusercontent.com/TheEconomist/big-mac-data/master/output-data/big-mac-full-index.csv",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "methodologyUrl": "https://github.com/TheEconomist/big-mac-data#methodology-changes"
+  }
+}

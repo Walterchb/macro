@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {regionalValue, regionalPeriods, regionalSeries} from '../assets/regional-view.js';
+import {regionalValue, regionalPeriods, regionalSeries, regionalModes, regionalStructure} from '../assets/regional-view.js';
 
 const series = (observations, extra={}) => ({id:'test', regionId:'01', indicatorId:'test', name:'Fixture', frequency:'monthly', unit:'S/ millones', observations:Object.entries(observations).map(([date,value])=>({date,value})), ...extra});
 const stock = {id:'test',kind:'stock'}, flow = {id:'test',kind:'flow'};
@@ -36,4 +36,27 @@ test('regional chart transformations preserve metadata and expose their true cal
   assert.match(chart.description,/diciembre/);
   assert.equal(chart.observations[0].value,null);
   assert.ok(Math.abs(chart.observations[1].value-20)<1e-9);
+});
+
+test('annual regional data permits YOY only and preserves estimate flags in chart exports', () => {
+  const s = series({'2024-01-01':100,'2025-01-01':120},{frequency:'annual'});
+  s.observations[1].observationStatus = 'estimated';
+  assert.deepEqual(regionalModes('annual'),['level','yoy']);
+  assert.equal(regionalValue(s,flow,'2025-01-01','mom'),null);
+  assert.equal(regionalValue(s,flow,'2025-01-01','ytd'),null);
+  const transformed = regionalSeries(s,flow,'yoy');
+  assert.ok(Math.abs(transformed.observations[1].value-20)<1e-9);
+  assert.equal(transformed.observations[1].observationStatus,'estimated');
+  assert.match(transformed.description,/año calendario anterior/);
+});
+
+test('sector structure requires complete matching years, includes residual and never silently imputes missing sectors', () => {
+  const total=series({'2025-01-01':100},{indicatorId:'vab_nominal',frequency:'annual'});
+  const sectors=['agriculture','mining','manufacturing','construction','trade'].map(id=>series({'2025-01-01':10},{indicatorId:`sector_${id}`,frequency:'annual'}));
+  const rows=regionalStructure([total,...sectors],'01','2025-01-01');
+  assert.equal(rows.length,6);
+  assert.equal(rows.at(-1).share,50);
+  assert.equal(rows.reduce((sum,r)=>sum+r.share,0),100);
+  assert.deepEqual(regionalStructure([total,...sectors.slice(1)],'01','2025-01-01'),[]);
+  assert.deepEqual(regionalStructure([total,...sectors],'01','2024-01-01'),[]);
 });

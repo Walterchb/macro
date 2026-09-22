@@ -59,7 +59,7 @@ jobs:
             core.setOutput('mode', mode);
             core.setOutput('page_url', site.html_url);
             core.info(`Pages: ${mode}; ${site.html_url}`);
-      - name: Actualizar indicadores y agenda (programación o solicitud expresa)
+      - name: Actualizar fuentes (programación o solicitud expresa)
         if: github.event_name == 'schedule' || inputs.refresh == true
         run: python scripts/refresh_publication.py
       - name: Verificar datos y cálculos del snapshot
@@ -67,6 +67,8 @@ jobs:
           python scripts/validate_data.py
           python scripts/sync_agenda.py --validate
           python scripts/sync_regional.py --validate
+          python scripts/sync_forecasts.py --validate
+          python scripts/sync_demography.py --validate
           python -m unittest discover -s tests -p 'test_*.py'
           npm test
           node --check assets/app.js

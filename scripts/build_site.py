@@ -76,7 +76,11 @@ if __name__ == '__main__':
     import json
     from sync_agenda import validate_agenda
     from sync_regional import validate_regional
+    from sync_forecasts import validate_forecasts
+    from sync_demography import validate_demography
     print(validate_data())
     validate_agenda()
     validate_regional(json.loads((ROOT / 'data/regional.json').read_text()))
+    validate_forecasts(json.loads((ROOT / 'data/forecasts.json').read_text()))
+    validate_demography(json.loads((ROOT / 'data/demography.json').read_text()))
     print('Web lista para publicar:', build_site())

@@ -1,0 +1,13 @@
+/* Sixth iteration: keep shared SBS shell dimensions. */
+.topic-nav + .kpi-grid{margin-top:14px}.economic-pulse{margin-top:16px}.agenda-preview{margin-bottom:18px}
+#detail-body{overscroll-behavior:contain}
+#detail-body table th,#detail-body table td{vertical-align:top}
+#content>.page-head{margin-bottom:14px}
+@media(max-width:760px){.topic-nav + .kpi-grid{margin-top:10px}}
+
+.supplemental-source-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.supplemental-source-grid h3{font-size:14px;margin:0 0 10px}.supplemental-source-grid .health-line{flex-wrap:wrap;gap:8px}.agenda-active .commandbar{display:none}.agenda-active .analysis-toolbar{min-height:54px}
+@media(max-width:760px){.supplemental-source-grid{grid-template-columns:1fr}}
+
+@media(min-width:761px){.topic-nav{flex-wrap:wrap;overflow:visible;gap:6px;padding-bottom:0}}
+
+.agenda-active .analysis-toolbar{grid-template-columns:minmax(0,1fr)}.agenda-active #navigation{grid-column:1/-1;width:100%}

@@ -114,3 +114,21 @@ test('growth cannot retain a live expansion label when one required corroboratin
   assert.equal(growth.state.tone,'muted');assert.equal(growth.state.label,'Cobertura parcial');
   assert.equal(growth.signals.filter(s=>s.value===1).length,3);
 });
+
+test('compact pulse keeps evidence in its dialog and opens the requested scope with provenance',()=>{
+  const captured=[];
+  const source={...series([{date:'2026-08-01',value:2.5}]),provider:'BCRP',sourceCode:'PN01273PM',id:'bcrp_PN01273PM',name:'IPC general',unit:'%',sourceUrl:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01273PM/html'};
+  const monitor=createEconomicMonitor({series:[source],now:()=>new Date('2026-09-22'),showDialog:(...args)=>captured.push(args)});
+  const compact=monitor.render('peru');
+  assert.equal((compact.match(/data-pulse-open=/g)||[]).length,5);
+  assert.doesNotMatch(compact,/pulse-evidence-list|pulse-method-rules|Clasificación y vigencia|data-detail=/);
+  assert.equal(monitor.open('peru','prices'),true);
+  assert.equal(captured[0][0],'Pulso · Precios');
+  assert.match(captured[0][1],/Indicadores de respaldo/);
+  assert.match(captured[0][1],/IPC general en el rango BCRP 1%–3%/);
+  assert.match(captured[0][1],/PN01273PM/);
+  assert.match(captured[0][1],/Clasificación y vigencia/);
+  assert.doesNotMatch(captured[0][1],/data-detail=|data-pulse-open=/);
+  assert.equal(monitor.open('peru','nonexistent'),false);
+  assert.equal(captured.length,1);
+});

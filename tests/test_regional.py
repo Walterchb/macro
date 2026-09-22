@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from sync_regional import assemble_series, combine_exact, parse_batch
+from sync_regional import assemble_series, combine_exact, parse_batch, parse_inei_gdp, parse_inei_population, per_capita, find_excel
 import sync_regional
 
 
@@ -66,6 +66,7 @@ class RegionalDataTests(unittest.TestCase):
     def test_total_outage_records_attempt_without_reporting_fresh_data_or_success(self):
         config = json.loads(sync_regional.CATALOG.read_text())
         config['series'] = config['series'][:1]
+        config['ineiSources'] = []
         previous = {**config['series'][0], 'status': 'ok',
                     'observations': [{'date': '2026-06-01', 'value': 123}],
                     'lastObservationDate': '2026-06-01', 'fetchedAt': '2026-08-01T12:00:00+00:00'}
@@ -85,6 +86,49 @@ class RegionalDataTests(unittest.TestCase):
             self.assertEqual(retained['series'][0]['observations'], previous['observations'])
             self.assertEqual(retained['series'][0]['fetchedAt'], previous['fetchedAt'])
             self.assertEqual(retained['series'][0]['status'], 'retained')
+
+    def test_inei_lima_is_disjoint_from_callao_and_preserves_estimate_markers(self):
+        cells = {'A3': 'por Años, según Departamentos', 'A4': 'Valores a Precios Constantes de 2007',
+                 'A5': '(Miles de soles)', 'B7': '2007', 'C7': '2008E/', 'A9': 'Lima',
+                 'A10': 'Región Lima', 'A11': 'Provincia de Lima', 'A12': 'Prov. Const. del Callao',
+                 'B9': '1000', 'C9': '1100', 'B10': '100', 'C10': '110', 'B11': '700', 'C11': '770', 'B12': '200', 'C12': '220'}
+        regions = [{'id': '07', 'name': 'Callao'}, {'id': '15', 'name': 'Lima'}]
+        parsed = parse_inei_gdp([{'cells': cells}], regions)
+        self.assertAlmostEqual(parsed['15'][1]['value'], .88)
+        self.assertAlmostEqual(parsed['07'][1]['value'], .22)
+        self.assertEqual(parsed['15'][1]['observationStatus'], 'estimated')
+        cells['C9'] = '1200'
+        with self.assertRaisesRegex(ValueError, 'concilian'):
+            parse_inei_gdp([{'cells': cells}], regions)
+        cells['A4'] = 'Valores a Precios Constantes de 2020'
+        with self.assertRaisesRegex(ValueError, 'base de precios'):
+            parse_inei_gdp([{'cells': cells}], regions)
+
+    def test_population_uses_both_sexes_and_official_department_codes(self):
+        cells = {'A1': 'POBLACIÓN ESTIMADA AL 30 DE JUNIO, POR AÑOS CALENDARIO Y SEXO',
+                 'C3': '2007', 'F3': '2008', 'C4': 'Total', 'F4': 'Total', 'A8': '070000',
+                 'C8': '1000', 'D8': '600', 'E8': '400', 'F8': '1100'}
+        rows = parse_inei_population([{'cells': cells}], [{'id': '07', 'name': 'Callao'}])['07']
+        self.assertEqual([r['value'] for r in rows], [1000, 1100])
+        self.assertTrue(all(r['observationStatus'] == 'population_estimate' for r in rows))
+        cells['C4'] = 'Hombre'
+        with self.assertRaisesRegex(ValueError, 'ambos sexos'):
+            parse_inei_population([{'cells': cells}], [{'id': '07', 'name': 'Callao'}])
+
+    def test_per_capita_requires_same_year_and_preserves_vab_status(self):
+        numerator = [{'date': '2024-01-01', 'value': 10, 'observationStatus': 'provisional'}, {'date': '2025-01-01', 'value': 12}]
+        rows = per_capita(numerator, [{'date': '2024-01-01', 'value': 1000}])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]['value'], 10000)
+        self.assertEqual(rows[0]['observationStatus'], 'provisional')
+        self.assertEqual(combine_exact([rows]), rows)
+
+    def test_dynamic_inei_link_discovery_rejects_ambiguous_workbooks(self):
+        html = '<a href="/new.xlsx">PERÚ: Producto Bruto Interno por Años, según Departamentos 2007–2025</a>'
+        pattern = 'peru: producto bruto interno por anos, segun departamentos'
+        self.assertEqual(find_excel(html, pattern, 'https://www.inei.gob.pe/index'), 'https://www.inei.gob.pe/new.xlsx')
+        with self.assertRaisesRegex(ValueError, 'único'):
+            find_excel(html + html.replace('new.xlsx', 'duplicate.xlsx'), pattern, 'https://www.inei.gob.pe/index')
 
 
 if __name__ == '__main__':

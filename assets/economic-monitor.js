@@ -260,8 +260,7 @@ export function createEconomicMonitor(ctx={}) {
   function freshnessLabel(m) {return m?.freshness.state==='stale'?' · dato antiguo':m?.freshness.state==='retained'?' · descarga conservada':'';}
   function evidenceHTML(m) {
     const muted=['missing','stale'].includes(m.freshness.state),tone=muted?'muted':m.signal===1?'good':m.signal===-1?'watch':'neutral';
-    const body=`<span class="pulse-evidence-label"><i class="pulse-dot ${tone}" aria-hidden="true"></i>${esc(m.label)}</span><strong>${esc(formatMetric(m))}</strong><span class="pulse-evidence-date">${m.date?esc(date(m.date,m.series?.frequency)):'Sin observaciones'}${esc(freshnessLabel(m))}${m.note?` · ${esc(m.note)}`:''}</span>`;
-    return m.id?`<button type="button" class="pulse-evidence" data-detail="${esc(m.id)}" title="Abrir la serie original usada en ${esc(m.label)}">${body}<i class="fa-solid fa-angle-right pulse-evidence-arrow" aria-hidden="true"></i></button>`:`<div class="pulse-evidence ${muted?'pulse-evidence-missing':''}">${body}</div>`;
+    return `<div class="pulse-evidence ${muted?'pulse-evidence-missing':''}"><span class="pulse-evidence-label"><i class="pulse-dot ${tone}" aria-hidden="true"></i>${esc(m.label)}</span><strong>${esc(formatMetric(m))}</strong><span class="pulse-evidence-date">${m.date?esc(date(m.date,m.series?.frequency)):'Sin observaciones'}${esc(freshnessLabel(m))}${m.note?` · ${esc(m.note)}`:''}</span></div>`;
   }
   function sparkHTML(m) {
     const rows=m?.history?.slice(-18)||[];if(rows.length<3)return '';
@@ -269,18 +268,53 @@ export function createEconomicMonitor(ctx={}) {
     const path=rows.map((o,i)=>`${i?'L':'M'}${(i/(rows.length-1)*92+4).toFixed(2)},${(30-(o.value-lo)/span*25).toFixed(2)}`).join(' ');
     return `<span class="pulse-spark" title="${rows.length} observaciones · escala propia"><svg viewBox="0 0 100 36" aria-hidden="true"><path d="${path} L96,35 L4,35 Z" fill="currentColor" opacity=".07"/><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="96" cy="${(30-(rows.at(-1).value-lo)/span*25).toFixed(2)}" r="2.6" fill="currentColor"/></svg></span>`;
   }
-  function renderCard(c) {
-    const primary=c.primary,state=c.state,active=c.signals.filter(s=>s.value!==null),positive=active.filter(s=>s.value===1).length,negative=active.filter(s=>s.value===-1).length;
-    const caption=c.key==='cycle'?`${c.customHeadline} umbrales activos`:`${positive} apoyos · ${negative} alertas${active.length<c.signals.length?` · ${c.signals.length-active.length} sin dato`:''}`;
-    const primaryUnit=primary?.unit?.replace(/\s+(YOY|QOQ).*$/,'')||'';
+  function headlineHTML(c) {
+    const primary=c.primary,primaryUnit=primary?.unit?.replace(/\s+(YOY|QOQ).*$/,'')||'';
     const valueHTML=c.customHeadline?`<strong>${esc(c.customHeadline)}</strong>`:finite(primary?.value)?`<strong>${esc(fmt(primary.value,primary.digits))} <small class="pulse-value-unit">${esc(primaryUnit)}</small></strong>`:'<strong>Sin dato</strong>';
-    const primaryHTML=primary?.id?`<button class="pulse-primary-value" type="button" data-detail="${esc(primary.id)}" title="Abrir la serie original utilizada">${valueHTML}</button>`:valueHTML;
-    const rules=c.signals.map(s=>`<li><i class="pulse-dot ${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" aria-hidden="true"></i><span>${esc(s.rule)}<small>${s.metric?.date?esc(date(s.metric.date,s.metric.series?.frequency))+' · ':''}${esc(formatMetric(s.metric))}${s.value===null?' · no evaluable':s.value===0?' · sin cambio':s.value===1?' · cumple':' · no cumple'}</small></span></li>`).join('');
-    return `<article class="pulse-card pulse-${state.tone}"><div class="pulse-card-top"><h3>${esc(c.title)}</h3><span class="pulse-status">${esc(state.label)}</span></div><div class="pulse-headline"><div>${primaryHTML}<span>${esc(c.customHeroLabel||c.heroLabel)}</span></div>${sparkHTML(primary)}</div><p class="pulse-primary-date">${primary?.date?`${esc(date(primary.date,primary.series?.frequency))}${esc(freshnessLabel(primary))} · ${esc(primary.series?.provider||'')}`:'EE. UU. · dos reglas publicadas'}</p><div class="pulse-signal-meter" role="img" aria-label="${esc(caption)}">${c.signals.map(s=>`<span class="${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" title="${esc(s.rule)}"><i></i><span>${esc(s.label)}</span></span>`).join('')}</div><p class="pulse-signal-caption">${esc(caption)}</p><p class="pulse-reading">${esc(c.summary)}</p><div class="pulse-evidence-list">${c.evidence.map(evidenceHTML).join('')}</div><details class="pulse-method"><summary>Señales y método</summary><ul class="pulse-method-rules">${rules}</ul><p>${esc(c.methodology)}</p><p><a href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">Fuente oficial <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>${c.extraSource?` · <a href="${esc(c.extraSource)}" target="_blank" rel="noopener noreferrer">Regla publicada</a>`:''}</p></details></article>`;
+    return `<div class="pulse-headline"><div>${valueHTML}<span>${esc(c.customHeroLabel||c.heroLabel)}</span></div>${sparkHTML(primary)}</div><p class="pulse-primary-date">${primary?.date?`${esc(date(primary.date,primary.series?.frequency))}${esc(freshnessLabel(primary))} · ${esc(primary.series?.provider||'')}`:'EE. UU. · dos reglas publicadas'}</p>`;
+  }
+  function signalHTML(c) {
+    const active=c.signals.filter(s=>s.value!==null),positive=active.filter(s=>s.value===1).length,negative=active.filter(s=>s.value===-1).length;
+    const caption=c.key==='cycle'?`${c.customHeadline} umbrales activos`:`${positive} apoyos · ${negative} alertas${active.length<c.signals.length?` · ${c.signals.length-active.length} sin dato`:''}`;
+    return `<div class="pulse-signal-meter" role="img" aria-label="${esc(caption)}">${c.signals.map(s=>`<span class="${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" title="${esc(s.rule)}"><i></i><span>${esc(s.label)}</span></span>`).join('')}</div><p class="pulse-signal-caption">${esc(caption)}</p>`;
+  }
+  function rulesHTML(c) {
+    return `<ul class="pulse-method-rules">${c.signals.map(s=>`<li><i class="pulse-dot ${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" aria-hidden="true"></i><span>${esc(s.rule)}<small>${s.metric?.date?esc(date(s.metric.date,s.metric.series?.frequency))+' · ':''}${esc(formatMetric(s.metric))}${s.value===null?' · no evaluable':s.value===0?' · sin cambio':s.value===1?' · cumple':' · no cumple'}</small></span></li>`).join('')}</ul>`;
+  }
+  function renderCard(c,scope) {
+    const id=`pulse-reading-${scope}-${c.key}`;
+    return `<article class="pulse-card pulse-${c.state.tone}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${esc(c.title)}: ${esc(c.state.label)}. Ver indicadores y método" aria-describedby="${id}" data-pulse-open="${scope}:${c.key}"><div class="pulse-card-top"><h3>${esc(c.title)} <i class="fa-solid fa-arrow-up-right-from-square pulse-open-icon" aria-hidden="true"></i></h3><span class="pulse-status">${esc(c.state.label)}</span></div>${headlineHTML(c)}${signalHTML(c)}<p class="pulse-reading" id="${id}">${esc(c.summary)}</p></article>`;
+  }
+  function criteriaHTML() {
+    return `<section class="pulse-dialog-criteria"><h3>Clasificación y vigencia</h3><p>Cada segmento representa una condición: verde, apoyo; ámbar, alerta; gris, sin dirección o sin dato. Apoyos y alertas producen una lectura mixta; condiciones sin cambio, confirmación parcial; y condiciones faltantes, cobertura parcial. No se promedian puntuaciones ni se calculan probabilidades. Las señales del ciclo cuentan únicamente dos umbrales publicados.</p><p>Fechas propias por indicador; las operaciones entre series exigen el mismo periodo. Se excluyen datos con más de 10 días (diarios), 28 (semanales), 100 (mensuales), 180 (trimestrales) o 730 (anuales) desde el fin del periodo. Son límites de vigencia de la herramienta. YOY: mismo periodo del año anterior; MOM: mes anterior; QOQ: trimestre anterior; pp: puntos porcentuales. ¹ Cálculo derivado.</p></section>`;
+  }
+  function modal(scope='peru',key) {
+    scope=scope==='world'?'world':'peru';
+    const c=build(scope).find(c=>c.key===key);if(!c)return '';
+    const metrics=[c.primary,...c.evidence,...c.signals.map(s=>s.metric)].filter(Boolean);
+    const sources=[...new Map(metrics.flatMap(m=>m.dependencies||[m.series]).filter(Boolean).map(s=>[`${s.provider}:${s.sourceCode||s.id}`,s])).values()];
+    return `<div class="pulse-dialog pulse-${c.state.tone}"><div class="pulse-dialog-intro"><div class="pulse-dialog-summary"><div class="pulse-dialog-context"><span>${scope==='world'?'Estados Unidos':'Perú'}</span><span class="pulse-status">${esc(c.state.label)}</span></div>${headlineHTML(c)}${signalHTML(c)}<p class="pulse-reading">${esc(c.summary)}</p></div><section class="pulse-dialog-evidence"><h3>Indicadores de respaldo</h3><div class="pulse-evidence-list">${c.evidence.map(evidenceHTML).join('')}</div></section></div><section class="pulse-dialog-rules"><h3>Condiciones evaluadas</h3>${rulesHTML(c)}</section><section class="pulse-dialog-method"><h3>Método</h3><p>${esc(c.methodology)}</p><p class="pulse-method-links"><a href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">Referencia oficial <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>${c.extraSource?`<a href="${esc(c.extraSource)}" target="_blank" rel="noopener noreferrer">Regla publicada <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>`:''}</p></section><section class="pulse-dialog-sources"><h3>Series y fuentes</h3><div class="pulse-source-list">${sources.map(s=>`<a href="${esc(s.sourceUrl||s.metadataUrl||c.source)}" target="_blank" rel="noopener noreferrer"><strong>${esc(s.name||s.sourceCode||s.id)}</strong><span>${esc(s.primarySource||s.originalSource||s.provider)} · ${esc(s.sourceCode||s.id)} · ${esc(s.unit||'')} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>`).join('')}</div></section>${criteriaHTML()}</div>`;
+  }
+  function open(scope='peru',key) {
+    scope=scope==='world'?'world':'peru';
+    const c=build(scope).find(c=>c.key===key);if(!c||typeof ctx.showDialog!=='function')return false;
+    ctx.showDialog(`Pulso · ${c.title}`,modal(scope,key));return true;
+  }
+  const boundContainers=new WeakSet();
+  function bind(container) {
+    if(!container||boundContainers.has(container))return;
+    const activate=event=>{
+      const card=event.target?.closest?.('[data-pulse-open]');
+      if(!card||!container.contains(card))return;
+      if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;
+      if(event.type==='keydown'){event.preventDefault();if(event.repeat)return;}
+      const [scope,key]=card.dataset.pulseOpen.split(':');open(scope,key);
+    };
+    container.addEventListener('click',activate);container.addEventListener('keydown',activate);boundContainers.add(container);
   }
   function render(scope='peru') {
-    const world=scope==='world';
-    return `<section class="economic-pulse" aria-labelledby="pulse-title-${scope}"><div class="pulse-section-head"><h2 id="pulse-title-${scope}">${world?'Pulso de EE. UU. · transmisión global':'Pulso económico del Perú'}</h2><span>Nivel · impulso · confirmación</span></div><div class="pulse-grid">${build(world?'world':'peru').map(renderCard).join('')}</div><details class="pulse-freshness"><summary>Criterios de clasificación y vigencia</summary><p>Cada segmento representa una condición visible en «Señales y método». Verde: apoyo; ámbar: alerta; gris: sin dirección o sin dato. Si hay apoyos y alertas, la lectura es mixta; si también hay condiciones sin cambio, la confirmación es parcial; si falta una condición, se indica cobertura parcial. No se promedian puntuaciones ni se calculan probabilidades. Las señales del ciclo cuentan únicamente dos umbrales publicados. Fechas propias por indicador; toda operación entre series exige el mismo periodo. Datos antiguos se excluyen: más de 10 días (diarios), 28 (semanales), 100 (mensuales), 180 (trimestrales) o 730 (anuales) desde el fin del periodo. Son límites de vigencia de la herramienta. YOY: frente al mismo periodo del año anterior; MOM: mes anterior; QOQ: trimestre anterior; pp: puntos porcentuales. ¹ Cálculo derivado, explicado en la tarjeta.</p></details></section>`;
+    scope=scope==='world'?'world':'peru';
+    return `<section class="economic-pulse" aria-labelledby="pulse-title-${scope}"><div class="pulse-section-head"><h2 id="pulse-title-${scope}">${scope==='world'?'Pulso de EE. UU. · transmisión global':'Pulso económico del Perú'}</h2></div><div class="pulse-grid">${build(scope).map(c=>renderCard(c,scope)).join('')}</div></section>`;
   }
-  return {render,build};
+  return {render,build,modal,open,bind};
 }

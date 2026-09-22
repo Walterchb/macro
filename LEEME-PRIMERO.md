@@ -10,13 +10,15 @@ El proyecto está preparado para alojar **código, datos, fuentes tipográficas,
 
 La entrega contiene **205 indicadores distintos**, **694 series configuradas**, **685 con datos**, **147 series de Perú** y **143.657 observaciones**. Los 78 gráficos temáticos se complementan con los panoramas, Latinoamérica y el Explorador. Estos conteos corresponden al catálogo nacional/internacional; el paquete regional se informa por separado. Los conteos corresponden a esta entrega y se actualizan en Fuentes.
 
-La versión 5 prioriza **indicadores de referencia → Pulso económico → gráficos → análisis por tema**, con Regiones y Agenda dentro de Perú. Mantiene la cabecera y las medidas compartidas con SBS.
+La versión 6 sigue el orden **navegación → indicadores → Pulso → próximas citas → gráficos y tablas**. El Pulso muestra únicamente su lectura resumida; al pulsar una tarjeta se abre el detalle con evidencias, reglas y fuentes. Agenda es una pestaña principal y Proyecciones sustituye la antigua agenda dentro de Perú. Mantiene la cabecera y las medidas compartidas con SBS.
 
-- **Pulso económico:** cinco lecturas para Perú y cinco para EE. UU. Cada tarjeta contrasta nivel, impulso y confirmación con cinco indicadores de respaldo. El medidor representa condiciones explícitas: señales divergentes se muestran como mixtas; datos insuficientes, como lectura parcial. Fuentes y fórmulas permanecen disponibles en cada tarjeta. No son calificaciones oficiales ni probabilidades de recesión.
+- **Pulso económico:** cinco lecturas para Perú y cinco para EE. UU. Cada tarjeta contrasta nivel, impulso y confirmación con cinco indicadores de respaldo. El medidor representa condiciones explícitas: señales divergentes se muestran como mixtas; datos insuficientes, como lectura parcial. Fuentes, evidencias y fórmulas se consultan en el modal de cada tarjeta. No son calificaciones oficiales ni probabilidades de recesión.
 - **Perú:** actividad y sectores, precios e ingresos, trabajo y crédito, finanzas públicas, sector externo, desarrollo, tasas y moneda. La cobertura incorpora también producción minera, remesas, viajes, recaudación y demanda interna.
 - **Mundo y mercados:** ciclo, inflación, empleo, riesgo, tasas, liquidez y materias primas. Las señales estadounidenses se identifican como tales; los agregados mundiales provienen del Banco Mundial.
-- **Regiones del Perú:** mapa seleccionable de 25 territorios con límites de ANA–SNIRH y siete indicadores oficiales. Son 174 series adicionales y 34.526 observaciones: crédito, depósitos, tributos internos, inversión nacional y local, afiliados al SPP y electricidad. Fuentes SBS, SUNAT, MEF y MINEM vía BCRP. Callao no tiene electricidad separada; Lima tributaria suma Metropolitana y provincias. YOY/MOM usan periodos exactos; YTD compara saldos contra diciembre o flujos acumulados contra iguales meses del año anterior.
-- **Agendas:** publicaciones estadísticas y decisiones programadas para Perú y el mundo, con horizonte móvil de 120 días, filtros de 31/60/120 días, flechas en próximas citas, horarios de Lima y exportación a calendario. Incluye feriados nacionales del Perú, bancarios de EE. UU. y cierres TARGET, cada uno con su ámbito. Cada organismo muestra su estado y horizonte publicado.
+- **Regiones del Perú:** mapa de 25 territorios, 17 indicadores, 424 series y 39.476 observaciones. La vista anual incorpora producción regional (VAB real y nominal, base real 2007), valores por habitante, población y estructura sectorial del INEI. La vista mensual conserva crédito, depósitos, tributos internos, inversión nacional/local, afiliados al SPP y electricidad. Lima no duplica Callao; VAB y población por habitante se emparejan por territorio y año. Los datos estimados y provisionales se identifican. VAB excluye los impuestos nacionales no asignados territorialmente; no se presenta como PBI a precios de mercado.
+- **Población y poder adquisitivo:** ocho gráficos con población, PBI per cápita real y PPA, estructura de edad, dependencia demográfica y precios del consumo (EE. UU. = 100). Incluye el índice Big Mac de The Economist, simple y ajustado por ingreso, con datos de Perú y atribución CC BY 4.0. Son 143 series WDI y 428 registros Big Mac de las economías incluidas. PBI por habitante no es ingreso personal; los índices de precios no son un pronóstico cambiario.
+- **Proyecciones del Perú:** 30 series oficiales del MEF, MMM 2027–2030 publicado el 28/08/2026, con proyecciones 2026–2030. Se distinguen histórico, proyección y supuestos del escenario. Incluye crecimiento, demanda, sectores, finanzas públicas, deuda y comercio. El PBI real conserva historia WDI hasta 2024; desde 2025 usa la edición MEF, con procedencia por observación. El índice 2025 = 100 es un cálculo compuesto, explicado y separado del nivel oficial del PBI.
+- **Agenda:** pestaña principal con calendario mensual para todas las economías, flechas, Hoy, filtros por país/tema/fuente y detalle de cada fecha. Banderas SVG locales, sin emoji. Conserva un horizonte móvil de 120 días y exporta el mes filtrado a ICS. Los días anteriores al archivo o fuera de cobertura se identifican; no se interpretan como ausencia de acontecimientos. Los feriados conservan su ámbito nacional, bancario o TARGET.
 - **Latinoamérica:** comparación del mismo indicador y año, trayectoria, mapa de crecimiento, lectura entre pares e indicadores de desarrollo. Los datos faltantes no se sustituyen por los de otro año.
 - **Explorador:** búsqueda por economía, tema y fuente; hasta cuatro series; transformaciones; intervalo de fechas; comparaciones guardadas; dispersión y correlaciones calculadas sobre fechas coincidentes.
 - **Gráficos:** ventanas 1A/3A/5A/Todo dentro del horizonte elegido, variaciones MOM/QOQ/YOY y fechas comparadas en el tooltip, medias móviles donde corresponde, etiquetas finales, leyendas con fechas, contexto histórico desplegable, referencias explícitas, mapas y dispersión, ocho vencimientos Treasury, bandas de recesión estadounidense. PNG con fuentes y CSV con unidades y definiciones.
@@ -47,12 +49,12 @@ El ZIP no sube cambios a tu cuenta por sí solo. Estas instrucciones actualizan 
 - Descarga automática: todos los días a las **12:35 UTC / 7:35 a. m. de Lima**.
 - Descarga manual: **Actions → Sincronizar Treasury Macro Hub → Run workflow**, marca **Descargar datos nuevos antes de publicar**, selecciona `main` y ejecuta.
 - Publicación manual sin descarga: deja esa casilla desmarcada. Es la opción más rápida para aplicar un cambio de diseño o corregir la publicación.
-- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Los indicadores, regiones y agenda se consultan de forma independiente: si una descarga completa falla, se puede publicar la otra conservando el archivo válido anterior y su fecha. Si todas fallan, esa ejecución se detiene sin publicar.
+- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Los indicadores, regiones, proyecciones, demografía y agenda se consultan de forma independiente: si una descarga completa falla, se puede publicar la otra conservando el archivo válido anterior y su fecha. Si todas fallan, esa ejecución se detiene sin publicar.
 - El flujo soporta Pages desde rama: después del commit del bot solicita explícitamente un build de Pages y espera a que GitHub confirme la versión. Un commit realizado con `GITHUB_TOKEN` no dispara por sí solo ese build.
 - En modo Actions, publica únicamente `index.html`, `assets/`, `data/` y `.nojekyll`, copiados a `dist` por el build. `dist` es una salida generada; no es la carpeta que debes editar.
 - Permisos: **Settings → Actions → General → Workflow permissions → Read and write permissions**. Si GitHub pide habilitar workflows, acéptalo para activar la programación. Las reglas de protección de `main` también deben permitir los commits de datos del bot.
 - Si `main` cambia mientras corre la actualización, el flujo se detiene para no publicar encima de un cambio más reciente. Reejecútalo sobre `main`.
-- La agenda y los indicadores se consultan independientemente cada cinco minutos mientras está visible y al volver a la pestaña. El botón **Actualizar** recarga la publicación; no ejecuta GitHub Actions.
+- Las publicaciones se consultan independientemente cada cinco minutos mientras está visible y al volver a la pestaña. El botón **Actualizar** recarga la publicación; no ejecuta GitHub Actions.
 - GitHub puede retrasar cron o suspenderlo en repositorios públicos tras 60 días sin actividad. Revisa Actions si la fecha de descarga deja de avanzar.
 
 ### Agenda económica
@@ -63,8 +65,8 @@ El ZIP no sube cambios a tu cuenta por sí solo. Estas instrucciones actualizan 
 - La agenda internacional incluye BEA, Reserva Federal, BCE y BLS. Los feriados proceden de Gob.pe, New York Fed y BCE; un feriado bancario no se presenta como cierre de todas las bolsas. Cada evento permite abrir la fuente original.
 - Se incorporaron lectores del programa monetario y del reporte de inflación del BCRP. En esta entrega su web bloqueó el acceso automatizado, de modo que figuran pendientes de verificación y se reintentan diariamente. No se publican fechas estimadas ni se inventan recurrencias. BLS conserva las fechas oficiales verificadas cuando su fuente no responde.
 - Las publicaciones sin hora se muestran como tales. Las horas confirmadas se convierten a **America/Lima**, respetando el horario de verano del lugar de origen.
-- El archivo ICS permite importar las fechas mostradas. Una importación de archivo no crea una suscripción que se actualice sola en el calendario personal; la agenda web sí se actualiza con GitHub Actions.
-- El botón Actualizar también consulta la agenda aunque no haya cambiado la versión de las series económicas.
+- El archivo ICS permite importar las fechas del mes y filtros elegidos (sin incluir los días adyacentes de otro mes visibles en la cuadrícula). Una importación de archivo no crea una suscripción que se actualice sola en el calendario personal; la agenda web sí se actualiza con GitHub Actions.
+- El botón Actualizar consulta la agenda e invalida las copias locales de regiones, proyecciones y demografía aunque no cambie la versión del catálogo principal.
 
 **No necesitas Supabase, servidor, API key ni mantener encendida tu PC.** Todo el código, los datos y los recursos visuales se sirven desde tu proyecto. Una descarga reciente no significa que una estadística anual también sea reciente: cada gráfico conserva su periodo de observación.
 
@@ -93,10 +95,12 @@ La UI no genera automáticamente un nuevo gráfico temático: sus composiciones 
 ## Datos y metodología
 
 - BCRP: API oficial pública. Inflación de Lima Metropolitana. PN01277PM es IPC **sin alimentos y energía**, no una sustitución genérica por otra definición de inflación subyacente.
-- MEF: deuda y estadísticas fiscales **distribuidas por BCRPData**. No se incluye un conector directo a Consulta Amigable ni ejecución presupuestal detallada; el portal directo probado no respondió con una API utilizable.
+- MEF: las proyecciones se obtienen directamente de los cuadros oficiales MMM/IAPM publicados en Gob.pe. Deuda histórica y estadísticas fiscales del catálogo se distribuyen por **BCRPData**. No se incluye un conector directo a Consulta Amigable ni ejecución presupuestal detallada; el portal directo probado no respondió con una API utilizable.
 - Banco Mundial: WDI API; inflación anual de promedios, desempleo modelado OIT, PIB y sector externo. Los agregados Mundo y Latinoamérica provienen de la fuente; no se promedian países manualmente.
 - FRED: exportación CSV pública. Conserva códigos y enlace a la ficha de cada serie; no requiere API key. Las condiciones de redistribución de cada serie pertenecen a su fuente original. No se copian datos ni código de JFPartners.
 - Fechas ISO: inicio del periodo. Los trimestres se muestran como T1–T4; nunca se interpretan como fecha de publicación.
+- Regional anual: Nivel y YOY; MOM/YTD solo se habilitan para las series mensuales. La población del INEI contiene estimaciones/proyecciones y se identifica como tal.
+- Proyecciones: se conserva la fecha y edición del informe; una consulta diaria no convierte la proyección en un dato observado. La continuación del PBI une únicamente tasas anuales compatibles. No se añaden intervalos de confianza sin una fuente que los publique.
 - Cambio de tasas/ratios: puntos porcentuales. En bases negativas se utiliza diferencia absoluta.
 - Variación interanual: se busca el periodo calendario exacto de un año atrás, no la observación doce posiciones atrás.
 - Base100: solo niveles positivos, misma frecuencia y fecha común. No admite tasas o saldos negativos.
@@ -132,10 +136,14 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 | `data/health.json` | Control de cobertura y errores |
 | `data/revisions.json` | Cambios en observaciones anteriores de la última ejecución |
 | `config/series.json` | Catálogo editable |
-| `scripts/refresh_publication.py` | Actualiza indicadores, regiones y agenda de forma independiente |
+| `scripts/refresh_publication.py` | Actualiza los cinco paquetes de fuentes de forma independiente |
 | `scripts/sync_agenda.py` | Descarga y valida fechas de calendarios oficiales |
-| `scripts/sync_regional.py` | Consulta BCRP, conserva y valida las series regionales |
-| `data/regional.json` | Paquete independiente de 25 regiones y siete indicadores |
+| `scripts/sync_regional.py` | Consulta BCRP e INEI; valida territorio, frecuencia, base de precios y estimaciones |
+| `data/regional.json` | Paquete de 25 regiones, 17 indicadores anuales y mensuales |
+| `scripts/sync_forecasts.py` | Descubre ediciones oficiales MMM/IAPM y valida sus cuadros |
+| `data/forecasts.json` | Proyecciones con estado, edición y fuente por observación |
+| `scripts/sync_demography.py` | WDI y Big Mac: consulta, validación y retención |
+| `data/demography.json` | Población, ingreso por habitante, precios y Big Mac |
 | `scripts/sync_data.py` | Descarga, normalización y preservación de datos en `data/` |
 | `scripts/build_site.py` | Valida y copia solo archivos de producción a `dist/` |
 | `.github/workflows/sync-macro.yml` | Programación, commit y publicación Pages |
@@ -146,6 +154,8 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 python scripts/validate_data.py
 python scripts/sync_agenda.py --validate
 python scripts/sync_regional.py --validate
+python scripts/sync_forecasts.py --validate
+python scripts/sync_demography.py --validate
 python -m unittest discover -s tests -p "test_*.py"
 npm test
 python scripts/build_site.py
@@ -169,6 +179,9 @@ Los controles verifican fechas, duplicados, valores finitos, esquema, variacione
 - [BCRPData API](https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api)
 - [Banco Mundial API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation)
 - [FRED series](https://fred.stlouisfed.org/)
+- [INEI: PBI por departamentos](https://www.inei.gob.pe/estadisticas/indice-tematico/producto-bruto-interno-por-departamentos-9089/)
+- [MEF: MMM 2027–2030](https://www.gob.pe/institucion/mef/informes-publicaciones/8533022-marco-macroeconomico-multianual-2027-2030)
+- [The Economist: Big Mac, datos y licencia](https://github.com/TheEconomist/big-mac-data)
 - [GitHub Pages: publicación desde rama o Actions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
 - [Solicitud de build Pages desde el flujo](https://docs.github.com/en/rest/pages/pages#request-a-github-pages-build)
 - [GitHub Pages con Actions](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)

@@ -58,3 +58,51 @@ test('holiday filters and exports keep jurisdiction without an invented release 
   assert.match(exported,/STATUS:CONFIRMED/);
   assert.doesNotMatch(exported,/DTSTART:20261008T/);
 });
+
+test('unified events retain all economies with explicit source and country filters',()=>{
+  const world={...base,id:'world',region:'world',country:'Estados Unidos',sourceId:'fed',title:'FOMC',date:'2026-10-01'};
+  const fixture={...data,events:[...data.events,world]};
+  assert.equal(agendaEvents(fixture,'all',{},now).some(e=>e.id==='world'),true);
+  assert.deepEqual(agendaEvents(fixture,'all',{source:'fed'},now).map(e=>e.id),['world']);
+  assert.deepEqual(agendaEvents(fixture,'all',{country:'Estados Unidos'},now).map(e=>e.id),['world']);
+  assert.equal(agendaEvents(fixture,'peru',{},now).some(e=>e.id==='world'),false);
+});
+
+test('monthly grid starts Monday, closes Sunday, and handles leap/year boundaries',async()=>{
+  const {agendaMonthGrid,shiftAgendaMonth}=await import('../assets/agenda.js');
+  const september=agendaMonthGrid('2026-09',now);
+  assert.equal(september[0].date,'2026-08-31');
+  assert.equal(september.at(-1).date,'2026-10-04');
+  assert.equal(september.filter(d=>d.inMonth).length,30);
+  assert.equal(september.find(d=>d.today).date,'2026-09-22');
+  assert.equal(agendaMonthGrid('2024-02',now).filter(d=>d.inMonth).length,29);
+  assert.equal(shiftAgendaMonth('2026-12',1),'2027-01');
+  assert.equal(shiftAgendaMonth('2027-01',-1),'2026-12');
+  assert.throws(()=>agendaMonthGrid('2026-13'),/Mes no válido/);
+});
+
+test('calendar includes stored past entries and spillover without mixing ICS month export',async()=>{
+  const {agendaMonthEvents}=await import('../assets/agenda.js');
+  const fixture={...data,events:[...data.events,
+    {...base,id:'past',title:'Dato publicado',date:'2026-09-02'},
+    {...base,id:'adjacent',title:'Octubre',date:'2026-10-01'},
+    {...base,id:'outside',title:'Fuera de cuadrícula',date:'2026-10-05'}
+  ]};
+  assert.deepEqual(agendaMonthEvents(fixture,'2026-09').map(e=>e.id),['past','today']);
+  assert.deepEqual(agendaMonthEvents(fixture,'2026-09',{spillover:true}).map(e=>e.id),['past','today','adjacent']);
+  assert.deepEqual(agendaMonthEvents(fixture,'2026-09',{source:'missing'}),[]);
+  assert.doesNotMatch(agendaICS(agendaMonthEvents(fixture,'2026-09'),now),/DTSTART;VALUE=DATE:20261001/);
+});
+
+test('calendar markup provides local flags, no-coverage dates, and safe modal entry attributes',async()=>{
+  const {createAgenda}=await import('../assets/agenda.js');
+  const fixture={...data,windowStart:'2026-09-22',events:[...data.events,{...base,id:'inject',title:'<script>bad</script>',date:'2026-09-23'}]};
+  const agenda=createAgenda({getData:()=>fixture}),html=agenda.render('all');
+  assert.match(html,/assets\/flags\/pe\.svg/);
+  assert.match(html,/Fuera de cobertura publicada/);
+  assert.match(html,/Mes siguiente/);
+  assert.match(html,/&lt;script&gt;bad&lt;\/script&gt;/);
+  assert.doesNotMatch(html,/<script>bad/);
+  assert.match(html,/role="columnheader">Lun/);
+  assert.equal(typeof agenda.exportCalendar,'function');
+});
