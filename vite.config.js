@@ -1,1 +1,1 @@
-export default {root:'dist',server:{host:'0.0.0.0',allowedHosts:['terminal.local']}};
+export default {root:'.',server:{host:'0.0.0.0',allowedHosts:['terminal.local']}};

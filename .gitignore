@@ -4,3 +4,4 @@ node_modules/
 .sites-runtime/
 *.zip
 .env
+dist/

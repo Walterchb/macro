@@ -6,8 +6,9 @@
   "scripts": {
     "test": "node --test tests/*.test.mjs",
     "validate": "python3 scripts/validate_data.py",
-    "serve": "python3 -m http.server 8080 --directory dist",
-    "dev": "vite"
+    "serve": "python3 -m http.server 8080",
+    "dev": "vite",
+    "build": "python3 scripts/build_site.py"
   },
   "devDependencies": {
     "vite": "^7.1.3"

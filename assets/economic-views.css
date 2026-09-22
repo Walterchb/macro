@@ -1,0 +1,19 @@
+/* Topic content only; shared SBS header, toolbar and panel geometry stay in treasury-core.css. */
+.economic-tabs{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:0 0 12px}
+.economic-tabs button{min-height:32px;padding:6px 10px;font-size:.74rem;border-radius:5px}
+.economic-tabs button[aria-pressed=true],.economic-tabs button[aria-current=page]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.economic-intro{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 12px}
+.economic-intro h2{font-size:.9rem;font-weight:650;margin:0 0 4px;color:var(--ink)}
+.economic-intro p{font-size:.76rem;color:var(--muted);margin:0;max-width:870px;line-height:1.5}
+.economic-coverage{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px;flex-shrink:0;max-width:260px}
+.economic-coverage span{color:var(--muted);font-size:.65rem;background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:4px 7px;white-space:nowrap}
+.economic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
+.economic-grid>.panel{min-width:0;margin-bottom:0;display:flex;flex-direction:column}
+.economic-grid .panel-body{flex:1;display:flex;flex-direction:column}
+.economic-grid .chart-renderer{height:342px;flex-shrink:0}
+.economic-grid .chart-note{line-height:1.5;flex:1}
+.economic-footnote{color:var(--muted);font-size:.72rem;line-height:1.5;margin:12px 0}
+@media(min-width:1400px){.economic-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.economic-grid>.wide{grid-column:span 2}.economic-grid .panel-actions button{padding-inline:6px}.economic-grid .panel-title p{font-size:.68rem}.economic-grid .panel-head{gap:7px}}
+@media(max-width:1000px){.economic-intro{align-items:flex-start;flex-direction:column;gap:7px}.economic-coverage{max-width:100%;justify-content:flex-start}}
+@media(max-width:760px){.economic-tabs{flex-wrap:nowrap;overflow:auto;scrollbar-width:thin;padding-bottom:4px}.economic-tabs button{flex-shrink:0}.economic-grid{grid-template-columns:minmax(0,1fr)}.economic-grid>.wide{grid-column:auto}.economic-grid .chart-renderer{height:286px}.economic-intro p{font-size:.73rem}.economic-grid .panel-actions button{font-size:.68rem;padding-inline:6px}}
+@media print{.economic-tabs{display:none}.economic-grid{display:block}.economic-grid>.panel{break-inside:avoid;margin-bottom:12px}}

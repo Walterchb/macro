@@ -1,21 +1,39 @@
-import json,sys,math
-from pathlib import Path
-from sync_data import validate_series,ROOT
-p=json.loads((ROOT/'dist/data/snapshot.json').read_text())
-ids=[s['id'] for s in p['series']]
-assert len(ids)==len(set(ids)), 'IDs duplicados'
-for s in p['series']:
-    validate_series(s)
-    assert s['provider'] in ('BCRP','FRED','World Bank')
-    assert s.get('unit') and s.get('sourceUrl','').startswith('https://')
-    assert s['frequency'] in ('daily','monthly','quarterly','annual')
-lookup={s['id']:{o['date']:o['value'] for o in s['observations']} for s in p['series']}
-exp,imp,trade=[lookup['bcrp_'+c] for c in ('PN38714BM','PN38718BM','PN38723BM')]
-for d in exp.keys()&imp.keys()&trade.keys():assert math.isclose(exp[d]-imp[d],trade[d],abs_tol=.001), 'Comercio no reconcilia '+d
-idx=lookup['bcrp_PN38705PM'];infl=lookup['bcrp_PN01273PM']
-for d,v in infl.items():
-    prev=str(int(d[:4])-1)+d[4:]
-    if d in idx and prev in idx:assert math.isclose((idx[d]/idx[prev]-1)*100,v,abs_tol=.001),'IPC no reconcilia '+d
-manifest=json.loads((ROOT/'dist/data/manifest.json').read_text())
-assert manifest['version']==p['version']
-print(f"VALIDADO: {len(ids)} series; {sum(len(s['observations']) for s in p['series'])} observaciones; IPC y comercio conciliados.")
+"""Validate the root snapshot before either GitHub Pages publishing mode."""
+import json
+import math
+from sync_data import validate_series, ROOT
+
+
+def validate_data(root=ROOT):
+    data = root / 'data'
+    snapshot = json.loads((data / 'snapshot.json').read_text(encoding='utf-8'))
+    ids = [s['id'] for s in snapshot['series']]
+    assert ids and len(ids) == len(set(ids)), 'Catálogo vacío o IDs duplicados'
+    for s in snapshot['series']:
+        validate_series(s)
+        assert s['provider'] in ('BCRP', 'FRED', 'World Bank')
+        assert s.get('unit') and s.get('sourceUrl', '').startswith('https://')
+        assert s['frequency'] in ('daily', 'weekly', 'monthly', 'quarterly', 'annual')
+    observations = sum(len(s['observations']) for s in snapshot['series'])
+    assert observations, 'La publicación no contiene observaciones'
+    lookup = {s['id']: {o['date']: o['value'] for o in s['observations']} for s in snapshot['series']}
+    exp, imp, trade = [lookup['bcrp_' + c] for c in ('PN38714BM', 'PN38718BM', 'PN38723BM')]
+    for d in exp.keys() & imp.keys() & trade.keys():
+        assert math.isclose(exp[d] - imp[d], trade[d], abs_tol=.001), 'Comercio no reconcilia ' + d
+    idx = lookup['bcrp_PN38705PM']
+    inflation = lookup['bcrp_PN01273PM']
+    for d, value in inflation.items():
+        prev = str(int(d[:4]) - 1) + d[4:]
+        if d in idx and prev in idx:
+            assert math.isclose((idx[d] / idx[prev] - 1) * 100, value, abs_tol=.001), 'IPC no reconcilia ' + d
+    manifest = json.loads((data / 'manifest.json').read_text(encoding='utf-8'))
+    health = json.loads((data / 'health.json').read_text(encoding='utf-8'))
+    assert manifest['version'] == snapshot['version'] == health['version'], 'Versiones de publicación distintas'
+    assert manifest['series'] == len(ids), 'Conteo de series no coincide'
+    assert manifest['observations'] == observations, 'Conteo de observaciones no coincide'
+    assert {s['id'] for s in health['series']} == set(ids), 'Control de calidad incompleto'
+    return f'VALIDADO: {len(ids)} series; {observations} observaciones; IPC y comercio conciliados.'
+
+
+if __name__ == '__main__':
+    print(validate_data())

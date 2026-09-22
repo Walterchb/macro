@@ -1,4 +1,4 @@
-import test from'node:test';import assert from'node:assert/strict';import{change,transform,isRate,correlation,pairs,validateSnapshot}from'../dist/assets/math.js';
+import test from'node:test';import assert from'node:assert/strict';import{change,transform,isRate,correlation,pairs,validateSnapshot}from'../assets/math.js';
 const s=(unit,observations,frequency='monthly')=>({id:'test',unit,frequency,observations});
 test('Una pendiente medida en pp cambia en pp, nunca porcentaje',()=>{const x=s('p.p.',[{date:'2026-09-17',value:.25},{date:'2026-09-18',value:.20}],'daily');assert.ok(isRate(x));assert.equal(change(x).unit,'pp');assert.ok(Math.abs(change(x).value+.05)<1e-10)});
 test('YoY usa fecha calendario y respeta mes faltante',()=>{const x=s('índice',[{date:'2024-10-01',value:100},{date:'2024-11-01',value:110},{date:'2025-11-01',value:121}]);const y=transform(x,'yoy');assert.ok(Math.abs(y.at(-1).value-10)<1e-10);assert.equal(y[0].value,null)});

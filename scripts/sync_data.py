@@ -5,7 +5,7 @@ from datetime import datetime, timezone, date
 from urllib.request import Request, urlopen
 from concurrent.futures import ThreadPoolExecutor, as_completed
 ROOT=Path(__file__).resolve().parents[1]
-OUT=ROOT/'dist/data'
+OUT=ROOT/'data'
 MONTHS={'ene':1,'feb':2,'mar':3,'abr':4,'may':5,'jun':6,'jul':7,'ago':8,'sep':9,'set':9,'oct':10,'nov':11,'dic':12,'jan':1,'apr':4,'aug':8,'dec':12}
 
 def parse_period(value):
@@ -100,16 +100,31 @@ def publish(snapshot):
     for s in snapshot['series']:validate_series(s)
     ids=[s['id'] for s in snapshot['series']]
     if len(ids)!=len(set(ids)):raise ValueError('IDs duplicados')
+    coverage_path=OUT/'coverage.json'
+    coverage=json.loads(coverage_path.read_text(encoding='utf-8')) if coverage_path.exists() else {}
+    series=snapshot['series'];populated=[s for s in series if s['observations']]
+    coverage.update({
+        'updatedAt':snapshot['fetchedAt'],
+        'seriesConfigured':len(series),
+        'seriesWithData':len(populated),
+        'indicators':len({(s['provider'],s['sourceCode']) for s in series}),
+        'observations':sum(len(s['observations']) for s in series),
+        'providers':{provider:sum(s['provider']==provider for s in series) for provider in sorted({s['provider'] for s in series})},
+        'countries':len({s['country'] for s in series if s['country'] not in ('LCN','WLD')}),
+        'aggregates':sorted({s['countryName'] for s in series if s['country'] in ('LCN','WLD')}),
+        'peruSeriesWithData':sum(s['country']=='PER' for s in populated),
+    })
     snapshot['version']=hashlib.sha256(json.dumps(snapshot,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
     atomic_json(OUT/'snapshot.json',snapshot)
     health={'version':snapshot['version'],'checkedAt':snapshot['fetchedAt'],'series':[{k:s.get(k) for k in ['id','name','provider','frequency','status','fetchedAt','lastObservationDate','error']}|{'observations':len(s['observations'])} for s in snapshot['series']]}
     atomic_json(OUT/'health.json',health)
     atomic_json(OUT/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
+    atomic_json(coverage_path,coverage)
 
 def main():
     now=datetime.now(timezone.utc);stamp=now.isoformat()
-    catalog=json.loads((ROOT/'config/series.json').read_text())
-    old=json.loads((OUT/'snapshot.json').read_text()) if (OUT/'snapshot.json').exists() else {'series':[]}
+    catalog=json.loads((ROOT/'config/series.json').read_text(encoding='utf-8'))
+    old=json.loads((OUT/'snapshot.json').read_text(encoding='utf-8')) if (OUT/'snapshot.json').exists() else {'series':[]}
     previous={s['id']:s for s in old['series']};results={};errors=[];revisions=[]
     wb={}
     jobs=[]
