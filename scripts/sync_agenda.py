@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh a 60-day official release calendar, independently of macro observations.
+"""Refresh a 120-day official release calendar, independently of macro observations.
 
 No inferred release-day recurrences are generated. INEI's feed is discovered from
 its official page; the public calendar remains owned by INEI, not this project.
@@ -23,12 +23,27 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 LIMA = ZoneInfo('America/Lima')
 MONTHS = {m.lower(): i for i, m in enumerate(('January','February','March','April','May','June','July','August','September','October','November','December'), 1)}
+SPANISH_MONTHS = {m:i for i,m in enumerate(('enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'),1)}
+SPANISH_MONTHS['setiembre'] = 9
+HOLIDAY_NAMES = {
+    "New Year's Day":'Año Nuevo', 'Birthday of Martin Luther King, Jr.':'Día de Martin Luther King Jr.',
+    "Washington's Birthday":'Día de los Presidentes', 'Memorial Day':'Día de los Caídos',
+    'Juneteenth National Independence Day':'Juneteenth', 'Independence Day':'Día de la Independencia',
+    'Labor Day':'Día del Trabajo', 'Columbus Day':'Columbus Day', 'Veterans Day':'Día de los Veteranos',
+    'Thanksgiving Day':'Acción de Gracias', 'Christmas Day':'Navidad', 'Christmas Holiday':'Segundo día de Navidad',
+    'Good Friday':'Viernes Santo', 'Easter Monday':'Lunes de Pascua', 'Labour Day':'Día del Trabajo',
+}
 SOURCES = [
     {'id':'inei','institution':'INEI','region':'peru','country':'Perú','url':'https://www.inei.gob.pe/calendario/'},
+    {'id':'bcrp-policy','institution':'BCRP · Programa monetario','region':'peru','country':'Perú','url':'https://www.bcrp.gob.pe/politica-monetaria/notas-informativas-del-programa-monetario.html'},
+    {'id':'bcrp-inflation','institution':'BCRP · Reporte de Inflación','region':'peru','country':'Perú','url':'https://www.bcrp.gob.pe/publicaciones/reporte-de-inflacion.html'},
+    {'id':'peru-holidays','institution':'Gob.pe','region':'peru','country':'Perú','url':'https://www.gob.pe/feriados'},
     {'id':'bls','institution':'BLS','region':'world','country':'Estados Unidos','url':'https://www.bls.gov/schedule/news_release/current_year.asp'},
     {'id':'bea','institution':'BEA','region':'world','country':'Estados Unidos','url':'https://www.bea.gov/news/schedule'},
     {'id':'fed','institution':'Reserva Federal','region':'world','country':'Estados Unidos','url':'https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm'},
     {'id':'ecb','institution':'BCE','region':'world','country':'Zona euro','url':'https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html'},
+    {'id':'us-holidays','institution':'Fed de Nueva York','region':'world','country':'Estados Unidos','url':'https://www.newyorkfed.org/aboutthefed/holiday_schedule'},
+    {'id':'target-holidays','institution':'BCE · TARGET','region':'world','country':'Zona euro','url':'https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html'},
 ]
 
 
@@ -37,7 +52,7 @@ def clean(text):
 
 
 def fetch(url):
-    request = urllib.request.Request(url, headers={'User-Agent':'TreasuryMacroHub/4.0 (+https://github.com/Walterchb/macro)'})
+    request = urllib.request.Request(url, headers={'User-Agent':'TreasuryMacroHub/5.0 (+https://github.com/Walterchb/macro)'})
     with urllib.request.urlopen(request, timeout=30) as response:
         body = response.read(4_000_001)
         if len(body) > 4_000_000:
@@ -228,10 +243,112 @@ def parse_ecb(text, source):
     return events
 
 
+def spanish_date(text, year):
+    match = re.search(r'(\d{1,2})\s+de\s+([a-záéíóú]+)(?:\s+(?:de\s+)?(20\d{2}))?', clean(text).lower())
+    if not match or match[2] not in SPANISH_MONTHS:
+        return None
+    return date(int(match[3] or year), SPANISH_MONTHS[match[2]], int(match[1])).isoformat()
+
+
+def parse_bcrp(text, source):
+    """Only explicit day/month rows under an explicit year heading are accepted."""
+    # BCRP groups schedules/publications by year. Never infer a meeting from its
+    # customary weekday, nor a report from the month of a previous report.
+    year_headers = list(re.finditer(r'<(?:h[1-6]|strong|b|span|button|td)\b[^>]*>\s*(?:<[^>]+>\s*)*(20\d{2})\s*(?:</[^>]+>\s*)*</(?:h[1-6]|strong|b|span|button|td)>', text, re.I))
+    rows = []
+    for i, header in enumerate(year_headers):
+        year = int(header[1])
+        section = text[header.end():year_headers[i+1].start() if i+1<len(year_headers) else len(text)]
+        for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>', section, re.S|re.I):
+            cells = [clean(c) for c in re.findall(r'<t[dh]\b[^>]*>(.*?)</t[dh]>', row, re.S|re.I)]
+            if not cells:
+                continue
+            day = spanish_date(cells[0], year)
+            if not day:
+                continue
+            inflation = source['id']=='bcrp-inflation'
+            rows.append(event(source, 'Reporte de Inflación — BCRP' if inflation else 'Decisión de tasa de referencia — BCRP', day,
+                              category='precios' if inflation else 'tasas', key=True,
+                              description='Proyecciones macroeconómicas y balance de riesgos.' if inflation else 'Programa monetario y decisión del Directorio sobre la tasa de referencia.'))
+    if not rows:
+        raise ValueError('BCRP no ofrece fechas explícitas reconocibles; no se infiere el calendario')
+    return list({r['id']:r for r in rows}.values())
+
+
+def holiday(source, title, day, scope, description=''):
+    item = event(source, title, day, category='feriados', description=description)
+    item.update(kind='holiday', jurisdiction=scope)
+    return item
+
+
+def parse_peru_holidays(text, source):
+    heading = re.search(r'<h1[^>]*>\s*Feriados\s+(20\d{2})', text, re.I)
+    if not heading:
+        raise ValueError('Gob.pe no identifica el año del calendario de feriados')
+    year = int(heading[1]); events = []
+    # The next holiday sits outside the table, and would otherwise be omitted.
+    recent = re.search(r'holidays__recent-holiday-date[^>]*>(.*?)</p>\s*<p[^>]*holidays__recent-holiday-name[^>]*>(.*?)</p>', text, re.S)
+    if recent and 'feriado nacional' in clean(text[max(0,recent.start()-400):recent.start()]).lower():
+        day = spanish_date(recent[1],year)
+        if day: events.append(holiday(source, clean(recent[2]), day, 'Feriado nacional · Perú'))
+    for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>', text, re.S|re.I):
+        cells=[clean(x) for x in re.findall(r'<td\b[^>]*>(.*?)</td>',row,re.S|re.I)]
+        if len(cells)<3 or cells[0].lower()!='feriado nacional':
+            continue
+        day=spanish_date(cells[1],year)
+        if day: events.append(holiday(source,cells[2],day,'Feriado nacional · Perú'))
+    if not events: raise ValueError('No se reconocieron feriados nacionales en Gob.pe')
+    return list({e['id']:e for e in events}.values())
+
+
+def parse_us_holidays(text, source):
+    """Read NY Fed's multi-year table and its published Sunday-observance rule."""
+    events=[]
+    aliases={m[:3]:v for m,v in MONTHS.items()}
+    for table in re.findall(r'<table\b[^>]*>(.*?)</table>',text,re.S|re.I):
+        years=[]
+        for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',table,re.S|re.I):
+            cells=[clean(re.sub(r'<sup\b.*?</sup>','',x,flags=re.S|re.I)) for x in re.findall(r'<t[dh]\b[^>]*>(.*?)</t[dh]>',row,re.S|re.I)]
+            cells=[x for x in cells if x]
+            if cells and cells[0]=='HOLIDAY':
+                years=[int(x) for x in cells[1:] if re.fullmatch(r'20\d{2}',x)];continue
+            if not years or len(cells)!=len(years)+1:
+                continue
+            for year,cell in zip(years,cells[1:]):
+                match=re.fullmatch(r'([A-Za-z]+)\.?\s+(\d{1,2})',cell)
+                if not match or match[1][:3].lower() not in aliases: continue
+                day=date(year,aliases[match[1][:3].lower()],int(match[2]))
+                # NY Fed explicitly observes Sunday holidays on Monday; Saturday
+                # holidays do NOT close the preceding Friday (unlike OPM rules).
+                if day.weekday()==6: day+=timedelta(days=1)
+                item=holiday(source,HOLIDAY_NAMES.get(cells[0],cells[0]),day.isoformat(),'Feriado bancario · Reserva Federal',
+                             'Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.')
+                events.append(item)
+    if not events:raise ValueError('No se reconoció la tabla plurianual de feriados de la Fed')
+    return events
+
+
+def parse_target_holidays(text, source):
+    events=[]
+    for row in re.findall(r'<tr\b[^>]*>(.*?)</tr>',text,re.S|re.I):
+        cells=[clean(x) for x in re.findall(r'<t[dh]\b[^>]*>(.*?)</t[dh]>',row,re.S|re.I)]
+        if len(cells)!=2 or not cells[0].endswith('*'): continue
+        match=re.fullmatch(r'(\d{1,2})\s+([A-Za-z]+)\s+(20\d{2})',cells[1])
+        if not match or match[2].lower() not in MONTHS: continue
+        day=date(int(match[3]),MONTHS[match[2].lower()],int(match[1])).isoformat()
+        name=cells[0].rstrip('*')
+        events.append(holiday(source,HOLIDAY_NAMES.get(name,name),day,'Cierre TARGET · Zona euro',
+                              'Día de cierre TARGET identificado por el BCE. No es un feriado de todos los países de la zona euro.'))
+    if not events:raise ValueError('No se encontraron fechas explícitas de cierre TARGET')
+    return events
+
+
 def retrieve(source):
     if source['id'] == 'inei':
         return fetch_inei(source)
-    parser = {'bls':parse_bls,'bea':parse_bea,'fed':parse_fed,'ecb':parse_ecb}[source['id']]
+    parser = {'bls':parse_bls,'bea':parse_bea,'fed':parse_fed,'ecb':parse_ecb,
+              'bcrp-policy':parse_bcrp,'bcrp-inflation':parse_bcrp,'peru-holidays':parse_peru_holidays,
+              'us-holidays':parse_us_holidays,'target-holidays':parse_target_holidays}[source['id']]
     return parser(fetch(source['url']),source), {}
 
 
@@ -239,7 +356,7 @@ def window_events(events, start, end):
     return [dict(e) for e in events if start <= e['date'] <= end]
 
 
-def merge_results(previous, results, now, horizon=60):
+def merge_results(previous, results, now, horizon=120):
     today = now.astimezone(LIMA).date()
     start, end = today.isoformat(), (today + timedelta(days=horizon)).isoformat()
     stamp = now.astimezone(timezone.utc).isoformat().replace('+00:00','Z')

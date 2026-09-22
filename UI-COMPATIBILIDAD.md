@@ -7,6 +7,7 @@ La referencia es [Información SBS](https://walterchb.github.io/data-sbs/), del 
 | Archivo | Responsabilidad |
 |---|---|
 | `assets/treasury-core.css` | Declaraciones compartidas extraídas del CSS de SBS: colores, tipografía, cabecera, navegación, controles, tarjetas, paneles, tablas, pie y reglas adaptables. Conserva el orden de sus reglas y su cascada. |
+| `assets/macro-v5.css` | Escala de texto 11/12/13 px, controles de 32 px y estados compartidos. Se carga al final sin modificar la geometría de la cabecera. |
 | `assets/macro.css` | Componentes y necesidades propias del análisis macroeconómico. No sustituye las medidas de la estructura compartida. |
 | `assets/treasury-shell.js` | Aplica el tema, sincroniza su preferencia entre pestañas y mide la altura real de la cabecera para posicionar los controles fijos. |
 | `assets/mobile-topbar.js` | Comportamiento de la cabecera móvil, copiado de SBS. |

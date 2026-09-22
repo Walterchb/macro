@@ -8,17 +8,18 @@ El proyecto está preparado para alojar **código, datos, fuentes tipográficas,
 
 ## Qué incluye
 
-La entrega contiene **204 indicadores distintos**, **693 series configuradas**, **684 con datos**, **146 series de Perú** y **143.457 observaciones**. Los 78 gráficos temáticos se complementan con los panoramas, Latinoamérica y el Explorador. Los conteos corresponden a esta entrega y se actualizan en Fuentes.
+La entrega contiene **205 indicadores distintos**, **694 series configuradas**, **685 con datos**, **147 series de Perú** y **143.657 observaciones**. Los 78 gráficos temáticos se complementan con los panoramas, Latinoamérica y el Explorador. Estos conteos corresponden al catálogo nacional/internacional; el paquete regional se informa por separado. Los conteos corresponden a esta entrega y se actualizan en Fuentes.
 
-La versión 4 organiza la herramienta en **Pulso económico → tendencias → análisis por tema → agenda**. Mantiene la cabecera y las medidas compartidas con SBS.
+La versión 5 prioriza **indicadores de referencia → Pulso económico → gráficos → análisis por tema**, con Regiones y Agenda dentro de Perú. Mantiene la cabecera y las medidas compartidas con SBS.
 
-- **Pulso económico:** cinco lecturas para Perú y cinco para EE. UU., con evidencia, fechas, reglas de interpretación y aviso de rezago. No son calificaciones oficiales ni probabilidades de recesión.
+- **Pulso económico:** cinco lecturas para Perú y cinco para EE. UU. Cada tarjeta contrasta nivel, impulso y confirmación con cinco indicadores de respaldo. El medidor representa condiciones explícitas: señales divergentes se muestran como mixtas; datos insuficientes, como lectura parcial. Fuentes y fórmulas permanecen disponibles en cada tarjeta. No son calificaciones oficiales ni probabilidades de recesión.
 - **Perú:** actividad y sectores, precios e ingresos, trabajo y crédito, finanzas públicas, sector externo, desarrollo, tasas y moneda. La cobertura incorpora también producción minera, remesas, viajes, recaudación y demanda interna.
 - **Mundo y mercados:** ciclo, inflación, empleo, riesgo, tasas, liquidez y materias primas. Las señales estadounidenses se identifican como tales; los agregados mundiales provienen del Banco Mundial.
-- **Agendas:** publicaciones estadísticas y decisiones programadas para Perú y el mundo, con ventana móvil de 60 días, fechas verificadas, horarios de Lima, filtros y exportación a calendario. Cada organismo muestra su estado y horizonte publicado.
+- **Regiones del Perú:** mapa seleccionable de 25 territorios con límites de ANA–SNIRH y siete indicadores oficiales. Son 174 series adicionales y 34.526 observaciones: crédito, depósitos, tributos internos, inversión nacional y local, afiliados al SPP y electricidad. Fuentes SBS, SUNAT, MEF y MINEM vía BCRP. Callao no tiene electricidad separada; Lima tributaria suma Metropolitana y provincias. YOY/MOM usan periodos exactos; YTD compara saldos contra diciembre o flujos acumulados contra iguales meses del año anterior.
+- **Agendas:** publicaciones estadísticas y decisiones programadas para Perú y el mundo, con horizonte móvil de 120 días, filtros de 31/60/120 días, flechas en próximas citas, horarios de Lima y exportación a calendario. Incluye feriados nacionales del Perú, bancarios de EE. UU. y cierres TARGET, cada uno con su ámbito. Cada organismo muestra su estado y horizonte publicado.
 - **Latinoamérica:** comparación del mismo indicador y año, trayectoria, mapa de crecimiento, lectura entre pares e indicadores de desarrollo. Los datos faltantes no se sustituyen por los de otro año.
 - **Explorador:** búsqueda por economía, tema y fuente; hasta cuatro series; transformaciones; intervalo de fechas; comparaciones guardadas; dispersión y correlaciones calculadas sobre fechas coincidentes.
-- **Gráficos:** etiquetas finales, leyendas con fechas, contexto histórico desplegable, referencias explícitas, mapas y dispersión, ocho vencimientos Treasury, bandas de recesión estadounidense. PNG con fuentes y CSV con unidades y definiciones.
+- **Gráficos:** ventanas 1A/3A/5A/Todo dentro del horizonte elegido, variaciones MOM/QOQ/YOY y fechas comparadas en el tooltip, medias móviles donde corresponde, etiquetas finales, leyendas con fechas, contexto histórico desplegable, referencias explícitas, mapas y dispersión, ocho vencimientos Treasury, bandas de recesión estadounidense. PNG con fuentes y CSV con unidades y definiciones.
 - **Fuentes:** periodos económicos, fechas de descarga, cobertura, salud del conector y ficha original de cada serie. Diseño adaptable y tema claro/oscuro.
 
 La cobertura y el número de observaciones se muestran en **Fuentes** y `data/manifest.json`. El catálogo puede incluir series sin cobertura en algunos países. No se usan datos simulados, y las ausencias se muestran expresamente. Ninguna fuente cubre por sí sola toda la economía; la herramienta distingue lo disponible de lo pendiente.
@@ -46,7 +47,7 @@ El ZIP no sube cambios a tu cuenta por sí solo. Estas instrucciones actualizan 
 - Descarga automática: todos los días a las **12:35 UTC / 7:35 a. m. de Lima**.
 - Descarga manual: **Actions → Sincronizar Treasury Macro Hub → Run workflow**, marca **Descargar datos nuevos antes de publicar**, selecciona `main` y ejecuta.
 - Publicación manual sin descarga: deja esa casilla desmarcada. Es la opción más rápida para aplicar un cambio de diseño o corregir la publicación.
-- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Los indicadores y la agenda se consultan de forma independiente: si una descarga completa falla, se puede publicar la otra conservando el archivo válido anterior y su fecha. Si ambas fallan, esa ejecución se detiene sin publicar.
+- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Los indicadores, regiones y agenda se consultan de forma independiente: si una descarga completa falla, se puede publicar la otra conservando el archivo válido anterior y su fecha. Si todas fallan, esa ejecución se detiene sin publicar.
 - El flujo soporta Pages desde rama: después del commit del bot solicita explícitamente un build de Pages y espera a que GitHub confirme la versión. Un commit realizado con `GITHUB_TOKEN` no dispara por sí solo ese build.
 - En modo Actions, publica únicamente `index.html`, `assets/`, `data/` y `.nojekyll`, copiados a `dist` por el build. `dist` es una salida generada; no es la carpeta que debes editar.
 - Permisos: **Settings → Actions → General → Workflow permissions → Read and write permissions**. Si GitHub pide habilitar workflows, acéptalo para activar la programación. Las reglas de protección de `main` también deben permitir los commits de datos del bot.
@@ -56,10 +57,11 @@ El ZIP no sube cambios a tu cuenta por sí solo. Estas instrucciones actualizan 
 
 ### Agenda económica
 
-`scripts/sync_agenda.py` consulta calendarios publicados por los organismos y conserva una ventana móvil de 60 días. No inventa recurrencias ni fechas probables. Las fuentes que no responden quedan como no disponibles o conservadas; la vista muestra si existe cobertura confirmada de al menos un mes. Las fechas pueden cambiar en origen.
+`scripts/sync_agenda.py` consulta calendarios publicados por los organismos y conserva una ventana móvil de 120 días. No inventa recurrencias ni fechas probables. Las fuentes que no responden quedan como no disponibles o conservadas; la vista muestra si existe cobertura confirmada de al menos un mes. Las fechas pueden cambiar en origen.
 
 - El calendario del INEI se obtiene de su agenda oficial y de su feed público enlazado.
-- La agenda internacional incluye las fuentes oficiales disponibles, como BEA, Reserva Federal y BCE. Cada evento permite abrir la publicación original.
+- La agenda internacional incluye BEA, Reserva Federal, BCE y BLS. Los feriados proceden de Gob.pe, New York Fed y BCE; un feriado bancario no se presenta como cierre de todas las bolsas. Cada evento permite abrir la fuente original.
+- Se incorporaron lectores del programa monetario y del reporte de inflación del BCRP. En esta entrega su web bloqueó el acceso automatizado, de modo que figuran pendientes de verificación y se reintentan diariamente. No se publican fechas estimadas ni se inventan recurrencias. BLS conserva las fechas oficiales verificadas cuando su fuente no responde.
 - Las publicaciones sin hora se muestran como tales. Las horas confirmadas se convierten a **America/Lima**, respetando el horario de verano del lugar de origen.
 - El archivo ICS permite importar las fechas mostradas. Una importación de archivo no crea una suscripción que se actualice sola en el calendario personal; la agenda web sí se actualiza con GitHub Actions.
 - El botón Actualizar también consulta la agenda aunque no haya cambiado la versión de las series económicas.
@@ -130,8 +132,10 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 | `data/health.json` | Control de cobertura y errores |
 | `data/revisions.json` | Cambios en observaciones anteriores de la última ejecución |
 | `config/series.json` | Catálogo editable |
-| `scripts/refresh_publication.py` | Actualiza indicadores y agenda de forma independiente |
+| `scripts/refresh_publication.py` | Actualiza indicadores, regiones y agenda de forma independiente |
 | `scripts/sync_agenda.py` | Descarga y valida fechas de calendarios oficiales |
+| `scripts/sync_regional.py` | Consulta BCRP, conserva y valida las series regionales |
+| `data/regional.json` | Paquete independiente de 25 regiones y siete indicadores |
 | `scripts/sync_data.py` | Descarga, normalización y preservación de datos en `data/` |
 | `scripts/build_site.py` | Valida y copia solo archivos de producción a `dist/` |
 | `.github/workflows/sync-macro.yml` | Programación, commit y publicación Pages |
@@ -141,6 +145,7 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 ```bash
 python scripts/validate_data.py
 python scripts/sync_agenda.py --validate
+python scripts/sync_regional.py --validate
 python -m unittest discover -s tests -p "test_*.py"
 npm test
 python scripts/build_site.py

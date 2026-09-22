@@ -73,7 +73,10 @@ def build_site(root=ROOT):
 
 
 if __name__ == '__main__':
+    import json
     from sync_agenda import validate_agenda
+    from sync_regional import validate_regional
     print(validate_data())
     validate_agenda()
+    validate_regional(json.loads((ROOT / 'data/regional.json').read_text()))
     print('Web lista para publicar:', build_site())

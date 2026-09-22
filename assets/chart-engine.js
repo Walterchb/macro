@@ -7,6 +7,7 @@
 const finite = n => typeof n === 'number' && Number.isFinite(n);
 const escapeHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const stamp = date => Date.parse(date + 'T00:00:00Z');
+const formatUnit = unit => String(unit ?? '').replace(/variación interanual/gi,'YOY').replace(/interanual/gi,'YOY').replace(/variación mensual/gi,'MOM').replace(/% mensual/gi,'% MOM').replace(/variación trimestral/gi,'QOQ').replace(/% trimestral/gi,'% QOQ');
 const nextMonth = date => { const d = new Date(stamp(date)); d.setUTCMonth(d.getUTCMonth() + 1); return d.toISOString().slice(0, 10); };
 const opacity = (color, alpha) => {
   if (/^#[\da-f]{6}$/i.test(color)) return `rgba(${parseInt(color.slice(1,3),16)},${parseInt(color.slice(3,5),16)},${parseInt(color.slice(5,7),16)},${alpha})`;
@@ -52,6 +53,45 @@ export function regression(rows) {
 export function spreadRows(left, right) {
   const lookup = new Map(right.filter(o => finite(o.value)).map(o => [o.date,o.value]));
   return left.filter(o => finite(o.value) && lookup.has(o.date)).map(o => ({date:o.date,value:o.value-lookup.get(o.date)}));
+}
+
+/** Period changes use exact calendar lags. Daily series compare published sessions. */
+export function periodChanges(rows, frequency, unit='') {
+  const observations=rows.filter(o=>finite(o.value)), values=new Map(observations.map(o=>[o.date,o.value]));
+  const label={daily:'DOD',weekly:'WOW',monthly:'MOM',quarterly:'QOQ',annual:'YOY'}[frequency];
+  const percentage=/%|porcent|p\.p\./i.test(unit), result=new Map();
+  if(!label)return result;
+  observations.forEach((row,i)=>{
+    const dt=new Date(stamp(row.date));let previous;
+    if(frequency==='daily')previous=observations[i-1]?.date;
+    else {
+      if(frequency==='weekly')dt.setUTCDate(dt.getUTCDate()-7);
+      if(frequency==='monthly')dt.setUTCMonth(dt.getUTCMonth()-1);
+      if(frequency==='quarterly')dt.setUTCMonth(dt.getUTCMonth()-3);
+      if(frequency==='annual')dt.setUTCFullYear(dt.getUTCFullYear()-1);
+      previous=dt.toISOString().slice(0,10);
+    }
+    const before=values.get(previous);
+    if(!finite(before))return;
+    const absolute=row.value-before, relative=!percentage&&before>0&&row.value>=0;
+    result.set(row.date,{label,previous,value:relative?absolute/before*100:absolute,unit:percentage?'pp':relative?'%':unit});
+  });
+  return result;
+}
+
+/** Complete weekly windows; a skipped weekly publication is not carried forward. */
+export function weeklyRollingMeanRows(rows, weeks=4) {
+  if(!Number.isInteger(weeks)||weeks<1)return [];
+  const values=new Map(rows.map(o=>[o.date,o.value]));
+  return rows.map(row=>{
+    const dt=new Date(stamp(row.date));let total=0;
+    for(let i=0;i<weeks;i++){
+      const value=values.get(dt.toISOString().slice(0,10));
+      if(!finite(value))return {date:row.date,value:null};
+      total+=value;dt.setUTCDate(dt.getUTCDate()-7);
+    }
+    return {date:row.date,value:total/weeks};
+  });
 }
 
 
@@ -120,28 +160,29 @@ export function createChartEngine(context) {
       animation:false,
       useUTC:true,
       color:palette(),
-      textStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',color:css('--muted')},
+      textStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',fontSize:11,color:css('--muted')},
       backgroundColor:'transparent',
       tooltip:{
         trigger:'axis',confine:true,backgroundColor:'#122133',borderWidth:0,padding:[10,12],
         extraCssText:'border-radius:7px;box-shadow:0 5px 20px #00162926;max-width:360px;',
         textStyle:{color:'#f5f8fc',fontFamily:'Manrope, Segoe UI, sans-serif',fontSize:11},
-        axisPointer:{type:'line',lineStyle:{color:css('--muted'),type:'dashed',width:1}},
+        transitionDuration:0,showDelay:0,hideDelay:80,
+        axisPointer:{type:'cross',crossStyle:{color:css('--muted'),type:'dashed',width:1},lineStyle:{color:css('--muted'),type:'dashed',width:1}},
         valueFormatter:v=>fmt(v),
       },
       legend:{top:3,left:12,right:12,type:'scroll',itemWidth:16,itemHeight:3,icon:'roundRect',itemGap:15,textStyle:{color:css('--muted'),fontSize:11}},
       grid:{left:54,right:32,top:42,bottom:54},
-      xAxis:{type:'time',boundaryGap:false,axisLine:{lineStyle:{color:css('--line')}},axisTick:{show:false},axisLabel:{color:css('--muted'),fontSize:10,hideOverlap:true,margin:12},splitLine:{show:false},axisPointer:{label:{show:false}}},
-      yAxis:{type:'value',splitNumber:4,axisLine:{show:false},axisTick:{show:false},axisLabel:{color:css('--muted'),fontSize:10,formatter:compact},splitLine:{lineStyle:{color:css('--grid'),width:1}},axisPointer:{label:{show:false}}},
+      xAxis:{type:'time',boundaryGap:false,axisLine:{lineStyle:{color:css('--line')}},axisTick:{show:false},axisLabel:{color:css('--muted'),fontSize:11,hideOverlap:true,margin:12},splitLine:{show:false},axisPointer:{label:{show:false}}},
+      yAxis:{type:'value',splitNumber:4,axisLine:{show:false},axisTick:{show:false},axisLabel:{color:css('--muted'),fontSize:11,formatter:compact},splitLine:{lineStyle:{color:css('--grid'),width:1}},axisPointer:{label:{show:false}}},
       dataZoom:[
         {type:'inside',filterMode:'none',zoomOnMouseWheel:false,moveOnMouseWheel:false,moveOnMouseMove:true},
-        {type:'slider',filterMode:'none',height:14,bottom:4,left:54,right:32,borderColor:'transparent',backgroundColor:css('--soft'),fillerColor:theme()?'#71d2dd18':'#0b365415',showDataShadow:true,dataBackground:{lineStyle:{color:css('--muted'),opacity:.18},areaStyle:{color:css('--muted'),opacity:.04}},selectedDataBackground:{lineStyle:{color:palette()[0],opacity:.4},areaStyle:{color:palette()[0],opacity:.08}},handleSize:11,handleStyle:{color:css('--panel'),borderColor:css('--muted')},moveHandleSize:0,showDetail:false,textStyle:{color:css('--muted'),fontSize:10}},
+        {type:'slider',filterMode:'none',height:14,bottom:4,left:54,right:32,borderColor:'transparent',backgroundColor:css('--soft'),fillerColor:theme()?'#71d2dd18':'#0b365415',showDataShadow:true,dataBackground:{lineStyle:{color:css('--muted'),opacity:.18},areaStyle:{color:css('--muted'),opacity:.04}},selectedDataBackground:{lineStyle:{color:palette()[0],opacity:.4},areaStyle:{color:palette()[0],opacity:.08}},handleSize:11,handleStyle:{color:css('--panel'),borderColor:css('--muted')},moveHandleSize:0,showDetail:false,textStyle:{color:css('--muted'),fontSize:11}},
       ],
     };
   }
 
   function timeChart(id, input, options={}) {
-    const {names=[],types=[],target=false,zero=false,index=false,area=false,recession=null,stats=true,referenceLines=[],lineStyles=[]} = options;
+    const {names=[],types=[],target=false,zero=false,index=false,area=false,recession=null,stats=true,referenceLines=[],lineStyles=[],stacked=false,signColors=false} = options;
     const el=document.getElementById(id);
     if (!el) return;
     const mapped=input.map((s,i)=>({s,name:names[i]||s?.name,type:types[i]||'line'})).filter(x=>x.s);
@@ -149,6 +190,7 @@ export function createChartEngine(context) {
     if (!ss.length) { el.innerHTML='<div class="empty">Serie no disponible en esta publicación.</div>'; return; }
     const units=[...new Set(ss.map(unitKey))], dates=index?commonDates(ss,range):[];
     if (index&&!dates.length) { el.innerHTML='<div class="empty">No hay una fecha base común.</div>'; return; }
+    if (stacked&&units.length!==1) { el.innerHTML='<div class="empty">La composición requiere series con la misma unidad.</div>'; return; }
     if (units.length>2&&!index) { el.innerHTML='<div class="empty">Hay más de dos unidades: compara menos series o usa base 100.</div>'; return; }
     const rows=windowRows(ss.map(s=>({s,rows:index?transform(s,'index',range,dates[0]):cut(s,'all'),...(index?{mode:'index'}:{})})),range);
     const finiteRows=rows.flatMap(g=>g.rows.filter(o=>finite(o.value)));
@@ -161,7 +203,7 @@ export function createChartEngine(context) {
     if(index) meta.mode='index';
     chartRows.set(id,meta);
     opt.legend.show=false;
-    opt.grid={left:narrow?43:54,right:twoAxes?(narrow?51:64):(narrow?47:59),top:32,bottom:49};
+    opt.grid={left:narrow?46:58,right:twoAxes?(narrow?55:68):(narrow?49:63),top:32,bottom:51};
     opt.dataZoom[1].left=opt.grid.left;
     opt.dataZoom[1].right=opt.grid.right;
     opt.xAxis.min=stamp(firstDate);
@@ -173,45 +215,48 @@ export function createChartEngine(context) {
       return new Intl.DateTimeFormat('es-PE',spanDays>365*3?{year:'numeric',timeZone:'UTC'}:spanDays>180?{month:'short',year:'2-digit',timeZone:'UTC'}:{day:'numeric',month:'short',timeZone:'UTC'}).format(d).replace('.','');
     }};
     opt.yAxis=(index?['Base 100']:units).slice(0,2).map((u,i)=>({
-      ...opt.yAxis,position:i?'right':'left',name:u.length<28?u:'',nameGap:15,
-      nameTextStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',fontSize:10,color:css('--muted'),align:i?'right':'left'},
-      scale:index||(!zero&&ss.length===1&&!isRate(ss[0])),
+      ...opt.yAxis,position:i?'right':'left',name:u.length<28?formatUnit(u):'',nameGap:15,
+      nameTextStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',fontSize:11,color:css('--muted'),align:i?'right':'left'},
+      scale:!stacked&&!mapped.some(m=>m.type==='bar')&&(index||(!zero&&ss.length===1&&!isRate(ss[0]))),
       axisLabel:{...opt.yAxis.axisLabel,margin:8},
     }));
     const allRendered=rows.map(({s,rows})=>withGaps(rows,s.frequency));
+    const changes=ss.map((s,i)=>s.derived==='diff'?new Map():periodChanges(index?rows[i].rows:s.observations,s.frequency,index?'Base 100':s.unit));
     opt.tooltip.formatter=params=>{
       const items=(Array.isArray(params)?params:[params]).filter(p=>p.seriesIndex<ss.length&&Array.isArray(p.value)&&finite(p.value[1]));
       if(!items.length)return '';
       return '<div class="chart-tooltip">'+items.map(p=>{
         const s=ss[p.seriesIndex], rawDate=typeof p.value[0]==='number'?new Date(p.value[0]).toISOString().slice(0,10):p.value[0];
-        const u=index?'Base 100':s.unit;
-        return `<div class="chart-tooltip-row"><span class="chart-tooltip-name"><i style="background:${colorsHere[p.seriesIndex%colorsHere.length]}"></i>${escapeHtml(mapped[p.seriesIndex].name)}</span><strong>${escapeHtml(fmt(p.value[1]))} <small>${escapeHtml(u)}</small></strong><span class="chart-tooltip-meta">${escapeHtml(date(rawDate,s.frequency))} · ${escapeHtml(s.provider)} · ${escapeHtml(s.sourceCode)}</span></div>`;
+        const u=index?'Base 100':formatUnit(s.unit);
+        const change=changes[p.seriesIndex].get(rawDate);
+        return `<div class="chart-tooltip-row"><span class="chart-tooltip-name"><i style="background:${colorsHere[p.seriesIndex%colorsHere.length]}"></i>${escapeHtml(mapped[p.seriesIndex].name)}</span><strong>${escapeHtml(fmt(p.value[1]))} <small>${escapeHtml(u)}</small></strong><span class="chart-tooltip-meta">${escapeHtml(date(rawDate,s.frequency))} · ${escapeHtml(s.provider)}</span>${change?`<span class="chart-tooltip-change">${change.label} <b>${change.value>0?'+':''}${escapeHtml(fmt(change.value))} ${escapeHtml(formatUnit(change.unit))}</b> <span>vs. ${escapeHtml(date(change.previous,s.frequency))}</span></span>`:''}</div>`;
       }).join('')+'</div>';
     };
     opt.series=rows.map(({s,rows:observations},i)=>{
       const color=colorsHere[i%colorsHere.length], type=mapped[i].type, final=observations.filter(o=>finite(o.value)).at(-1);
       return {
         id:`${id}-${i}`,name:mapped[i].name,type,
-        data:allRendered[i].map(o=>[stamp(o.date),o.value]),
+        data:allRendered[i].map(o=>signColors&&type==='bar'?{value:[stamp(o.date),o.value],itemStyle:{color:o.value<0?colors[4]:color}}:[stamp(o.date),o.value]),
         showSymbol:false,symbol:'circle',symbolSize:5,connectNulls:false,
         yAxisIndex:index?0:Math.min(units.indexOf(unitKey(s)),1),smooth:false,
-        lineStyle:{width:ss.length>4?1.4:1.9,color,type:lineStyles[i]||'solid'},itemStyle:{color,opacity:type==='bar'?.78:1,borderRadius:type==='bar'?[2,2,0,0]:undefined},
+        stack:stacked?'composition':undefined,
+        lineStyle:{width:stacked?1.25:ss.length>4?1.6:2,color,type:lineStyles[i]||'solid'},itemStyle:{color,opacity:type==='bar'?.86:1,borderRadius:type==='bar'?[2,2,0,0]:undefined},
         emphasis:{focus:'series',lineStyle:{width:2.4},itemStyle:{opacity:1}},
         blur:{lineStyle:{opacity:.25},itemStyle:{opacity:.22}},
-        areaStyle:area&&i===0?{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:opacity(color,.13)},{offset:1,color:opacity(color,.01)}]}}:undefined,
+        areaStyle:stacked?{color,opacity:.23}:area&&i===0?{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:opacity(color,.15)},{offset:1,color:opacity(color,.015)}]}}:undefined,
         barMaxWidth:18,barMinWidth:1,
-        endLabel:type==='line'&&!twoAxes?{show:true,formatter:p=>compact(p.value?.[1]),color,fontSize:10,fontWeight:650,distance:7,backgroundColor:css('--panel'),padding:[2,3],borderRadius:3}:undefined,
+        endLabel:type==='line'&&!twoAxes&&!stacked?{show:true,formatter:p=>compact(p.value?.[1]),color,fontSize:11,fontWeight:650,distance:7,backgroundColor:css('--panel'),padding:[2,3],borderRadius:3}:undefined,
         labelLayout:{moveOverlap:'shiftY',hideOverlap:true},
-        markPoint:final?{silent:true,symbol:'circle',symbolSize:5,itemStyle:{color,borderColor:css('--panel'),borderWidth:1.2},label:{show:false},data:[{coord:[stamp(final.date),final.value]}]}:undefined,
+        markPoint:final&&!stacked?{silent:true,symbol:'circle',symbolSize:5,itemStyle:{color,borderColor:css('--panel'),borderWidth:1.2},label:{show:false},data:[{coord:[stamp(final.date),final.value]}]}:undefined,
         z:type==='bar'?2:4,
       };
     });
     const markAreas=[],markLines=[];
-    referenceLines.filter(r=>finite(r.value)).forEach(r=>markLines.push({yAxis:r.value,name:r.label||'',lineStyle:{color:r.color||css('--muted'),opacity:.7,type:'dashed',width:1},label:{show:!!r.label,formatter:r.label,position:'insideEndTop',fontSize:9,color:css('--muted'),backgroundColor:css('--panel'),padding:[2,3]}}));
+    referenceLines.filter(r=>finite(r.value)).forEach(r=>markLines.push({yAxis:r.value,name:r.label||'',lineStyle:{color:r.color||css('--muted'),opacity:.7,type:'dashed',width:1},label:{show:!!r.label,formatter:r.label,position:'insideEndTop',fontSize:11,color:css('--muted'),backgroundColor:css('--panel'),padding:[2,3]}}));
     const targetBand=target===true?{min:1,max:3,label:'Meta BCRP · 1–3%'}:target;
     if(targetBand&&finite(targetBand.min)&&finite(targetBand.max)) {
       markAreas.push([{yAxis:targetBand.min,itemStyle:{color:theme()?'#13b9c810':'#009bae0c'}},{yAxis:targetBand.max}]);
-      markLines.push({yAxis:targetBand.max,name:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,lineStyle:{color:colors[0],opacity:.5,type:'dashed'},label:{show:true,formatter:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,position:'insideEndTop',fontSize:9,color:css('--muted')}});
+      markLines.push({yAxis:targetBand.max,name:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,lineStyle:{color:colors[0],opacity:.5,type:'dashed'},label:{show:true,formatter:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,position:'insideEndTop',fontSize:11,color:css('--muted')}});
     }
     const bands=recessionBands(recession,firstDate,lastDate);
     for(const [a,b] of bands)markAreas.push([{xAxis:stamp(a),itemStyle:{color:theme()?'#b4c2d312':'#152c4010'}},{xAxis:stamp(b)}]);
@@ -226,11 +271,15 @@ export function createChartEngine(context) {
     footer.dataset.chartEvidence=id;
     const history=index?rows[0].rows:cut(ss[0],'all');
     const statHelp='Percentil empírico: porcentaje de observaciones del historial que son menores o iguales al último valor. No mide si el indicador es bueno, malo, barato o caro.';
+    let zoomStart=0,zoomEnd=100;
+    const windows=[1,3,5].filter(years=>spanDays>years*365.25*1.15);
+    function windowStart(years){const point=new Date(stamp(lastDate));point.setUTCFullYear(point.getUTCFullYear()-years);return Math.max(0,(point.getTime()-stamp(firstDate))/(stamp(lastDate)-stamp(firstDate))*100);}
     function updateEvidence(groups) {
       const primary=computeStats(groups[0]?.rows||[],history);
-      footer.innerHTML=`<div class="chart-series-legend" aria-label="Series del gráfico">${groups.map(({s,rows:obs},i)=>{
+      const statisticsOpen=footer.querySelector('.chart-stat-details')?.open||false;
+      footer.innerHTML=`${windows.length?`<div class="chart-window-controls" role="group" aria-label="Ventana del gráfico"><span>Ventana</span>${windows.map(years=>`<button class="btn btn-sm" type="button" data-chart-years="${years}" aria-pressed="${Math.abs(zoomStart-windowStart(years))<.05&&zoomEnd>99.95}" title="Últimos ${years} ${years===1?'año':'años'} disponibles">${years}A</button>`).join('')}<button class="btn btn-sm" type="button" data-chart-years="all" aria-pressed="${zoomStart<.05&&zoomEnd>99.95}" title="Todo el horizonte seleccionado">Todo</button></div>`:''}<div class="chart-series-legend" aria-label="Series del gráfico">${groups.map(({s,rows:obs},i)=>{
         const final=obs.filter(o=>finite(o.value)).at(-1);
-        return `<button type="button" class="chart-legend-item" data-legend-index="${i}" aria-pressed="true" title="Mostrar u ocultar ${escapeHtml(mapped[i].name)}"><i style="--series-color:${colorsHere[i%colorsHere.length]}" aria-hidden="true"></i><span class="chart-legend-name">${escapeHtml(mapped[i].name)}</span><strong>${escapeHtml(fmt(final?.value))}<small> ${escapeHtml(index?'Base 100':s.unit)}</small></strong><span class="chart-legend-period">${final?escapeHtml(date(final.date,s.frequency)):'Sin dato'}</span></button>`;
+        return `<button type="button" class="chart-legend-item" data-legend-index="${i}" aria-pressed="true" title="Mostrar u ocultar ${escapeHtml(mapped[i].name)}"><i style="--series-color:${colorsHere[i%colorsHere.length]}" aria-hidden="true"></i><span class="chart-legend-name">${escapeHtml(mapped[i].name)}</span><strong>${escapeHtml(fmt(final?.value))}<small> ${escapeHtml(index?'Base 100':formatUnit(s.unit))}</small></strong><span class="chart-legend-period">${final?escapeHtml(date(final.date,s.frequency)):'Sin dato'}</span></button>`;
       }).join('')}</div>${stats&&primary&&groups.length<=3?`<details class="chart-stat-details"><summary><span>Contexto histórico</span><span>${escapeHtml(compact(primary.min))} — ${escapeHtml(compact(primary.max))} <small>en ventana</small></span></summary><div class="chart-distribution"><div class="chart-range-stat"><span>Mín. ventana</span><strong>${escapeHtml(compact(primary.min))}</strong></div><div class="chart-range-stat"><span>Mediana</span><strong>${escapeHtml(compact(primary.median))}</strong></div><div class="chart-range-stat"><span>Máx. ventana</span><strong>${escapeHtml(compact(primary.max))}</strong></div><div class="chart-percentile" title="${statHelp}"><div><span>Percentil histórico</span><strong>P${escapeHtml(fmt(primary.percentile,0))}</strong></div><div class="chart-percentile-track"><i style="left:${Math.max(0,Math.min(100,primary.percentile))}%"></i></div></div></div><div class="chart-history-caption">${groups.length>1?escapeHtml(mapped[0].name)+' · ':''}${escapeHtml(date(primary.firstDate,ss[0].frequency))}–${escapeHtml(date(primary.lastDate,ss[0].frequency))} · ${primary.count} obs. en ventana${finite(primary.percentile)?` · percentil sobre ${primary.historyCount} obs. desde ${escapeHtml(date(primary.historyStart,ss[0].frequency))}`:''}</div></details>`:''}<div class="chart-source-line"><span>${escapeHtml(date(groups.flatMap(g=>g.rows).map(o=>o.date).sort()[0]||firstDate,ss[0].frequency))}–${escapeHtml(date(groups.flatMap(g=>g.rows).map(o=>o.date).sort().at(-1)||lastDate,ss[0].frequency))}</span><span>${[...new Map(ss.map(s=>[s.provider,s])).values()].map(s=>`<a href="${escapeHtml(s.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.provider)} ↗</a>`).join(' · ')}</span></div>${bands.length?'<div class="chart-recession-key"><i></i> Sombreado: recesiones de EE. UU. · FRED / NBER (USREC)</div>':''}`;
       const selected=instance.getOption().legend?.[0]?.selected||{};
       footer.querySelectorAll('[data-legend-index]').forEach(button=>{
@@ -238,11 +287,16 @@ export function createChartEngine(context) {
         button.setAttribute('aria-pressed',String(selected[name]!==false));
         button.onclick=()=>instance.dispatchAction({type:'legendToggleSelect',name});
       });
+      footer.querySelectorAll('[data-chart-years]').forEach(button=>{
+        button.onclick=()=>instance.dispatchAction({type:'dataZoom',start:button.dataset.chartYears==='all'?0:windowStart(Number(button.dataset.chartYears)),end:100});
+      });
+      if(statisticsOpen&&footer.querySelector('.chart-stat-details'))footer.querySelector('.chart-stat-details').open=true;
     }
     updateEvidence(rows);
     instance.on('legendselectchanged',event=>footer.querySelectorAll('[data-legend-index]').forEach(button=>button.setAttribute('aria-pressed',String(event.selected[mapped[Number(button.dataset.legendIndex)].name]!==false))));
     instance.on('datazoom',()=>{
       const zoom=instance.getOption().dataZoom?.[0]||{},start=finite(zoom.start)?zoom.start:0,end=finite(zoom.end)?zoom.end:100;
+      zoomStart=start;zoomEnd=end;
       const lo=stamp(firstDate)+(stamp(lastDate)-stamp(firstDate))*start/100,hi=stamp(firstDate)+(stamp(lastDate)-stamp(firstDate))*end/100;
       const visible=rows.map(group=>({...group,rows:group.rows.filter(o=>stamp(o.date)>=lo-.5&&stamp(o.date)<=hi+.5)}));
       meta.rows=visible;

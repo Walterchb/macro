@@ -36,3 +36,25 @@ test('upcoming summary excludes timed events whose scheduled hour passed, keepin
   assert.equal(agendaSummary(fixture,'peru',now).events.some(e=>e.id==='passed'),false);
   assert.equal(agendaSummary(fixture,'peru',now).events.some(e=>e.id==='today'),true);
 });
+
+test('preview paging preserves chronology, clamps edges, and keeps a partial last page',async()=>{
+  const {agendaPage}=await import('../assets/agenda.js');
+  const events=Array.from({length:10},(_,i)=>({id:i}));
+  assert.deepEqual(agendaPage(events,0).rows.map(e=>e.id),[0,1,2,3]);
+  assert.deepEqual(agendaPage(events,1).rows.map(e=>e.id),[4,5,6,7]);
+  assert.deepEqual(agendaPage(events,99),{page:2,pages:3,rows:[{id:8},{id:9}],from:9,to:10,total:10});
+  assert.equal(agendaPage(events,-1).page,0);
+  assert.equal(agendaPage(events.slice(0,2),2).page,0);
+  assert.deepEqual(agendaPage([]),{page:0,pages:1,rows:[],from:0,to:0,total:0});
+});
+
+test('holiday filters and exports keep jurisdiction without an invented release hour',()=>{
+  const holiday={...base,id:'holiday',kind:'holiday',title:'Combate de Angamos',category:'feriados',key:false,date:'2026-10-08',jurisdiction:'Feriado nacional · Perú'};
+  const fixture={...data,events:[...data.events,holiday]};
+  assert.deepEqual(agendaEvents(fixture,'peru',{category:'feriados'},now).map(e=>e.id),['holiday']);
+  assert.equal(agendaEvents(fixture,'peru',{key:true},now).some(e=>e.id==='holiday'),false);
+  const exported=agendaICS([holiday],now);
+  assert.match(exported,/DTSTART;VALUE=DATE:20261008/);
+  assert.match(exported,/STATUS:CONFIRMED/);
+  assert.doesNotMatch(exported,/DTSTART:20261008T/);
+});

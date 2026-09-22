@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {computeStats,regression,spreadRows,recessionBands} from '../assets/chart-engine.js';
+import {computeStats,regression,spreadRows,recessionBands,periodChanges,weeklyRollingMeanRows,createChartEngine} from '../assets/chart-engine.js';
 import {change} from '../assets/math.js';
 test('El percentil usa toda la historia y el rango solo la ventana visible',()=>{
  const history=[{date:'2024-01-01',value:10},{date:'2024-02-01',value:20},{date:'2024-03-01',value:20},{date:'2024-04-01',value:40}];
@@ -23,6 +23,41 @@ test('Bandas de recesión no rellenan meses ausentes ni otras economías',()=>{
 test('Cambio semanal compara exactamente siete días antes',()=>{
  const s={frequency:'weekly',unit:'Miles USD',observations:[{date:'2026-09-02',value:100},{date:'2026-09-09',value:110}]};
  assert.equal(change(s).value,10);assert.equal(change(s).unit,'%');
+});
+
+test('Los cambios del tooltip exigen periodos comparables y distinguen porcentajes de pp',()=>{
+ const monthly=[{date:'2026-01-01',value:100},{date:'2026-02-01',value:110},{date:'2026-04-01',value:121}];
+ const changes=periodChanges(monthly,'monthly','Millones USD');
+ assert.deepEqual(changes.get('2026-02-01'),{label:'MOM',previous:'2026-01-01',value:10,unit:'%'});
+ assert.equal(changes.has('2026-04-01'),false);
+ const rates=periodChanges([{date:'2026-01-01',value:2},{date:'2026-02-01',value:3}],'monthly','% YOY');
+ assert.equal(rates.get('2026-02-01').value,1);assert.equal(rates.get('2026-02-01').unit,'pp');
+ const signed=periodChanges([{date:'2026-01-01',value:-2},{date:'2026-02-01',value:1}],'monthly','Índice');
+ assert.equal(signed.get('2026-02-01').value,3);assert.equal(signed.get('2026-02-01').unit,'Índice');
+ const sessions=periodChanges([{date:'2026-09-18',value:10},{date:'2026-09-21',value:11}],'daily','USD');
+ assert.deepEqual(sessions.get('2026-09-21'),{label:'DOD',previous:'2026-09-18',value:10,unit:'%'});
+});
+
+test('La media de cuatro semanas no reemplaza una semana sin publicación',()=>{
+ const rows=[{date:'2026-08-01',value:100},{date:'2026-08-08',value:110},{date:'2026-08-15',value:120},{date:'2026-08-22',value:130},{date:'2026-09-05',value:140}];
+ const mean=weeklyRollingMeanRows(rows,4);
+ assert.equal(mean[2].value,null);assert.equal(mean[3].value,115);assert.equal(mean[4].value,null);
+});
+
+test('Los gráficos de barras y áreas apiladas conservan una base cero',()=>{
+ const previousDocument=globalThis.document;
+ globalThis.document={getElementById:()=>({clientWidth:640})};
+ try {
+  const source={id:'a',name:'Nivel',provider:'BCRP',sourceCode:'A',unit:'Millones USD',frequency:'monthly',observations:[{date:'2026-01-01',value:100},{date:'2026-02-01',value:110}]};
+  let option;
+  const engine=createChartEngine({colors:Array(8).fill('#123456'),css:()=> '#789abc',theme:()=>false,fmt:String,date:String,chart:(_id,o)=>{option=o;return null},chartRows:new Map(),unitKey:s=>s.unit,windowRows:rows=>rows,withGaps:rows=>rows,cut:s=>s.observations,transform:()=>[],commonDates:()=>[],isRate:()=>false,range:()=> 'all'});
+  engine.timeChart('test',[source],{types:['bar']});
+  assert.equal(option.yAxis[0].scale,false);
+  engine.timeChart('test',[source,{...source,id:'b'}],{stacked:true});
+  assert.equal(option.yAxis[0].scale,false);
+  assert.equal(option.series[0].stack,'composition');assert.equal(option.series[1].stack,'composition');
+  assert.equal(option.series[0].markPoint,undefined);
+ } finally {globalThis.document=previousDocument;}
 });
 
 test('El impulso anualizado exige meses consecutivos y conserva la capitalización',async()=>{

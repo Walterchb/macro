@@ -64,3 +64,53 @@ test('a finite but future or old primary observation cannot yield a live positiv
     assert.equal(growth.state.position,-1);
   }
 });
+
+import {monitorJoin,monitorBreadth,monitorConsensus} from '../assets/economic-monitor.js';
+
+test('divergent evidence stays mixed even if a majority points upward; missing conditions stay partial',()=>{
+  const votes=values=>values.map(value=>({value}));
+  assert.equal(monitorConsensus(votes([1,1,1,-1])).label,'Señales mixtas');
+  assert.equal(monitorConsensus(votes([1,1,1,-1])).tone,'neutral');
+  assert.equal(monitorConsensus(votes([1,1,null])).tone,'muted');
+  assert.equal(monitorConsensus(votes([1,1,0])).label,'Apoyo parcial');
+  assert.equal(monitorConsensus(votes([-1,0,0])).label,'Deterioro parcial');
+  assert.equal(monitorConsensus(votes([0,0,0])).label,'Sin dirección clara');
+});
+
+test('real-rate and purchasing-power calculations join the same reference month only',()=>{
+  const nominal=[{date:'2026-07-01',value:4.5},{date:'2026-08-01',value:4.25}],expected=[{date:'2026-07-01',value:3.01},{date:'2026-09-01',value:3.1}];
+  const joined=monitorJoin(nominal,expected,(n,p)=>((1+n/100)/(1+p/100)-1)*100);
+  assert.equal(joined.length,1);assert.equal(joined[0].date,'2026-07-01');
+  assert.ok(Math.abs(joined[0].value-1.4464615085914)<1e-10);
+});
+
+test('breadth cannot combine different months or silently drop a missing sector',()=>{
+  const sectors=[series([{date:'2026-06-01',value:1},{date:'2026-07-01',value:2}]),series([{date:'2026-06-01',value:-1},{date:'2026-08-01',value:3}])];
+  assert.deepEqual(monitorBreadth(sectors),[{date:'2026-06-01',value:1,total:2,negative:1}]);
+  assert.deepEqual(monitorBreadth([...sectors,null]),[]);
+});
+
+test('annualized momentum and compounded rates reject gaps and preserve the correct formula',()=>{
+  const s=series([{date:'2026-04-01',value:100},{date:'2026-05-01',value:101},{date:'2026-06-01',value:102},{date:'2026-07-01',value:103}]);
+  assert.ok(Math.abs(monitorTransform(s,'ann3')[0].value-((1.03**4-1)*100))<1e-10);
+  assert.deepEqual(monitorTransform({...s,observations:s.observations.filter(o=>o.date!=='2026-05-01')},'ann3'),[]);
+  const rates=series([{date:'2026-05-01',value:10},{date:'2026-06-01',value:-10},{date:'2026-07-01',value:10}]);
+  assert.ok(Math.abs(monitorTransform(rates,'compound3')[0].value-8.9)<1e-10);
+});
+
+test('weekly claims average requires four consecutive weekly observations',()=>{
+  const s=series([{date:'2026-08-22',value:100},{date:'2026-08-29',value:200},{date:'2026-09-05',value:300},{date:'2026-09-12',value:400}],'weekly');
+  assert.deepEqual(monitorTransform(s,'weeklyMean4'),[{date:'2026-09-12',value:250}]);
+  assert.equal(monitorTransform({...s,observations:s.observations.filter(o=>o.date!=='2026-08-29')},'weeklyMean4').length,0);
+});
+
+test('growth cannot retain a live expansion label when one required corroborating source goes stale',()=>{
+  const now=()=>new Date('2026-09-22');
+  const mk=(sourceCode,observations)=>({...series(observations),provider:'BCRP',sourceCode,id:`bcrp_${sourceCode}`});
+  const monthly=[{date:'2026-05-01',value:2},{date:'2026-06-01',value:2},{date:'2026-07-01',value:2}];
+  const codes=['PN01713AM','PN01716AM','PN01717AM','PN01720AM','PN01723AM','PN01724AM','PN01725AM','PN01726AM'];
+  const rows=[mk('PN01728AM',monthly),mk('PN01731AM',monthly),...codes.map(c=>mk(c,monthly)),mk('PD38045AM',[{date:'2025-01-01',value:60}])];
+  const growth=createEconomicMonitor({series:rows,now}).build('peru').find(c=>c.key==='growth');
+  assert.equal(growth.state.tone,'muted');assert.equal(growth.state.label,'Cobertura parcial');
+  assert.equal(growth.signals.filter(s=>s.value===1).length,3);
+});

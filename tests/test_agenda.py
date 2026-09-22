@@ -5,7 +5,8 @@ import unittest
 from datetime import datetime, timezone
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 from sync_agenda import (SOURCES,event,parse_ics,parse_bls,parse_bea,parse_fed,parse_ecb,
-                         merge_results,validate_agenda,window_events)
+                         merge_results,validate_agenda,window_events,parse_bcrp,
+                         parse_peru_holidays,parse_us_holidays,parse_target_holidays)
 SOURCE={s['id']:s for s in SOURCES}
 NOW=datetime(2026,9,22,12,tzinfo=timezone.utc)
 
@@ -67,7 +68,7 @@ END:VCALENDAR'''
 
     def test_window_is_lima_and_validation_rejects_invented_hour(self):
         now=datetime(2026,9,23,2,tzinfo=timezone.utc) # still September 22 in Lima
-        data=merge_results({}, {'inei':{'events':[event(SOURCE['inei'],'x','2026-09-22'),event(SOURCE['inei'],'y','2026-11-21'),event(SOURCE['inei'],'z','2026-11-22')]}},now)
+        data=merge_results({}, {'inei':{'events':[event(SOURCE['inei'],'x','2026-09-22'),event(SOURCE['inei'],'y','2026-11-21'),event(SOURCE['inei'],'z','2026-11-22')]}},now,horizon=60)
         self.assertEqual(data['windowStart'],'2026-09-22')
         self.assertEqual([e['date'] for e in data['events']],['2026-09-22','2026-11-21'])
         validate_agenda(data)
@@ -76,9 +77,39 @@ END:VCALENDAR'''
 
     def test_coverage_uses_official_dates_not_requested_window(self):
         short=merge_results({}, {'inei':{'events':[event(SOURCE['inei'],'x','2026-10-01')]}},NOW)
-        self.assertEqual(short['horizonDays'],60)
+        self.assertEqual(short['horizonDays'],120)
         self.assertFalse(short['coverage']['peru']['coversMonth'])
         full=merge_results({}, {'inei':{'events':[event(SOURCE['inei'],'x','2026-10-23')]}},NOW)
         self.assertTrue(full['coverage']['peru']['coversMonth'])
+
+    def test_bcrp_explicit_dates_and_years_only(self):
+        text='<h3>2026</h3><table><tr><td>15 de octubre</td><td>Nota informativa</td></tr><tr><td>noviembre</td><td>Por confirmar</td></tr></table><h3>2027</h3><table><tr><td>14 de enero</td><td>Nota informativa</td></tr></table>'
+        rows=parse_bcrp(text,SOURCE['bcrp-policy'])
+        self.assertEqual([e['date'] for e in rows],['2026-10-15','2027-01-14'])
+        self.assertTrue(all(e['time'] is None and e['key'] for e in rows))
+        with self.assertRaises(ValueError):parse_bcrp('<h3>2026</h3><tr><td>diciembre</td></tr>',SOURCE['bcrp-inflation'])
+
+    def test_peru_holidays_include_featured_next_holiday_not_nonworking_days(self):
+        page='<h1 class="holidays__title">Feriados 2026</h1><p>El siguiente feriado nacional es</p><p class="holidays__recent-holiday-date">Jueves 8 de octubre</p><p class="holidays__recent-holiday-name">Combate de Angamos</p><table><tr><td>Feriado nacional</td><td>Domingo 1 de noviembre</td><td>Todos los Santos</td></tr><tr><td>Día no laborable</td><td>Viernes 9 de octubre</td><td>Sector público</td></tr></table>'
+        rows=parse_peru_holidays(page,SOURCE['peru-holidays'])
+        self.assertEqual([e['date'] for e in rows],['2026-10-08','2026-11-01'])
+        self.assertTrue(all(e['kind']=='holiday' and e['precision']=='date' for e in rows))
+
+    def test_fed_holiday_saturday_no_friday_closure_and_sunday_observed_monday(self):
+        page='<table><tr><td></td><td>HOLIDAY</td><td>2026</td><td>2027</td></tr><tr><td></td><td>Independence Day</td><td>Jul 4</td><td>Jul 4<sup>1</sup></td></tr></table>'
+        rows=parse_us_holidays(page,SOURCE['us-holidays'])
+        self.assertEqual([e['date'] for e in rows],['2026-07-04','2027-07-05'])
+        self.assertTrue(all('bolsas' in e['description'] for e in rows))
+
+    def test_target_filters_bce_office_holidays_and_keeps_explicit_year(self):
+        page='<table><tr><th>Christmas Day*</th><td>25 December 2026</td></tr><tr><th>New Year\'s Eve</th><td>31 December 2026</td></tr><tr><th>New Year\'s Day*</th><td>1 January 2027</td></tr></table>'
+        rows=parse_target_holidays(page,SOURCE['target-holidays'])
+        self.assertEqual([e['date'] for e in rows],['2026-12-25','2027-01-01'])
+
+    def test_120_day_calendar_handles_year_boundary(self):
+        rows=[event(SOURCE['inei'],'Enero','2027-01-20'),event(SOURCE['inei'],'Fuera','2027-01-21')]
+        data=merge_results({}, {'inei':{'events':rows}},NOW)
+        self.assertEqual(data['windowEnd'],'2027-01-20')
+        self.assertEqual([e['title'] for e in data['events']],['Enero'])
 
 if __name__=='__main__':unittest.main()

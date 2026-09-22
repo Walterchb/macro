@@ -10925,5 +10925,21 @@
     "category": "markets",
     "primarySource": "Board of Governors of the Federal Reserve System",
     "description": "Tipo comprador al mediodía en Nueva York (H.10). Una subida indica apreciación del euro frente al dólar."
+  },
+  {
+    "id": "bcrp_PD12912AM",
+    "sourceCode": "PD12912AM",
+    "code": "PD12912AM",
+    "name": "Expectativa de inflación a 12 meses",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PD12912AM/html",
+    "frequency": "monthly",
+    "unit": "%",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "expectations",
+    "description": "Expectativa de inflación a 12 meses de la encuesta de expectativas macroeconómicas del BCRP. Es una expectativa, no inflación observada.",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PD12912AM/html"
   }
 ]

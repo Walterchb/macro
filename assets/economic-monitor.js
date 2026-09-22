@@ -25,30 +25,78 @@ export function monitorFreshness(series, observation, now = new Date()) {
   return {state:ageDays>limitDays?'stale':series?.status==='retained'?'retained':'fresh',ageDays,limitDays};
 }
 
-/** Exact-period transformations: a missing comparison month is never replaced by a nearby row. */
+/** Exact calendar periods only. Missing observations never shorten a window. */
 export function monitorTransform(series, kind='level') {
   const rows=validRows(series), lookup=new Map(rows.map(o=>[o.date,o.value]));
   if(kind==='level') return rows;
   const frequency=series?.frequency;
+  if(kind==='weeklyMean4' && frequency==='weekly') return rows.flatMap(o=>{
+    const values=Array.from({length:4},(_,k)=>lookup.get(new Date(new Date(`${o.date}T00:00:00Z`)-k*7*DAY).toISOString().slice(0,10)));
+    return values.every(finite)?[{date:o.date,value:values.reduce((a,b)=>a+b,0)/4}]:[];
+  });
   if(!['monthly','quarterly','annual'].includes(frequency)) return [];
   const stride=frequency==='quarterly'?3:frequency==='annual'?12:1;
   return rows.flatMap(o=>{
     let value=null;
-    if(kind==='mean3diff' && frequency==='monthly') {
-      // Mean of three monthly changes equals (level[t] - level[t-3]) / 3,
-      // but all four monthly levels must exist to support the interpretation.
-      const prior=[1,2,3].map(k=>lookup.get(shiftedMonth(o.date,-k)));
-      if(prior.every(finite)) value=(o.value-prior[2])/3;
+    const window=length=>Array.from({length},(_,k)=>lookup.get(shiftedMonth(o.date,-k)));
+    if(['mean3','sum12','compound3'].includes(kind) && frequency==='monthly') {
+      const values=window(kind==='sum12'?12:3);
+      if(values.every(finite)) value=kind==='mean3'?values.reduce((a,b)=>a+b,0)/3:kind==='sum12'?values.reduce((a,b)=>a+b,0):(values.reduce((a,b)=>a*(1+b/100),1)-1)*100;
+    } else if(kind==='mean3diff' && frequency==='monthly') {
+      const values=window(4); if(values.every(finite)) value=(values[0]-values[3])/3;
+    } else if(['ann3','ann6'].includes(kind) && frequency==='monthly') {
+      const months=kind==='ann3'?3:6,values=window(months+1);
+      if(values.every(v=>finite(v)&&v>0))value=((values[0]/values[months])**(12/months)-1)*100;
     } else {
-      const lag=kind==='yoy'?12:kind==='change3'?3:stride;
+      const lag=kind==='yoy'||kind==='change12'?12:kind==='change3'?3:kind==='change6'?6:stride;
       const previous=lookup.get(shiftedMonth(o.date,-lag));
       if(finite(previous)) {
-        if(kind==='diff'||kind==='change3') value=o.value-previous;
-        else if(kind==='yoy' && previous!==0) value=(o.value/previous-1)*100;
-        else if(kind==='annualized' && frequency==='quarterly' && previous>0 && o.value>0) value=((o.value/previous)**4-1)*100;
+        if(['diff','change3','change6','change12'].includes(kind))value=o.value-previous;
+        else if(kind==='yoy' && previous!==0)value=(o.value/previous-1)*100;
+        else if(kind==='annualized' && frequency==='quarterly' && previous>0 && o.value>0)value=((o.value/previous)**4-1)*100;
       }
     }
     return finite(value)?[{date:o.date,value}]:[];
+  });
+}
+
+/** Derived comparisons join exactly on reference date, never the latest two unrelated vintages. */
+export function monitorJoin(a,b,calculate) {
+  const other=new Map(b.map(o=>[o.date,o.value]));
+  return a.flatMap(o=>{const second=other.get(o.date); if(!finite(second))return [];const value=calculate(o.value,second);return finite(value)?[{date:o.date,value}]:[];});
+}
+
+/** Every sector must exist for a month to enter the breadth history. No weighting is implied. */
+export function monitorBreadth(sectors) {
+  if(!sectors.length||sectors.some(s=>!s))return [];
+  const maps=sectors.map(s=>new Map(validRows(s).map(o=>[o.date,o.value])));
+  return validRows(sectors[0]).flatMap(o=>{
+    const values=maps.map(m=>m.get(o.date));
+    return values.every(finite)?[{date:o.date,value:values.filter(v=>v>0).length,total:values.length,negative:values.filter(v=>v<0).length}]:[];
+  });
+}
+
+/** Each segment represents one disclosed condition. Divergence is never hidden by averaging. */
+export function monitorConsensus(signals, labels={}) {
+  const available=signals.filter(s=>[-1,0,1].includes(s.value)),positive=available.filter(s=>s.value===1).length,negative=available.filter(s=>s.value===-1).length;
+  const counts={positive,negative,available:available.length,total:signals.length};
+  if(available.length<signals.length||!signals.length)return {...counts,tone:'muted',label:'Cobertura parcial',position:-1};
+  if(positive&&negative)return {...counts,tone:'neutral',label:labels.mixed||'Señales mixtas',position:1};
+  if(positive&&positive<available.length)return {...counts,tone:'neutral',label:'Apoyo parcial',position:1};
+  if(negative&&negative<available.length)return {...counts,tone:'neutral',label:'Deterioro parcial',position:1};
+  if(positive)return {...counts,tone:'good',label:labels.positive||'Señales favorables',position:2};
+  if(negative)return {...counts,tone:'watch',label:labels.negative||'Señales de deterioro',position:0};
+  return {...counts,tone:'neutral',label:'Sin dirección clara',position:1};
+}
+
+function changeOverDays(rows,days=91) {
+  // Binary search keeps daily market histories responsive (O(n log n), not O(n²)).
+  return rows.flatMap(o=>{
+    const target=new Date(`${o.date}T00:00:00Z`)-days*DAY,targetDate=new Date(target).toISOString().slice(0,10);
+    let low=0,high=rows.length;
+    while(low<high){const middle=(low+high)>>1;if(rows[middle].date<=targetDate)low=middle+1;else high=middle;}
+    const previous=rows[low-1];
+    return previous&&target-new Date(`${previous.date}T00:00:00Z`)<=7*DAY?[{date:o.date,value:o.value-previous.value}]:[];
   });
 }
 
@@ -69,131 +117,170 @@ export function createEconomicMonitor(ctx={}) {
   const date=ctx.date || ((d,f)=>new Date(`${d}T00:00:00Z`).toLocaleDateString('es-PE',{timeZone:'UTC',month:'short',year:'numeric',...(['daily','weekly'].includes(f)?{day:'numeric'}:{})}));
   const now=()=>typeof ctx.now==='function'?ctx.now():new Date();
   const getSeries=()=>typeof ctx.getSeries==='function'?ctx.getSeries():ctx.series || [];
+  let cachedSeries,cachedDay,cached={};
 
-  function build(scope) {
-    const ss=getSeries(), byCode=new Map(ss.map(s=>[`${s.provider}:${s.sourceCode}`,s]));
-    const b=code=>byCode.get(`BCRP:${code}`), f=code=>byCode.get(`FRED:${code}`);
-    const metric=(s,label,unit,kind='level',digits=1,rule=null)=>{
-      const history=monitorTransform(s,kind),point=history.at(-1),freshness=monitorFreshness(s,point,now());
-      return {series:s,id:s?.id,label,unit:unit ?? s?.unit ?? '',kind,digits,history,value:point?.value,date:point?.date,freshness,rule};
+  function build(scope='peru') {
+    const ss=getSeries(),today=new Date(now()).toISOString().slice(0,10);
+    if(ss!==cachedSeries||today!==cachedDay){cachedSeries=ss;cachedDay=today;cached={};}
+    if(cached[scope])return cached[scope];
+    const byCode=new Map(ss.map(s=>[`${s.provider}:${s.sourceCode}`,s]));
+    const b=code=>byCode.get(`BCRP:${code}`),f=code=>byCode.get(`FRED:${code}`);
+    const metric=(s,label,unit,kind='level',digits=1,customRows=null,sources=null)=>{
+      const history=customRows ?? monitorTransform(s,kind),point=history.at(-1),dependencies=sources||[s];
+      const sourceState=dependencies.some(s=>s?.status==='retained')?'retained':s?.status;
+      const freshness=monitorFreshness({...s,status:sourceState},point,now());
+      return {series:s,id:s?.id,label,unit:unit??s?.unit??'',kind,digits,history,value:point?.value,date:point?.date,freshness,dependencies};
     };
-    const usable=m=>finite(m?.value)&&m.freshness.state!=='stale'&&m.freshness.state!=='missing';
-    const value=(m,signed=false)=>finite(m?.value)?`${signed&&m.value>0?'+':''}${fmt(m.value,m.digits)}${m.unit?' '+m.unit:''}`:'sin dato';
-    const signLabels=['Contracción','Sin cambio','Expansión'];
-    function card(config) {
-      const primary=config.primary;
-      let state=config.state || classifySignal(primary?.value,config.rule || 'growth');
-      if(primary?.freshness.state==='stale') state={tone:'muted',label:'Dato antiguo',position:-1};
-      else if((primary?.freshness.state==='missing'||!finite(primary?.value)) && !config.customHeadline) state={tone:'muted',label:'Sin dato reciente',position:-1};
-      return {...config,state,scale:config.scale || signLabels};
-    }
+    const usable=m=>finite(m?.value)&&!['stale','missing'].includes(m.freshness.state);
+    const val=(m,signed=false)=>finite(m?.value)?`${signed&&m.value>0?'+':''}${fmt(m.value,m.digits)}${m.unit?' '+m.unit:''}`:'sin dato';
+    const derived=(a,b,label,unit,calculate,digits=1)=>metric(a?.series,label,unit,'derived',digits,monitorJoin(a?.history||[],b?.history||[],calculate),[...(a?.dependencies||[]),...(b?.dependencies||[])]);
+    const signal=(m,label,rule,fn=v=>Math.sign(v))=>{
+      const result=usable(m)?fn(m.value):null;
+      if(m)m.signal=result;
+      return {label,rule,value:result,metric:m};
+    };
+    const card=(config)=>{
+      const state=config.state||monitorConsensus(config.signals,config.labels);
+      return {...config,state};
+    };
     if(scope==='peru') {
-      const gdp=metric(b('PN01728AM'),'PBI real','% ia','level',1,'growth');
-      const impulse=metric(b('PN01731AM'),'Impulso mensual','% m/m','level',1,'growth');
-      const confidence=metric(b('PD38045AM'),'Economía a 3 meses','pts','level',1,'confidence');
-      const prices=metric(b('PN01273PM'),'Inflación general','% ia','level',2,'inflation-pe');
-      const core=metric(b('PN01277PM'),'Sin alimentos y energía','% ia','level',2);
-      const food=metric(b('PN09822PM'),'Alimentos y bebidas','% ia','level',2);
-      const jobs=metric(b('PN31880GM'),'Empleo formal total','% ia','level',1,'growth');
-      const privateJobs=metric(b('PN31882GM'),'Empleo formal privado','% ia','level',1,'growth');
-      const income=metric(b('PN37697PM'),'Ingreso real formal privado','% ia','yoy',1,'growth');
-      const unemployment=metric(b('PN38063GM'),'Desempleo en Lima','%','level',1);
-      const credit=metric(b('PN00539MM'),'Crédito total','% ia','level',1,'growth');
-      const business=metric(b('PN00536MM'),'Crédito a empresas','% ia','level',1,'growth');
-      const mortgage=metric(b('PN07848NM'),'Tasa hipotecaria en soles','% TEA','level',1);
+      const gdp=metric(b('PN01728AM'),'PBI real','% YOY');
+      const gdp3=metric(b('PN01728AM'),'PBI · media 3M','% YOY','mean3');
+      const impulse=metric(b('PN01731AM'),'PBI desest. · 3M','%','compound3');
+      const sectors=['PN01713AM','PN01716AM','PN01717AM','PN01720AM','PN01723AM','PN01724AM','PN01725AM','PN01726AM'].map(b);
+      const breadthRows=monitorBreadth(sectors),breadth=metric({...b('PN01728AM'),id:null},'Sectores creciendo','de 8','derived',0,breadthRows,sectors);
+      const confidence=metric(b('PD38045AM'),'Expectativas 3M','pts');
+      const nonprimary=metric(b('PN01730AM'),'PBI no primario','% YOY');
+      const prices=metric(b('PN01273PM'),'Inflación general','% YOY','level',2);
+      const core=metric(b('PN01277PM'),'IPC subyacente','% YOY','level',2);
+      const food=metric(b('PN09822PM'),'Alimentos','% YOY','level',2);
+      const pricesDelta=metric(b('PN01273PM'),'IPC · Δ3M','pp','change3',2);
+      const coreDelta=metric(b('PN01277PM'),'Subyacente · Δ3M','pp','change3',2);
+      const expectation=metric(b('PD12912AM'),'Expectativas 12M','%','level',2);
+      const wholesale=metric(b('PN01287PM'),'Precios mayoristas','% YOY','level',2);
+      const jobs=metric(b('PN31880GM'),'Empleo formal nacional','% YOY');
+      const privateJobs=metric(b('PN31882GM'),'Empleo privado','% YOY');
+      const income=metric(b('PN37697PM'),'Ingreso real formal','% YOY','yoy');
+      const employment=metric(b('PN38051GM'),'Ocupados · Lima','% YOY','yoy');
+      const unemployment=metric(b('PN38063GM'),'Desempleo Lima','%');
+      const unemploymentDelta=metric(b('PN38063GM'),'Desempleo · ΔYOY','pp','change12');
+      const credit=metric(b('PN00539MM'),'Crédito nominal','% YOY');
+      const realCredit=derived(credit,prices,'Crédito real¹','% YOY',(a,c)=>((1+a/100)/(1+c/100)-1)*100);
+      const business=metric(b('PN00536MM'),'Crédito empresas','% YOY');
+      const mortgage=metric(b('PN07848NM'),'Hipotecaria PEN','% TEA','level',2);
+      const corporate=metric(b('PN07809NM'),'Corporativa · Δ3M','pp','change3',2);
+      const deposits=derived(metric(b('PN00281MM'),'Depósitos PEN','% YOY','yoy'),prices,'Depósitos PEN reales¹','% YOY',(a,c)=>((1+a/100)/(1+c/100)-1)*100);
       const reference=metric(b('PD04722MM'),'Referencia BCRP','%','level',2);
-      const trade=metric(b('PN38723BM'),'Balanza de bienes','M US$','level',0);
-      const exports=metric(b('PN38714BM'),'Exportaciones FOB','% ia','yoy',1,'growth');
-      const reserves=metric(b('PN00027MM'),'Reservas netas','M US$','level',0);
-      const terms=metric(b('PN38923BM'),'Términos de intercambio','% ia','yoy',1,'growth');
-      const tradeState=classifySignal(trade.value,'growth');
-      if(finite(trade.value)) tradeState.label=trade.value>0?'Superávit':trade.value<0?'Déficit':'Equilibrio';
-      return [
-        card({key:'growth',title:'Actividad',primary:gdp,heroLabel:'PBI real · variación interanual',evidence:[impulse,confidence],
-          summary:usable(gdp)?`La producción ${gdp.value>0?'crece':gdp.value<0?'retrocede':'no varía'} frente al mismo mes del año anterior. El impulso mensual y la confianza completan la lectura.`:'La última lectura disponible se muestra con su fecha. Falta un dato reciente para describir el ciclo actual.',
-          methodology:'La etiqueta sigue el signo del PBI interanual: negativo, cero o positivo. El PBI mensual está desestacionalizado. Las expectativas a 3 meses son un índice de difusión; 50 separa expectativas favorables y desfavorables. No se suman indicadores ni se estima el PBI futuro.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01728AM/html'}),
-        card({key:'prices',title:'Precios',primary:prices,rule:'inflation-pe',heroLabel:'Lima Metropolitana · inflación anual',evidence:[core,food],scale:['Menos de 1%','Rango 1–3%','Más de 3%'],
-          summary:usable(prices)?`La inflación general está ${prices.value<1?'por debajo':prices.value>3?'por encima':'dentro'} del rango meta del BCRP. El indicador sin alimentos y energía ayuda a observar presiones persistentes.`:'No hay una lectura reciente para contrastar la inflación con el rango meta.',
-          methodology:'La banda de 1%–3% corresponde a la meta de inflación general del BCRP. Los extremos 1% y 3% se incluyen en el rango. La banda no es una meta independiente para alimentos ni para la serie sin alimentos y energía. La cobertura de estas series es Lima Metropolitana.',source:'https://www.bcrp.gob.pe/politica-monetaria.html'}),
-        card({key:'jobs',title:'Trabajo e ingresos',primary:jobs,heroLabel:'Empleo formal nacional · variación anual',evidence:[privateJobs,income,unemployment],
-          summary:usable(jobs)?`El empleo formal ${jobs.value>0?'aumenta':jobs.value<0?'disminuye':'no cambia'} ${value(jobs)}. El ingreso real mide poder de compra; el desempleo mostrado corresponde a Lima.`:'La lectura del empleo formal requiere una observación reciente. Las fechas distinguen las coberturas disponibles.',
-          methodology:'La etiqueta usa el crecimiento interanual del empleo formal nacional, no el empleo total del país. Ingreso real: (nivel del mes / nivel del mismo mes del año anterior − 1) × 100. El desempleo de Lima es una ventana móvil de 3 meses y no una tasa nacional.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN31880GM/html'}),
-        card({key:'credit',title:'Crédito y tasas',primary:credit,heroLabel:'Crédito al sector privado · variación anual',evidence:[business,reference,mortgage],
-          summary:usable(credit)?`El saldo de crédito ${credit.value>0?'se expande':credit.value<0?'se contrae':'permanece estable'} frente a un año antes. Las tasas muestran el precio del financiamiento, con sus propias fechas.`:'Sin un dato reciente de crédito no se asigna una lectura de expansión o contracción.',
-          methodology:'La etiqueta describe únicamente el signo del crecimiento del saldo crediticio. Expandirse no implica por sí solo menor riesgo o mayor bienestar. La tasa hipotecaria es un promedio bancario en soles, expresado como TEA; no es la TCEA ni una oferta personalizada.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN00539MM/html'}),
-        card({key:'external',title:'Sector externo',primary:trade,state:tradeState,heroLabel:'Saldo comercial de bienes · mes',evidence:[exports,reserves,terms],scale:['Déficit','Equilibrio','Superávit'],
-          summary:usable(trade)?`Las exportaciones ${trade.value>0?'superan':trade.value<0?'son menores que':'igualan'} las importaciones de bienes. Reservas y precios de intercambio aportan contexto; no son componentes de ese saldo.`:'El saldo comercial se presenta como dato histórico hasta contar con una observación reciente.',
-          methodology:'La etiqueta usa el signo de exportaciones FOB menos importaciones FOB del mes. No equivale a la cuenta corriente y no incluye servicios ni rentas. La variación de exportaciones y términos de intercambio exige el mismo mes del año anterior. Las reservas son un saldo.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38723BM/html'})
+      const realRate=derived(reference,expectation.series?expectation:prices,expectation.series?'Tasa real ex ante¹':'Tasa real ex post¹','%',(a,c)=>((1+a/100)/(1+c/100)-1)*100,2);
+      const fx=metric(b('PN01207PM'),'USD/PEN','% YOY','yoy',2);
+      const trade=metric(b('PN38723BM'),'Comercio · 12M','M US$','sum12',0);
+      const current=metric(b('PN39002BQ'),'Cuenta corriente','% PBI','level',2);
+      const exports=metric(b('PN02536AQ'),'Exportaciones reales','% YOY','yoy');
+      const reserves=metric(b('PN00027MM'),'RIN','M US$','level',0);
+      const imports=metric(b('PN38718BM'),'Importaciones · 12M','M US$','sum12',0);
+      const cover=derived(reserves,imports,'RIN / import.¹','meses',(r,m)=>m>0?r/(m/12):null,1);
+      const terms=metric(b('PN38923BM'),'Térm. intercambio','% YOY','yoy');
+      const growthSignals=[signal(gdp3,'Crecim.','Media de tres tasas YOY del PBI > 0'),signal(impulse,'Impulso','PBI desestacionalizado: variación acumulada de 3 meses > 0'),signal(breadth,'Sectores','Más de la mitad de los 8 sectores crece',v=>Math.sign(v-4)),signal(confidence,'Expect.','Expectativas a 3 meses > 50 puntos',v=>Math.sign(v-50))];
+      const priceSignals=[signal(prices,'Meta','IPC general en el rango BCRP 1%–3%',v=>v>=1&&v<=3?1:-1),signal(pricesDelta,'Impulso','Inflación general disminuye frente a hace 3 meses',v=>-Math.sign(v)),signal(coreDelta,'Núcleo','Inflación sin alimentos y energía disminuye frente a hace 3 meses',v=>-Math.sign(v))];
+      if(expectation.series)priceSignals.push(signal(expectation,'Expect.','Inflación esperada a 12 meses entre 1% y 3%; referencia analítica a la meta general',v=>v>=1&&v<=3?1:-1));
+      const cards=[
+        card({key:'growth',title:'Actividad',primary:gdp,heroLabel:'PBI real · YOY',evidence:[gdp3,impulse,breadth,confidence,nonprimary],signals:growthSignals,labels:{positive:'Expansión respaldada',negative:'Debilidad extendida'},
+          summary:usable(gdp3)&&usable(breadth)?`${val(breadth)} sectores crecen. Impulso 3M: ${val(impulse,true)}; expectativas: ${val(confidence)}.`:'Se necesitan crecimiento, impulso, amplitud y expectativas recientes para completar la lectura.',
+          methodology:'Crecimiento = media aritmética de tres tasas YOY; no es la tasa del PBI trimestral. Impulso = producto de (1 + MOM/100) de tres meses desestacionalizados, menos 1. Amplitud: agropecuario, pesca, minería e hidrocarburos, manufactura, electricidad y agua, construcción, comercio y otros servicios. Se exige el mismo mes para los ocho, sin ponderar; el recuento no mide su contribución al PBI. Expectativas: 50 es el punto de equilibrio del índice de difusión. Las cuatro condiciones se muestran por separado y ninguna sustituye a las demás.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01728AM-PN01731AM-PD38045AM/html'}),
+        card({key:'prices',title:'Precios',primary:prices,heroLabel:'IPC Lima · YOY',evidence:[core,food,expectation.series?expectation:wholesale,pricesDelta,coreDelta],signals:priceSignals,labels:{positive:'Presión contenida',negative:prices.value>3?'Presión persistente':'Fuera de rango'},
+          summary:usable(prices)&&usable(pricesDelta)?`IPC ${prices.value<1?'bajo':prices.value>3?'sobre':'en'} el rango de 1–3%. En 3M, general ${val(pricesDelta,true)} y subyacente ${val(coreDelta,true)}.`:'La meta, el cambio de la inflación y su componente persistente se evalúan con periodos exactos.',
+          methodology:'La meta BCRP 1%–3% corresponde al IPC general de Lima. Para inflación subyacente y alimentos se informa el dato, sin atribuirles una meta oficial distinta. Cambios 3M = tasa YOY actual menos tasa YOY de hace tres meses, en puntos porcentuales; no son inflación trimestral anualizada. Las expectativas se contrastan con la meta general como señal de anclaje. No se anualiza el IPC no desestacionalizado.',source:'https://www.bcrp.gob.pe/politica-monetaria.html'}),
+        card({key:'jobs',title:'Trabajo e ingresos',primary:jobs,heroLabel:'Empleo formal nacional · YOY',evidence:[privateJobs,income,employment,unemployment,unemploymentDelta],signals:[signal(privateJobs,'Empleo','Empleo formal privado: YOY > 0'),signal(income,'Ingreso','Ingreso formal privado real: YOY > 0'),signal(employment,'Ocupados','Población ocupada de Lima: YOY > 0'),signal(unemploymentDelta,'Desempl.','Tasa de desempleo Lima: cambio YOY < 0',v=>-Math.sign(v))],labels:{positive:'Mejora extendida',negative:'Deterioro extendido'},
+          summary:usable(income)&&usable(unemploymentDelta)?`Ingreso real ${val(income,true)}; desempleo de Lima ${val(unemploymentDelta,true)} frente a un año antes.`:'Se contrastan empleo, poder de compra y mercado laboral de Lima; la cobertura no representa todo el empleo nacional.',
+          methodology:'Empleo formal nacional y privado: registros administrativos. Ingreso real: variación YOY del nivel deflactado publicado. Ocupados y desempleo: Lima Metropolitana, ventanas móviles de tres meses; se compara la misma ventana del año anterior para evitar interpretar estacionalidad como mejora. Empleo formal privado, ingreso real, ocupados y desempleo de Lima determinan cuatro señales; no se extrapolan al empleo informal ni al desempleo nacional.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN31880GM-PN37697PM-PN38063GM/html'}),
+        card({key:'credit',title:'Financiamiento',primary:realCredit,heroLabel:'Crédito real¹ · YOY',evidence:[business,deposits,corporate,realRate,fx],signals:[signal(realCredit,'Crédito real','Crecimiento crediticio real > 0'),signal(deposits,'Depósitos','Depósitos en soles, deflactados: YOY > 0'),signal(corporate,'Costo PEN','Tasa preferencial corporativa en soles: cambio 3M < 0',v=>-Math.sign(v))],labels:{positive:'Expansión y menor costo',negative:'Contracción y mayor costo'},
+          summary:usable(realCredit)&&usable(corporate)?`Crédito real ${val(realCredit,true)}; costo corporativo ${val(corporate,true)} en 3M. USD/PEN: ${val(fx,true)}.`:'La lectura necesita crédito real, depósitos reales y costo corporativo recientes.',
+          methodology:`¹ Crédito y depósitos reales = [(1 + crecimiento nominal/100)/(1 + IPC YOY/100) − 1] × 100, en el mismo mes. El IPC de Lima aproxima la deflación; crédito y depósitos conservan su cobertura original. Tasa real ${expectation.series?'ex ante usa expectativas de inflación a 12 meses':'ex post usa inflación observada YOY'} y la identidad de Fisher; no estima la tasa neutral. USD/PEN es contexto: una subida indica depreciación del sol, sin asignarle automáticamente signo favorable o desfavorable. Las tres condiciones describen volumen y precio del financiamiento, no solvencia bancaria.`,source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN00539MM-PN00281MM-PN07809NM/html'}),
+        card({key:'external',title:'Sector externo',primary:current,heroLabel:'Cuenta corriente · % PBI',evidence:[trade,exports,terms,reserves,cover],signals:[signal(current,'Cta. cte.','Saldo corriente del trimestre > 0'),signal(exports,'Volumen','Exportaciones reales de bienes y servicios: YOY > 0'),signal(terms,'Precios','Términos de intercambio: YOY > 0')],labels:{positive:'Apoyos externos',negative:'Presión externa'},
+          summary:usable(current)&&usable(exports)?`Cuenta corriente ${current.value>0?'superavitaria':current.value<0?'deficitaria':'equilibrada'}; exportaciones reales ${val(exports,true)}. Bienes 12M: ${val(trade)}.`:'Se distinguen saldo corriente, volúmenes exportados, precios relativos y liquidez externa.',
+          methodology:'Cuenta corriente: saldo trimestral / PBI del trimestre, distinto del saldo de bienes. Balanza comercial 12M: suma de doce meses consecutivos. Exportaciones reales: bienes y servicios, variación YOY del trimestre. Términos de intercambio: cociente de precios de exportación e importación, YOY. ¹ Meses de importación = RIN / promedio mensual de importaciones FOB de bienes de los últimos doce meses, ambos al mismo mes; medida descriptiva calculada aquí, sin servicios y sin umbral oficial de suficiencia. Reservas y comercio se muestran como contexto, no como votos adicionales correlacionados.',source:'https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN39002BQ-PN02536AQ/html'})
       ];
+      cached[scope]=cards;return cards;
     }
-    const gdp=metric(f('GDPC1'),'PBI real trimestral','% anualiz.','annualized',1,'growth');
-    const production=metric(f('INDPRO'),'Producción industrial','% ia','yoy',1,'growth');
-    const consumption=metric(f('PCEC96'),'Consumo personal real','% ia','yoy',1,'growth');
-    const pce=metric(f('PCEPI'),'Inflación PCE general','% ia','yoy',2,'inflation-us');
-    const core=metric(f('PCEPILFE'),'PCE subyacente','% ia','yoy',2);
-    const cpi=metric(f('CPIAUCSL'),'IPC general','% ia','yoy',2);
-    const payroll=metric(f('PAYEMS'),'Nóminas · media de 3 meses','mil / mes','mean3diff',0,'growth');
-    const unemployment=metric(f('UNRATE'),'Desempleo nacional','%','level',1);
-    const jobsChange=metric(f('PAYEMS'),'Nóminas · último mes','mil','diff',0,'growth');
-    const claims=metric(f('ICSA'),'Peticiones iniciales','personas','level',0);
-    const nfci=metric(f('NFCI'),'Condiciones financieras NFCI','índice','level',2,'nfci');
-    const vix=metric(f('VIXCLS'),'Volatilidad VIX','pts','level',1);
-    const highYield=metric(f('BAMLH0A0HYM2'),'Diferencial high yield','pp','level',2);
-    const sahm=metric(f('SAHMREALTIME'),'Sahm · umbral ≥ 0,50','pp','level',2,'sahm');
-    const cfnai=metric(f('CFNAIMA3'),'CFNAI 3m · umbral < −0,70','índice','level',2,'cfnai');
-    const curve=metric(f('T10Y3M') || f('T10Y2Y'),f('T10Y3M')?'Curva 10 años − 3 meses':'Curva 10 años − 2 años','pp','level',2);
-    const available=[sahm,cfnai].filter(usable),count=available.filter(m=>classifySignal(m.value,m.rule).tone==='risk').length;
-    const cycleState=available.length<2?{tone:'muted',label:'Cobertura parcial',position:-1}:count===0?{tone:'neutral',label:'Sin umbrales activos',position:0}:count===1?{tone:'watch',label:'Una señal activa',position:1}:{tone:'risk',label:'Dos señales activas',position:2};
-    return [
-      card({key:'growth',title:'Actividad',primary:gdp,heroLabel:'PBI real · trimestre anualizado',evidence:[production,consumption],
-        summary:usable(gdp)?`La economía ${gdp.value>0?'crece':gdp.value<0?'se contrae':'no varía'} respecto del trimestre previo. Producción y consumo ofrecen una lectura mensual más reciente.`:'El crecimiento trimestral se conserva con su fecha; falta un dato reciente para calificar el ciclo actual.',
-        methodology:'PBI: ((nivel trimestral / nivel del trimestre anterior)^4 − 1) × 100. Es una tasa trimestral anualizada, no interanual. Producción y consumo: variación respecto del mismo mes del año anterior. La etiqueta sigue el signo del PBI trimestral anualizado.',source:'https://fred.stlouisfed.org/series/GDPC1'}),
-      card({key:'prices',title:'Inflación',primary:pce,rule:'inflation-us',heroLabel:'PCE general · variación interanual',evidence:[core,cpi],scale:['Menos de 2%','2%','Más de 2%'],
-        summary:usable(pce)?`La lectura PCE ${pce.value>2?'supera':pce.value<2?'está por debajo de':'coincide con'} el 2% de referencia de largo plazo de la Fed. El IPC tiene una canasta y ponderaciones distintas.`:'Se requiere un PCE reciente y su nivel de hace 12 meses para contrastar la inflación con el 2%.',
-        methodology:'La Fed define su objetivo de largo plazo sobre la variación anual del PCE general, no sobre el IPC ni sobre el PCE subyacente. Variación: (índice / índice del mismo mes del año anterior − 1) × 100. El umbral se evalúa antes de redondear y no constituye una banda de tolerancia.',source:'https://www.federalreserve.gov/faqs/economy_14400.htm'}),
-      card({key:'jobs',title:'Empleo',primary:payroll,heroLabel:'Creación media de empleo · últimos 3 meses',evidence:[jobsChange,unemployment,claims],
-        summary:usable(payroll)?`Las nóminas ${payroll.value>0?'añaden':payroll.value<0?'pierden':'no añaden'} empleo neto en promedio. Las peticiones de subsidio son semanales y no equivalen al total de desempleados.`:'El promedio necesita cuatro niveles mensuales consecutivos; no se reemplazan los meses ausentes.',
-        methodology:'Promedio de las tres últimas variaciones mensuales de PAYEMS: (nivel actual − nivel de hace 3 meses) / 3. Se exigen los cuatro niveles mensuales consecutivos. La etiqueta usa el signo de ese promedio. Nóminas en miles de puestos; peticiones iniciales en personas.',source:'https://fred.stlouisfed.org/series/PAYEMS'}),
-      card({key:'finance',title:'Condiciones financieras',primary:nfci,rule:'nfci',heroLabel:'NFCI · frente al promedio histórico',evidence:[vix,highYield],scale:['Más holgadas','Promedio','Más restrictivas'],
-        summary:usable(nfci)?`Las condiciones son ${nfci.value<0?'más holgadas que':nfci.value>0?'más restrictivas que':'similares a'} su promedio histórico según Chicago Fed. VIX y crédito describen dimensiones distintas del riesgo.`:'La etiqueta se mantiene neutral mientras no haya un NFCI reciente.',
-        methodology:'NFCI menor que cero: condiciones más holgadas que su promedio histórico; mayor que cero: más restrictivas. Es un índice semanal, no una tasa ni una probabilidad. VIX y diferencial high yield se muestran sin umbrales inventados; 1 pp de spread equivale a 100 puntos básicos.',source:'https://www.chicagofed.org/research/data/nfci/about'}),
-      card({key:'cycle',title:'Señales del ciclo',primary:null,customHeadline:`${count} / ${available.length}`,customHeroLabel:'umbrales activos · indicadores disponibles',state:cycleState,evidence:[sahm,cfnai,curve],scale:['Ninguno','Uno','Dos'],
-        summary:available.length===2?`Se contrastan dos reglas publicadas de empleo y actividad. La curva aporta contexto adelantado; este recuento no estima la probabilidad de una recesión.`:'La cobertura es incompleta o antigua. El recuento usa solamente indicadores recientes y no permite descartar riesgos.',
-        methodology:'Sahm en tiempo real: umbral ≥ 0,50 pp según la serie publicada por FRED. CFNAI-MA3: después de una expansión, un valor inferior a −0,70 se ha asociado históricamente con mayor probabilidad de recesión. Se cuentan reglas activadas, sin ponderar ni asignar probabilidades. Una pendiente negativa de la curva se muestra aparte y no entra en el recuento. No sustituye la datación de recesiones del NBER.',source:'https://fred.stlouisfed.org/series/SAHMREALTIME',extraSource:'https://www.chicagofed.org/research/data/cfnai/current-data'})
+    const gdp=metric(f('GDPC1'),'PBI real','% QOQ anualizado','annualized');
+    const production=metric(f('INDPRO'),'Industria · 3M','% anual.','ann3');
+    const consumption=metric(f('PCEC96'),'Consumo real · 3M','% anual.','ann3');
+    const productionYoy=metric(f('INDPRO'),'Industria · YOY','% YOY','yoy');
+    const capacity=metric(f('TCU'),'Capacidad utilizada','%');
+    const cfnai=metric(f('CFNAIMA3'),'CFNAI · media 3M','índice','level',2);
+    const pce=metric(f('PCEPI'),'PCE general','% YOY','yoy',2);
+    const core=metric(f('PCEPILFE'),'PCE subyacente','% YOY','yoy',2);
+    const core3=metric(f('PCEPILFE'),'PCE subyac. · 3M','% anual.','ann3',2);
+    const core6=metric(f('PCEPILFE'),'PCE subyac. · 6M','% anual.','ann6',2);
+    const cpi=metric(f('CPIAUCSL'),'IPC general','% YOY','yoy',2);
+    const expectations=metric(f('T5YIE'),'Breakeven 5a','%','level',2);
+    const core3Gap=derived(core3,core,'Impulso 3M vs. YOY','pp',(a,b)=>a-b,2),core6Gap=derived(core6,core,'Impulso 6M vs. YOY','pp',(a,b)=>a-b,2);
+    const payroll=metric(f('PAYEMS'),'Nóminas · media 3M','mil/mes','mean3diff',0);
+    const jobsChange=metric(f('PAYEMS'),'Nóminas · MOM','mil','diff',0);
+    const unemployment=metric(f('UNRATE'),'Desempleo','%');
+    const sahm=metric(f('SAHMREALTIME'),'Sahm · umbral ≥ 0,50','pp','level',2);
+    const claims=metric(f('ICSA'),'Peticiones · 4S','mil','weeklyMean4',0);
+    claims.history=claims.history.map(o=>({...o,value:o.value/1000}));claims.value=claims.history.at(-1)?.value;
+    const claimsChange=metric(f('ICSA'),'Peticiones 4S · cambio 13S','mil','derived',1,changeOverDays(claims.history));
+    const wages=derived(metric(f('CES0500000003'),'Salario por hora','% YOY','yoy'),cpi,'Salario real¹','% YOY',(a,b)=>((1+a/100)/(1+b/100)-1)*100);
+    claims.note=`Δ 13S: ${val(claimsChange,true)}`;
+    const nfci=metric(f('NFCI'),'NFCI','índice','level',2);
+    const stress=metric(f('STLFSI4'),'Estrés St. Louis','índice','level',2);
+    const vix=metric(f('VIXCLS'),'VIX','pts','level',1);
+    const hy=metric(f('BAMLH0A0HYM2'),'Spread high yield','pp','level',2);
+    const ig=metric(f('BAMLC0A0CM'),'Spread IG','pp','level',2);
+    const hyChange=metric(hy.series,'High yield · Δ13S','pp','derived',2,changeOverDays(hy.history));
+    const vixChange=metric(vix.series,'VIX · cambio 13S','pts','derived',1,changeOverDays(vix.history));
+    vix.note=`Δ 13S: ${val(vixChange,true)}`;
+    const curve=metric(f('T10Y3M')||f('T10Y2Y'),f('T10Y3M')?'Curva UST 10a − 3m':'Curva UST 10a − 2a','pp','level',2);
+    const cycleAvailable=[sahm,cfnai].filter(usable),cycleCount=cycleAvailable.filter(m=>m===sahm?m.value>=.5:m.value<-.7).length;
+    const cycleSignals=[signal(sahm,'Empleo','Sahm < 0,50 pp',v=>v>=.5?-1:1),signal(cfnai,'Actividad','CFNAI-MA3 ≥ −0,70',v=>v<-.7?-1:1)];
+    const cycleState=cycleAvailable.length<2?{tone:'muted',label:'Cobertura parcial',position:-1}:cycleCount===0?{tone:'neutral',label:'Sin umbrales activos',position:2}:cycleCount===1?{tone:'watch',label:'Una señal activa',position:1}:{tone:'risk',label:'Dos señales activas',position:0};
+    const cards=[
+      card({key:'growth',title:'Actividad',primary:gdp,heroLabel:'PBI real · QOQ anualizado',evidence:[production,consumption,productionYoy,cfnai,capacity],signals:[signal(gdp,'PBI','PBI real: QOQ anualizado > 0'),signal(production,'Industria','Producción industrial: 3M anualizado > 0'),signal(consumption,'Consumo','Consumo real: 3M anualizado > 0')],labels:{positive:'Expansión respaldada',negative:'Contracción extendida'},
+        summary:usable(production)&&usable(consumption)?`Impulso 3M anualizado: industria ${fmt(production.value,1)}% y consumo ${fmt(consumption.value,1)}%.`:'La lectura contrasta PBI trimestral con producción y consumo mensuales.',
+        methodology:'PBI: [(trimestre actual / anterior)^4 − 1] × 100. Impulso mensual 3M: [(nivel actual / nivel de hace 3 meses)^4 − 1] × 100; requiere cuatro meses consecutivos y series desestacionalizadas. No equivale a YOY. CFNAI-MA3 y capacidad son contexto; CFNAI cero significa crecimiento en torno a la tendencia histórica, no PBI sin crecimiento. Tres condiciones contrastan actividad agregada, industria y consumo, sin ponderarlas en un índice.',source:'https://fred.stlouisfed.org/series/GDPC1'}),
+      card({key:'prices',title:'Inflación',primary:pce,heroLabel:'PCE general · YOY',evidence:[core,core3,core6,cpi,expectations],signals:[signal(pce,'Objetivo','PCE general entre 0% y 2%; 2% es la meta Fed de largo plazo',v=>v>=0&&v<=2?1:-1),signal(core3Gap,'Impulso 3M','PCE subyacente 3M anualizado < su YOY',v=>-Math.sign(v)),signal(core6Gap,'Impulso 6M','PCE subyacente 6M anualizado < su YOY',v=>-Math.sign(v))],labels:{positive:'Desinflación respaldada',negative:'Presión persistente'},
+        summary:usable(core3)&&usable(core)?`Subyacente: ${val(core3)} a 3M frente a ${val(core)}. PCE general ${usable(pce)?(pce.value>2?'sobre':'en o bajo'):'sin comparación con'} el 2%.`:'Se contrastan inflación anual e impulso de 3 y 6 meses con ajuste estacional.',
+        methodology:'La meta Fed es 2% sobre el PCE general YOY, a largo plazo. El intervalo 0%–2% de esta lectura distingue estar por debajo de la meta sin deflación; no es una banda oficial. PCE subyacente 3M/6M = [(nivel / nivel rezagado)^4 o ^2 − 1] × 100, con todos los meses y series desestacionalizadas. Sus diferencias respecto a YOY miden impulso, no desviaciones de una meta independiente. Los horizontes comparten observaciones y no son señales estadísticamente independientes. Breakeven 5a incluye primas de riesgo y liquidez; no es una expectativa pura.',source:'https://www.federalreserve.gov/faqs/economy_14400.htm'}),
+      card({key:'jobs',title:'Empleo e ingresos',primary:payroll,heroLabel:'Nóminas · media de cambios MOM de 3M',evidence:[jobsChange,unemployment,sahm,claims,wages],signals:[signal(payroll,'Creación','Media de tres cambios MOM de nóminas > 0'),signal(wages,'Salario real','Salario real aproximado: YOY > 0'),signal(claimsChange,'Peticiones','Media de cuatro semanas de peticiones menor que hace trece semanas',v=>-Math.sign(v)),signal(sahm,'Desempleo','Sahm < 0,50 pp',v=>v>=.5?-1:1)],labels:{positive:'Resiliencia respaldada',negative:'Deterioro extendido'},
+        summary:usable(payroll)&&usable(wages)?`Creación media ${val(payroll,true)}; salario real ${val(wages,true)}. Peticiones 4S: ${val(claims)}.`:'Se contrastan nóminas, desempleo, peticiones e ingreso real con sus fechas de referencia.',
+        methodology:'Nóminas 3M = (PAYEMS actual − nivel de hace 3 meses)/3; exige cuatro meses consecutivos. Peticiones: media de cuatro semanas exactas; su cambio compara con trece semanas atrás. Sahm se toma de la serie oficial en tiempo real, preservando su metodología de vintages. ¹ Salario real aproximado = [(1 + salario horario YOY/100)/(1 + IPC YOY/100) − 1] × 100, en el mismo mes; no corrige cambios de composición del empleo. Ninguna regla es una tasa de desempleo de equilibrio.',source:'https://fred.stlouisfed.org/series/PAYEMS',extraSource:'https://fred.stlouisfed.org/series/SAHMREALTIME'}),
+      card({key:'finance',title:'Condiciones financieras',primary:nfci,heroLabel:'NFCI · desviación del promedio',evidence:[stress,hy,hyChange,ig,vix],signals:[signal(nfci,'NFCI','NFCI < 0: condiciones más holgadas que el promedio',v=>-Math.sign(v)),signal(hyChange,'Crédito','Spread high yield menor que hace trece semanas',v=>-Math.sign(v)),signal(vixChange,'VIX','VIX menor que hace trece semanas',v=>-Math.sign(v))],labels:{positive:'Holgura y alivio',negative:'Tensión y deterioro'},
+        summary:usable(nfci)&&usable(hyChange)?`NFCI ${nfci.value<0?'bajo':'sobre'} su promedio; spread HY ${val(hyChange,true)} y VIX ${val(vixChange,true)} en 13S.`:'La lectura necesita nivel de condiciones financieras y cambios recientes de crédito y volatilidad.',
+        methodology:'NFCI < 0: condiciones más holgadas que su promedio histórico; STLFSI < 0: estrés por debajo de su promedio. Se informa el nivel de ambos índices sin sumarlos. Impulso de spread HY y VIX: último valor menos el de trece semanas atrás, usando el día publicado más cercano anterior (tolerancia máxima de siete días). Esos signos describen alivio/tensión relativa; no son umbrales universales de crisis. 1 pp de spread = 100 pb. La dependencia entre indicadores impide interpretar el recuento como probabilidad.',source:'https://www.chicagofed.org/research/data/nfci/about'}),
+      card({key:'cycle',title:'Señales del ciclo',primary:null,customHeadline:`${cycleCount} / ${cycleAvailable.length}`,customHeroLabel:'umbrales activos · Sahm y CFNAI',evidence:[sahm,cfnai,curve,payroll,claims],signals:cycleSignals,state:cycleState,
+        summary:cycleAvailable.length===2?`${cycleCount} de 2 umbrales activos. Curva ${val(curve,true)}; creación media ${val(payroll,true)}.`:'Cobertura insuficiente para evaluar conjuntamente las reglas de empleo y actividad.',
+        methodology:'Recuento exclusivo de dos reglas publicadas: Sahm en tiempo real ≥ 0,50 pp y CFNAI-MA3 < −0,70. La primera contrasta el desempleo medio de 3 meses con el mínimo de las medias de los doce meses anteriores; la segunda tiene interpretación recesiva histórica después de una expansión. Ambas pueden dar señales falsas y revisarse. Curva, nóminas y peticiones aportan contexto adelantado o coincidente, pero no se añaden al recuento. Una curva positiva no descarta una recesión ni elimina una inversión previa. No estima probabilidades ni sustituye la datación NBER.',source:'https://fred.stlouisfed.org/series/SAHMREALTIME',extraSource:'https://www.chicagofed.org/research/data/cfnai/current-data'})
     ];
+    cached[scope]=cards;return cards;
   }
 
-  function formatMetric(m) { return finite(m?.value)?`${fmt(m.value,m.digits)}${m.unit?' '+m.unit:''}`:'Sin dato'; }
-  function freshnessLabel(m) {
-    if(m.freshness.state==='stale') return ` · dato antiguo (${m.freshness.ageDays} días desde el fin del periodo)`;
-    if(m.freshness.state==='retained') return ' · última descarga válida';
-    return '';
-  }
+  function formatMetric(m) {return finite(m?.value)?`${fmt(m.value,m.digits)}${m.unit?' '+m.unit:''}`:'Sin dato';}
+  function freshnessLabel(m) {return m?.freshness.state==='stale'?' · dato antiguo':m?.freshness.state==='retained'?' · descarga conservada':'';}
   function evidenceHTML(m) {
-    let tone=m.rule?classifySignal(m.value,m.rule).tone:'neutral';
-    if(['missing','stale'].includes(m.freshness.state)) tone='muted';
-    const body=`<span class="pulse-evidence-label"><i class="pulse-dot ${tone}" aria-hidden="true"></i>${esc(m.label)}</span><strong>${esc(formatMetric(m))}</strong><span class="pulse-evidence-date">${m.date?esc(date(m.date,m.series?.frequency)):'Sin observaciones'}${esc(freshnessLabel(m))}</span>`;
-    return m.id?`<button type="button" class="pulse-evidence" data-detail="${esc(m.id)}" title="Ver definición, historia y fuente: ${esc(m.label)}">${body}<span class="pulse-evidence-arrow" aria-hidden="true">↗</span></button>`:`<div class="pulse-evidence pulse-evidence-missing">${body}</div>`;
+    const muted=['missing','stale'].includes(m.freshness.state),tone=muted?'muted':m.signal===1?'good':m.signal===-1?'watch':'neutral';
+    const body=`<span class="pulse-evidence-label"><i class="pulse-dot ${tone}" aria-hidden="true"></i>${esc(m.label)}</span><strong>${esc(formatMetric(m))}</strong><span class="pulse-evidence-date">${m.date?esc(date(m.date,m.series?.frequency)):'Sin observaciones'}${esc(freshnessLabel(m))}${m.note?` · ${esc(m.note)}`:''}</span>`;
+    return m.id?`<button type="button" class="pulse-evidence" data-detail="${esc(m.id)}" title="Abrir la serie original usada en ${esc(m.label)}">${body}<i class="fa-solid fa-angle-right pulse-evidence-arrow" aria-hidden="true"></i></button>`:`<div class="pulse-evidence ${muted?'pulse-evidence-missing':''}">${body}</div>`;
   }
   function sparkHTML(m) {
-    if(!m?.history?.length) return '';
-    const rows=m.history.slice(-18);if(rows.length<3)return '';
-    const lo=Math.min(...rows.map(o=>o.value)),hi=Math.max(...rows.map(o=>o.value)),span=hi-lo || 1;
-    const path=rows.map((o,i)=>`${i?'L':'M'}${(i/(rows.length-1)*94+3).toFixed(2)},${(25-(o.value-lo)/span*21).toFixed(2)}`).join(' ');
-    const lastY=25-(rows.at(-1).value-lo)/span*21;
-    return `<div class="pulse-spark" title="Trayectoria de las ${rows.length} últimas observaciones · escala propia"><svg viewBox="0 0 100 29" aria-hidden="true" focusable="false"><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linejoin="round" stroke-linecap="round"/><circle cx="97" cy="${lastY.toFixed(2)}" r="2.4" fill="currentColor"/></svg><small>${rows.length} observaciones · escala propia</small></div>`;
+    const rows=m?.history?.slice(-18)||[];if(rows.length<3)return '';
+    const lo=Math.min(...rows.map(o=>o.value)),hi=Math.max(...rows.map(o=>o.value)),span=hi-lo||1;
+    const path=rows.map((o,i)=>`${i?'L':'M'}${(i/(rows.length-1)*92+4).toFixed(2)},${(30-(o.value-lo)/span*25).toFixed(2)}`).join(' ');
+    return `<span class="pulse-spark" title="${rows.length} observaciones · escala propia"><svg viewBox="0 0 100 36" aria-hidden="true"><path d="${path} L96,35 L4,35 Z" fill="currentColor" opacity=".07"/><path d="${path}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="96" cy="${(30-(rows.at(-1).value-lo)/span*25).toFixed(2)}" r="2.6" fill="currentColor"/></svg></span>`;
   }
   function renderCard(c) {
-    const primary=c.primary, state=c.state;
-    const primaryDate=primary?.date?`${date(primary.date,primary.series?.frequency)}${freshnessLabel(primary)}`:'';
-    const methodSources=`<a href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">Consultar fuente</a>${c.extraSource?` · <a href="${esc(c.extraSource)}" target="_blank" rel="noopener noreferrer">Regla CFNAI</a>`:''}`;
-    const primaryValue=`<strong>${esc(c.customHeadline ?? formatMetric(primary))}</strong>`;
-    const primaryHTML=primary?.id?`<button class="pulse-primary-value" type="button" data-detail="${esc(primary.id)}" title="Ver definición, historia y fuente: ${esc(primary.label)}">${primaryValue}</button>`:primaryValue;
-    return `<article class="pulse-card pulse-${state.tone}"><div class="pulse-card-top"><h3>${esc(c.title)}</h3><span class="pulse-status">${esc(state.label)}</span></div><div class="pulse-headline"><div>${primaryHTML}<span>${esc(c.customHeroLabel || c.heroLabel)}</span></div>${sparkHTML(primary)}</div>${primaryDate?`<p class="pulse-primary-date">${esc(primaryDate)}${primary?.series?.provider?` · ${esc(primary.series.provider)}`:''}</p>`:'<p class="pulse-primary-date">EE. UU. · reglas de empleo y actividad</p>'}<div class="pulse-scale" role="img" aria-label="${esc(c.scale.join(' · '))}. ${esc(state.label)}">${c.scale.map((label,i)=>`<span class="${i===state.position?'is-active':''}"><i></i><small>${esc(label)}</small></span>`).join('')}</div><p class="pulse-reading">${esc(c.summary)}</p><div class="pulse-evidence-list">${c.evidence.map(evidenceHTML).join('')}</div><details class="pulse-method"><summary>Cómo se interpreta</summary><p>${esc(c.methodology)}</p><p>${methodSources}</p></details></article>`;
+    const primary=c.primary,state=c.state,active=c.signals.filter(s=>s.value!==null),positive=active.filter(s=>s.value===1).length,negative=active.filter(s=>s.value===-1).length;
+    const caption=c.key==='cycle'?`${c.customHeadline} umbrales activos`:`${positive} apoyos · ${negative} alertas${active.length<c.signals.length?` · ${c.signals.length-active.length} sin dato`:''}`;
+    const primaryUnit=primary?.unit?.replace(/\s+(YOY|QOQ).*$/,'')||'';
+    const valueHTML=c.customHeadline?`<strong>${esc(c.customHeadline)}</strong>`:finite(primary?.value)?`<strong>${esc(fmt(primary.value,primary.digits))} <small class="pulse-value-unit">${esc(primaryUnit)}</small></strong>`:'<strong>Sin dato</strong>';
+    const primaryHTML=primary?.id?`<button class="pulse-primary-value" type="button" data-detail="${esc(primary.id)}" title="Abrir la serie original utilizada">${valueHTML}</button>`:valueHTML;
+    const rules=c.signals.map(s=>`<li><i class="pulse-dot ${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" aria-hidden="true"></i><span>${esc(s.rule)}<small>${s.metric?.date?esc(date(s.metric.date,s.metric.series?.frequency))+' · ':''}${esc(formatMetric(s.metric))}${s.value===null?' · no evaluable':s.value===0?' · sin cambio':s.value===1?' · cumple':' · no cumple'}</small></span></li>`).join('');
+    return `<article class="pulse-card pulse-${state.tone}"><div class="pulse-card-top"><h3>${esc(c.title)}</h3><span class="pulse-status">${esc(state.label)}</span></div><div class="pulse-headline"><div>${primaryHTML}<span>${esc(c.customHeroLabel||c.heroLabel)}</span></div>${sparkHTML(primary)}</div><p class="pulse-primary-date">${primary?.date?`${esc(date(primary.date,primary.series?.frequency))}${esc(freshnessLabel(primary))} · ${esc(primary.series?.provider||'')}`:'EE. UU. · dos reglas publicadas'}</p><div class="pulse-signal-meter" role="img" aria-label="${esc(caption)}">${c.signals.map(s=>`<span class="${s.value===1?'good':s.value===-1?'watch':s.value===null?'muted':'neutral'}" title="${esc(s.rule)}"><i></i><span>${esc(s.label)}</span></span>`).join('')}</div><p class="pulse-signal-caption">${esc(caption)}</p><p class="pulse-reading">${esc(c.summary)}</p><div class="pulse-evidence-list">${c.evidence.map(evidenceHTML).join('')}</div><details class="pulse-method"><summary>Señales y método</summary><ul class="pulse-method-rules">${rules}</ul><p>${esc(c.methodology)}</p><p><a href="${esc(c.source)}" target="_blank" rel="noopener noreferrer">Fuente oficial <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>${c.extraSource?` · <a href="${esc(c.extraSource)}" target="_blank" rel="noopener noreferrer">Regla publicada</a>`:''}</p></details></article>`;
   }
   function render(scope='peru') {
-    const world=scope==='world',cards=build(world?'world':'peru');
-    return `<section class="economic-pulse" aria-labelledby="pulse-title-${world?'world':'peru'}"><div class="pulse-section-head"><div><span class="pulse-eyebrow">Lectura en un minuto</span><h2 id="pulse-title-${world?'world':'peru'}">${world?'Pulso de EE. UU. · transmisión global':'Pulso económico del Perú'}</h2><p>${world?'Cinco lecturas de Estados Unidos, por su peso en el ciclo y los mercados globales. Los gráficos siguientes amplían la mirada al mundo.':'Cinco lecturas complementarias, con el dato, la fecha y la regla a la vista.'}</p></div><span class="pulse-rules-note">Señales descriptivas<br>sin puntaje agregado</span></div><div class="pulse-grid">${cards.map(renderCard).join('')}</div><details class="pulse-freshness"><summary>Fechas, cobertura y actualización</summary><p>Las tarjetas se recalculan con cada publicación del repositorio. Cada indicador conserva su periodo de referencia; las frecuencias y fechas pueden diferir. Un dato se atenúa al superar, desde el fin de su periodo, 10 días para series diarias, 28 para semanales, 100 para mensuales, 180 para trimestrales o 730 para anuales. Son reglas de vigencia de esta herramienta, no calendarios oficiales. Una descarga fallida conserva y señala la última observación válida. «ia» significa interanual; «pp», puntos porcentuales. Las etiquetas resumen reglas visibles y no constituyen un pronóstico ni una evaluación oficial.</p></details></section>`;
+    const world=scope==='world';
+    return `<section class="economic-pulse" aria-labelledby="pulse-title-${scope}"><div class="pulse-section-head"><h2 id="pulse-title-${scope}">${world?'Pulso de EE. UU. · transmisión global':'Pulso económico del Perú'}</h2><span>Nivel · impulso · confirmación</span></div><div class="pulse-grid">${build(world?'world':'peru').map(renderCard).join('')}</div><details class="pulse-freshness"><summary>Criterios de clasificación y vigencia</summary><p>Cada segmento representa una condición visible en «Señales y método». Verde: apoyo; ámbar: alerta; gris: sin dirección o sin dato. Si hay apoyos y alertas, la lectura es mixta; si también hay condiciones sin cambio, la confirmación es parcial; si falta una condición, se indica cobertura parcial. No se promedian puntuaciones ni se calculan probabilidades. Las señales del ciclo cuentan únicamente dos umbrales publicados. Fechas propias por indicador; toda operación entre series exige el mismo periodo. Datos antiguos se excluyen: más de 10 días (diarios), 28 (semanales), 100 (mensuales), 180 (trimestrales) o 730 (anuales) desde el fin del periodo. Son límites de vigencia de la herramienta. YOY: frente al mismo periodo del año anterior; MOM: mes anterior; QOQ: trimestre anterior; pp: puntos porcentuales. ¹ Cálculo derivado, explicado en la tarjeta.</p></details></section>`;
   }
   return {render,build};
 }

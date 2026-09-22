@@ -1,0 +1,248 @@
+/* Content typography and controls. Keep treasury-core.css and its shell geometry intact. */
+:root {
+  --type-body: .8125rem;
+  --type-control: .75rem;
+  --type-meta: .6875rem;
+  --type-title: .9rem;
+  --control-radius: 5px;
+}
+
+/* The same button language as SBS: a defined border, calm hover and clear selection. */
+:is(.panel-actions,.topic-nav,.economic-tabs,.countries,.analysis-presets,.selection,.explorer-controls,.lab-controls,.lab-save-row,.lab-date-row,.agenda-toolbar,.agenda-preview-head,.chart-window-controls) button,
+.agenda-open {
+  min-height: 32px;
+  border-radius: var(--control-radius);
+  padding: 6px 10px;
+  font-size: var(--type-control);
+  font-weight: 620;
+  line-height: 1.35;
+  transition: background-color .12s ease, border-color .12s ease, color .12s ease;
+}
+:is(.panel-actions,.topic-nav,.economic-tabs,.countries,.analysis-presets,.selection,.explorer-controls,.lab-controls,.lab-save-row,.lab-date-row,.agenda-toolbar,.agenda-preview-head,.chart-window-controls) button:enabled:hover:not([aria-pressed="true"]):not([aria-current="page"]),
+.agenda-open:enabled:hover {
+  border-color: var(--accent);
+  background: var(--selected);
+  color: var(--ink);
+}
+:is(.panel-actions,.topic-nav,.economic-tabs,.countries,.analysis-presets,.selection,.explorer-controls,.lab-controls,.lab-save-row,.lab-date-row,.agenda-toolbar,.agenda-preview-head,.chart-window-controls) button:enabled:active:not([aria-pressed="true"]):not([aria-current="page"]),
+.agenda-open:enabled:active {
+  background: color-mix(in srgb, var(--cyan) 17%, var(--panel));
+  border-color: var(--accent);
+}
+:is(.topic-nav,.economic-tabs) button:is([aria-pressed="true"],[aria-current="page"]) {
+  background: var(--navy3);
+  border-color: var(--navy3);
+  color: #fff;
+  box-shadow: none;
+}
+:is(.countries,.analysis-presets,.selection) button[aria-pressed="true"] {
+  background: var(--selected);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+:is(.panel-actions,.agenda-preview-head) .icon-only {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+}
+:is(.panel-actions,.topic-nav,.economic-tabs,.countries,.analysis-presets,.selection,.explorer-controls,.lab-controls,.lab-save-row,.lab-date-row,.agenda-toolbar,.agenda-preview-head,.chart-window-controls) button:disabled {
+  opacity: .45;
+  cursor: default;
+  transform: none;
+}
+.topic-nav { align-items: center; }
+.topic-nav button { min-width: max-content; }
+
+/* Reuse three text sizes across views; small print stays readable on mobile. */
+.chapter-head h2,
+.lab-section-heading h2,
+.explorer-lab .lab-section-heading h2,
+.lab-correlation .lab-section-heading h2,
+.agenda-intro h2,
+.economic-intro h2 {
+  font-size: var(--type-title);
+  line-height: 1.4;
+  letter-spacing: -.015em;
+  font-weight: 650;
+}
+.chapter-head p,
+.lab-section-heading p,
+.agenda-intro p,
+.economic-intro p,
+.panel-head p,
+.economic-grid .panel-title p,
+.page-head p,
+.chart-note,
+.source-note,
+.source-card p,
+.expanded-meta,
+.weekly-note {
+  font-size: var(--type-control);
+  line-height: 1.55;
+}
+.eyebrow,
+.lab-eyebrow,
+.kpi .label,
+.kpi-bottom small,
+.kpi-change .delta,
+.stat-label,
+.stat-card small,
+.stat span,
+.provider-name,
+.badge,
+.catalog-head small,
+.series-item span,
+.metadata span,
+.historical-context>summary,
+.economic-coverage span,
+.economic-footnote,
+.lab-coverage,
+.lab-section-heading>small,
+.lab-country-caption span,
+.lab-notice,
+.lab-method,
+.lab-date-row>span,
+.lens-card-top>span,
+.lens-card>p,
+.lens-card>small,
+.lens-value span,
+.lens-comparison,
+.lens-change,
+.lens-key,
+.lab-matrix caption,
+.lab-matrix table small,
+.lab-series-key>span,
+.lab-series-key b,
+.lab-correlation-row>span,
+.lab-correlation-row button small {
+  font-size: var(--type-meta);
+  line-height: 1.5;
+}
+.eyebrow,.lab-eyebrow,.provider-name,.stat-label,.stat span {
+  letter-spacing: .06em;
+}
+.kpi .label { letter-spacing: .035em; }
+.kpi-bottom { flex-wrap: wrap; row-gap: 4px; }
+.lab-country-caption,
+.lens-card-top h3,
+.lab-controls label,
+.lab-save-row label,
+.lab-date-row label,
+.lab-controls select,
+.lab-save-row select,
+.lab-save-row input,
+.lab-date-row input,
+.lab-matrix summary,
+.lab-scatter-disclosure>summary,
+.lab-matrix table td,
+.lab-matrix table th,
+.lens-card>.link-button {
+  font-size: var(--type-control);
+  line-height: 1.5;
+}
+.lens-card-top { flex-wrap: wrap; }
+.lens-card>p { min-height: 33px; }
+.lens-card>.link-button { min-height: 32px; }
+.lab-save-row,.lab-date-row { gap: 8px; }
+.lab-series-key b { min-width: 22px; height: 22px; }
+.lab-correlation-row button small { white-space: nowrap; }
+.lab-correlation-row button { min-height: 62px; }
+.lab-save-row input,.lab-save-row select,.lab-date-row input,.lab-controls select {
+  min-height: 34px;
+  border-radius: var(--control-radius);
+}
+.lab-controls button { min-height: 34px; }
+.series-item { font-size: var(--type-control); line-height: 1.5; }
+table { font-size: var(--type-body); }
+th { font-size: var(--type-meta); letter-spacing: .035em; }
+td small,td a { font-size: var(--type-control); }
+
+/* Chart annotations share one hierarchy rather than per-panel microtype. */
+.chart-legend-item { font-size: var(--type-control); }
+.chart-legend-item strong { font-size: var(--type-control); }
+.chart-legend-item strong small,
+.chart-legend-period,
+.chart-range-stat span,
+.chart-percentile span,
+.chart-history-caption,
+.chart-recession-key,
+.chart-stat-details>summary,
+.chart-stat-details>summary>span:last-child,
+.chart-stat-details>summary small,
+.chart-source-line,
+.chart-tooltip-row>strong small,
+.chart-tooltip-meta {
+  font-size: var(--type-meta);
+  line-height: 1.5;
+}
+.chart-range-stat strong,.chart-percentile strong { font-size: var(--type-control); }
+.chart-series-legend { gap: 7px 14px; }
+.chart-legend-item { min-height: 30px; }
+.chart-tooltip-name,.chart-tooltip-row>strong { font-size: var(--type-control); }
+.chart-stat-details>summary { min-height: 32px; }
+.chart-tooltip-row { gap: 3px 10px; }
+
+/* Calendar sources, dates and categories remain legible at every breakpoint. */
+.agenda-preview-head>span,
+.agenda-mini strong,
+.agenda-toolbar label,
+.agenda-toolbar select,
+.agenda-event-body>a,
+.agenda-week-head h3,
+.agenda-source-status summary,
+.agenda-sources a {
+  font-size: var(--type-control);
+  line-height: 1.5;
+}
+.agenda-mini time,
+.agenda-mini small,
+.agenda-counters span,
+.agenda-meta,
+.agenda-week-head>span,
+.agenda-date time span,
+.agenda-date>small,
+.agenda-tags>span,
+.agenda-event-body>p,
+.agenda-event-body>small,
+.agenda-event-foot,
+.agenda-source-status summary>span,
+.agenda-source-status>p,
+.agenda-sources span,
+.agenda-sources p {
+  font-size: var(--type-meta);
+  line-height: 1.5;
+}
+.agenda-event-body>a i,.agenda-sources a i { font-size: var(--type-meta); }
+.agenda-tags>span { text-transform: none; letter-spacing: 0; }
+.agenda-date { min-width: 45px; }
+.agenda-event-body { overflow-wrap: anywhere; }
+
+/* Limit interaction repaint work without clipping charts, popovers or focus rings. */
+.catalog-list,.table-scroll,.table-wrap,.topic-nav,.pulse-grid {
+  overscroll-behavior: contain;
+}
+.catalog-list,.table-scroll,.table-wrap { scrollbar-gutter: stable; }
+.panel,.lens-card,.agenda-event { scroll-margin-top: calc(var(--topbar-height, 64px) + 78px); }
+button,select,input { -webkit-tap-highlight-color: transparent; }
+input[type="search"],input[type="text"] { min-width: 0; }
+
+@media(max-width:760px) {
+  .lab-section-heading { flex-wrap: wrap; }
+  .lab-section-heading>small { max-width: none; padding-top: 0; text-align: left; }
+  .lab-coverage { white-space: normal; }
+  .lens-card { padding: 12px 10px; }
+  .lens-card>p { min-height: 33px; }
+  .chart-legend-name { max-width: 175px; }
+  .chart-source-line { row-gap: 4px; }
+  .lab-correlation-row button { min-height: 60px; }
+  .lab-correlation-row { grid-template-columns: 25px repeat(var(--lab-count),minmax(0,1fr)); }
+  .agenda-preview-head { align-items: center; flex-wrap: wrap; }
+  .agenda-toolbar label { flex-wrap: wrap; }
+  .agenda-toolbar select { max-width: 100%; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration: .01ms!important; animation-iteration-count: 1!important; transition: none!important; scroll-behavior: auto!important; }
+}
+
+.chart-definition {font-size:13px;line-height:1.65;padding:4px 0 12px}.chart-definition p{margin:0 0 16px}.chart-definition-sources{display:grid;gap:10px}.chart-definition-sources a{display:grid;gap:3px;padding:10px;border:1px solid var(--line);border-radius:5px;color:var(--ink);text-decoration:none}.chart-definition-sources a:hover{border-color:var(--accent);background:var(--soft)}.chart-definition-sources span{font-size:11px;color:var(--muted)}.catalog-more{display:block;margin:10px auto;min-height:32px;font-size:12px;padding:6px 12px;border-radius:5px}

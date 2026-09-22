@@ -1,0 +1,4198 @@
+{
+  "schemaVersion": "1.0",
+  "catalogVerifiedAt": "2026-09-22",
+  "historyFrom": "2010-01-01",
+  "regions": [
+    {
+      "id": "01",
+      "name": "Amazonas"
+    },
+    {
+      "id": "02",
+      "name": "Áncash"
+    },
+    {
+      "id": "03",
+      "name": "Apurímac"
+    },
+    {
+      "id": "04",
+      "name": "Arequipa"
+    },
+    {
+      "id": "05",
+      "name": "Ayacucho"
+    },
+    {
+      "id": "06",
+      "name": "Cajamarca"
+    },
+    {
+      "id": "07",
+      "name": "Callao"
+    },
+    {
+      "id": "08",
+      "name": "Cusco"
+    },
+    {
+      "id": "09",
+      "name": "Huancavelica"
+    },
+    {
+      "id": "10",
+      "name": "Huánuco"
+    },
+    {
+      "id": "11",
+      "name": "Ica"
+    },
+    {
+      "id": "12",
+      "name": "Junín"
+    },
+    {
+      "id": "13",
+      "name": "La Libertad"
+    },
+    {
+      "id": "14",
+      "name": "Lambayeque"
+    },
+    {
+      "id": "15",
+      "name": "Lima"
+    },
+    {
+      "id": "16",
+      "name": "Loreto"
+    },
+    {
+      "id": "17",
+      "name": "Madre de Dios"
+    },
+    {
+      "id": "18",
+      "name": "Moquegua"
+    },
+    {
+      "id": "19",
+      "name": "Pasco"
+    },
+    {
+      "id": "20",
+      "name": "Piura"
+    },
+    {
+      "id": "21",
+      "name": "Puno"
+    },
+    {
+      "id": "22",
+      "name": "San Martín"
+    },
+    {
+      "id": "23",
+      "name": "Tacna"
+    },
+    {
+      "id": "24",
+      "name": "Tumbes"
+    },
+    {
+      "id": "25",
+      "name": "Ucayali"
+    }
+  ],
+  "indicators": [
+    {
+      "id": "credit",
+      "name": "Crédito directo",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "deposits",
+      "name": "Depósitos",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "tax_revenue",
+      "name": "Tributos internos",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "investment_national",
+      "name": "Inversión del Gobierno Nacional",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "investment_local",
+      "name": "Inversión de gobiernos locales",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "pension_members",
+      "name": "Afiliados activos al SPP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "electricity",
+      "name": "Producción de electricidad",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    }
+  ],
+  "series": [
+    {
+      "id": "regional_01_credit",
+      "regionId": "01",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13562DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13562DM/html",
+      "sources": [
+        {
+          "code": "RD13562DM",
+          "name": "Amazonas (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Amazonas (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13562DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_02_credit",
+      "regionId": "02",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13565DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13565DM/html",
+      "sources": [
+        {
+          "code": "RD13565DM",
+          "name": "Ancash (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Ancash (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13565DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_03_credit",
+      "regionId": "03",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13568DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13568DM/html",
+      "sources": [
+        {
+          "code": "RD13568DM",
+          "name": "Apurímac (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Apurímac (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13568DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_04_credit",
+      "regionId": "04",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13571DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13571DM/html",
+      "sources": [
+        {
+          "code": "RD13571DM",
+          "name": "Arequipa (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Arequipa (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13571DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_05_credit",
+      "regionId": "05",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13574DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13574DM/html",
+      "sources": [
+        {
+          "code": "RD13574DM",
+          "name": "Ayacucho (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Ayacucho (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13574DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_06_credit",
+      "regionId": "06",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13577DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13577DM/html",
+      "sources": [
+        {
+          "code": "RD13577DM",
+          "name": "Cajamarca (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Cajamarca (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13577DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_07_credit",
+      "regionId": "07",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13580DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13580DM/html",
+      "sources": [
+        {
+          "code": "RD13580DM",
+          "name": "Callao (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Callao (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13580DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_08_credit",
+      "regionId": "08",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13583DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13583DM/html",
+      "sources": [
+        {
+          "code": "RD13583DM",
+          "name": "Cusco (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Cusco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13583DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_09_credit",
+      "regionId": "09",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13586DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13586DM/html",
+      "sources": [
+        {
+          "code": "RD13586DM",
+          "name": "Huancavelica (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Huancavelica (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13586DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_10_credit",
+      "regionId": "10",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13589DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13589DM/html",
+      "sources": [
+        {
+          "code": "RD13589DM",
+          "name": "Huánuco (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Huánuco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13589DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_11_credit",
+      "regionId": "11",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13592DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13592DM/html",
+      "sources": [
+        {
+          "code": "RD13592DM",
+          "name": "Ica (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Ica (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13592DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_12_credit",
+      "regionId": "12",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13595DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13595DM/html",
+      "sources": [
+        {
+          "code": "RD13595DM",
+          "name": "Junín (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Junín (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13595DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_13_credit",
+      "regionId": "13",
+      "indicatorId": "credit",
+      "name": "Crédito directo · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13598DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13598DM/html",
+      "sources": [
+        {
+          "code": "RD13598DM",
+          "name": "La Libertad (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - La Libertad (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13598DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_14_credit",
+      "regionId": "14",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13601DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13601DM/html",
+      "sources": [
+        {
+          "code": "RD13601DM",
+          "name": "Lambayeque (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Lambayeque (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13601DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_15_credit",
+      "regionId": "15",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13604DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13604DM/html",
+      "sources": [
+        {
+          "code": "RD13604DM",
+          "name": "Lima (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Lima (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13604DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_16_credit",
+      "regionId": "16",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13607DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13607DM/html",
+      "sources": [
+        {
+          "code": "RD13607DM",
+          "name": "Loreto (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Loreto (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13607DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_17_credit",
+      "regionId": "17",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13610DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13610DM/html",
+      "sources": [
+        {
+          "code": "RD13610DM",
+          "name": "Madre de Dios (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Madre de Dios (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13610DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_18_credit",
+      "regionId": "18",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13613DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13613DM/html",
+      "sources": [
+        {
+          "code": "RD13613DM",
+          "name": "Moquegua (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Moquegua (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13613DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_19_credit",
+      "regionId": "19",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13616DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13616DM/html",
+      "sources": [
+        {
+          "code": "RD13616DM",
+          "name": "Pasco (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Pasco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13616DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_20_credit",
+      "regionId": "20",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13619DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13619DM/html",
+      "sources": [
+        {
+          "code": "RD13619DM",
+          "name": "Piura (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Piura (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13619DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_21_credit",
+      "regionId": "21",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13622DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13622DM/html",
+      "sources": [
+        {
+          "code": "RD13622DM",
+          "name": "Puno (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Puno (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13622DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_22_credit",
+      "regionId": "22",
+      "indicatorId": "credit",
+      "name": "Crédito directo · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13625DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13625DM/html",
+      "sources": [
+        {
+          "code": "RD13625DM",
+          "name": "San Martín (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - San Martín (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13625DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_23_credit",
+      "regionId": "23",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13628DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13628DM/html",
+      "sources": [
+        {
+          "code": "RD13628DM",
+          "name": "Tacna (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Tacna (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13628DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_24_credit",
+      "regionId": "24",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13631DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13631DM/html",
+      "sources": [
+        {
+          "code": "RD13631DM",
+          "name": "Tumbes (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Tumbes (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13631DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_25_credit",
+      "regionId": "25",
+      "indicatorId": "credit",
+      "name": "Crédito directo · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13634DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13634DM/html",
+      "sources": [
+        {
+          "code": "RD13634DM",
+          "name": "Ucayali (total)",
+          "description": "Crédito directo del sistema financiero al sector privado por departamentos - fin de periodo (millones S/) - Ucayali (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13634DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Saldo del crédito directo del sistema financiero al sector privado al cierre de mes. La localización financiera no equivale al destino final de los fondos."
+    },
+    {
+      "id": "regional_01_deposits",
+      "regionId": "01",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13640DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13640DM/html",
+      "sources": [
+        {
+          "code": "RD13640DM",
+          "name": "Amazonas (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Amazonas (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13640DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_02_deposits",
+      "regionId": "02",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13643DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13643DM/html",
+      "sources": [
+        {
+          "code": "RD13643DM",
+          "name": "Ancash (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Ancash (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13643DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_03_deposits",
+      "regionId": "03",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13646DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13646DM/html",
+      "sources": [
+        {
+          "code": "RD13646DM",
+          "name": "Apurímac (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Apurímac (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13646DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_04_deposits",
+      "regionId": "04",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13649DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13649DM/html",
+      "sources": [
+        {
+          "code": "RD13649DM",
+          "name": "Arequipa (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Arequipa (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13649DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_05_deposits",
+      "regionId": "05",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13652DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13652DM/html",
+      "sources": [
+        {
+          "code": "RD13652DM",
+          "name": "Ayacucho (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Ayacucho (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13652DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_06_deposits",
+      "regionId": "06",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13655DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13655DM/html",
+      "sources": [
+        {
+          "code": "RD13655DM",
+          "name": "Cajamarca (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Cajamarca (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13655DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_07_deposits",
+      "regionId": "07",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13658DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13658DM/html",
+      "sources": [
+        {
+          "code": "RD13658DM",
+          "name": "Callao (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Callao (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13658DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_08_deposits",
+      "regionId": "08",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13661DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13661DM/html",
+      "sources": [
+        {
+          "code": "RD13661DM",
+          "name": "Cusco (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Cusco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13661DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_09_deposits",
+      "regionId": "09",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13664DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13664DM/html",
+      "sources": [
+        {
+          "code": "RD13664DM",
+          "name": "Huancavelica (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Huancavelica (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13664DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_10_deposits",
+      "regionId": "10",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13667DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13667DM/html",
+      "sources": [
+        {
+          "code": "RD13667DM",
+          "name": "Huánuco (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Huánuco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13667DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_11_deposits",
+      "regionId": "11",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13670DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13670DM/html",
+      "sources": [
+        {
+          "code": "RD13670DM",
+          "name": "Ica (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Ica (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13670DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_12_deposits",
+      "regionId": "12",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13673DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13673DM/html",
+      "sources": [
+        {
+          "code": "RD13673DM",
+          "name": "Junín (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Junín (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13673DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_13_deposits",
+      "regionId": "13",
+      "indicatorId": "deposits",
+      "name": "Depósitos · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13676DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13676DM/html",
+      "sources": [
+        {
+          "code": "RD13676DM",
+          "name": "La Libertad (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - La Libertad (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13676DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_14_deposits",
+      "regionId": "14",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13679DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13679DM/html",
+      "sources": [
+        {
+          "code": "RD13679DM",
+          "name": "Lambayeque (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Lambayeque (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13679DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_15_deposits",
+      "regionId": "15",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13682DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13682DM/html",
+      "sources": [
+        {
+          "code": "RD13682DM",
+          "name": "Lima (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Lima (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13682DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_16_deposits",
+      "regionId": "16",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13685DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13685DM/html",
+      "sources": [
+        {
+          "code": "RD13685DM",
+          "name": "Loreto (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Loreto (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13685DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_17_deposits",
+      "regionId": "17",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13688DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13688DM/html",
+      "sources": [
+        {
+          "code": "RD13688DM",
+          "name": "Madre de Dios (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Madre de Dios (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13688DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_18_deposits",
+      "regionId": "18",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13691DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13691DM/html",
+      "sources": [
+        {
+          "code": "RD13691DM",
+          "name": "Moquegua (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Moquegua (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13691DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_19_deposits",
+      "regionId": "19",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13694DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13694DM/html",
+      "sources": [
+        {
+          "code": "RD13694DM",
+          "name": "Pasco (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Pasco (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13694DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_20_deposits",
+      "regionId": "20",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13697DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13697DM/html",
+      "sources": [
+        {
+          "code": "RD13697DM",
+          "name": "Piura (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Piura (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13697DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_21_deposits",
+      "regionId": "21",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13700DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13700DM/html",
+      "sources": [
+        {
+          "code": "RD13700DM",
+          "name": "Puno (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Puno (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13700DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_22_deposits",
+      "regionId": "22",
+      "indicatorId": "deposits",
+      "name": "Depósitos · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13703DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13703DM/html",
+      "sources": [
+        {
+          "code": "RD13703DM",
+          "name": "San Martín (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - San Martín (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13703DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_23_deposits",
+      "regionId": "23",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13706DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13706DM/html",
+      "sources": [
+        {
+          "code": "RD13706DM",
+          "name": "Tacna (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Tacna (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13706DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_24_deposits",
+      "regionId": "24",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13709DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13709DM/html",
+      "sources": [
+        {
+          "code": "RD13709DM",
+          "name": "Tumbes (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Tumbes (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13709DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_25_deposits",
+      "regionId": "25",
+      "indicatorId": "deposits",
+      "name": "Depósitos · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "SBS",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13712DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13712DM/html",
+      "sources": [
+        {
+          "code": "RD13712DM",
+          "name": "Ucayali (total)",
+          "description": "Depósitos en el sistema financiero por departamentos - fin de periodo (millones S/) - Ucayali (total)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13712DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Depósitos en el sistema financiero al cierre de mes; total de monedas expresado en soles por la fuente."
+    },
+    {
+      "id": "regional_01_tax_revenue",
+      "regionId": "01",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13774DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13774DM/html",
+      "sources": [
+        {
+          "code": "RD13774DM",
+          "name": "Amazonas (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Amazonas (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13774DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_02_tax_revenue",
+      "regionId": "02",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13775DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13775DM/html",
+      "sources": [
+        {
+          "code": "RD13775DM",
+          "name": "Ancash (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Ancash (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13775DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_03_tax_revenue",
+      "regionId": "03",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13776DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13776DM/html",
+      "sources": [
+        {
+          "code": "RD13776DM",
+          "name": "Apurimac (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Apurimac (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13776DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_04_tax_revenue",
+      "regionId": "04",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13777DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13777DM/html",
+      "sources": [
+        {
+          "code": "RD13777DM",
+          "name": "Arequipa (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Arequipa (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13777DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_05_tax_revenue",
+      "regionId": "05",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13778DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13778DM/html",
+      "sources": [
+        {
+          "code": "RD13778DM",
+          "name": "Ayacucho (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Ayacucho (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13778DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_06_tax_revenue",
+      "regionId": "06",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13779DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13779DM/html",
+      "sources": [
+        {
+          "code": "RD13779DM",
+          "name": "Cajamarca (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Cajamarca (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13779DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_07_tax_revenue",
+      "regionId": "07",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13780DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13780DM/html",
+      "sources": [
+        {
+          "code": "RD13780DM",
+          "name": "Callao (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Callao (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13780DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_08_tax_revenue",
+      "regionId": "08",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13781DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13781DM/html",
+      "sources": [
+        {
+          "code": "RD13781DM",
+          "name": "Cusco (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Cusco (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13781DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_09_tax_revenue",
+      "regionId": "09",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13782DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13782DM/html",
+      "sources": [
+        {
+          "code": "RD13782DM",
+          "name": "Huancavelica (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Huancavelica (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13782DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_10_tax_revenue",
+      "regionId": "10",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13783DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13783DM/html",
+      "sources": [
+        {
+          "code": "RD13783DM",
+          "name": "Huánuco (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Huánuco (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13783DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_11_tax_revenue",
+      "regionId": "11",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13784DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13784DM/html",
+      "sources": [
+        {
+          "code": "RD13784DM",
+          "name": "Ica (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Ica (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13784DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_12_tax_revenue",
+      "regionId": "12",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13785DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13785DM/html",
+      "sources": [
+        {
+          "code": "RD13785DM",
+          "name": "Junín (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Junín (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13785DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_13_tax_revenue",
+      "regionId": "13",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13786DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13786DM/html",
+      "sources": [
+        {
+          "code": "RD13786DM",
+          "name": "La Libertad (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - La Libertad (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13786DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_14_tax_revenue",
+      "regionId": "14",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13787DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13787DM/html",
+      "sources": [
+        {
+          "code": "RD13787DM",
+          "name": "Lambayeque (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Lambayeque (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13787DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_15_tax_revenue",
+      "regionId": "15",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13788DM + RD13789DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13788DM/html",
+      "sources": [
+        {
+          "code": "RD13788DM",
+          "name": "Lima Metropolitana (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Lima Metropolitana (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13788DM/html"
+        },
+        {
+          "code": "RD13789DM",
+          "name": "Lima provincias (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Lima provincias (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13789DM/html"
+        }
+      ],
+      "aggregation": "sum_exact_dates",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica.",
+      "territoryNote": "Departamento de Lima = Lima Metropolitana + Lima provincias; Callao se publica por separado. Solo se suman meses con ambas observaciones."
+    },
+    {
+      "id": "regional_16_tax_revenue",
+      "regionId": "16",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13790DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13790DM/html",
+      "sources": [
+        {
+          "code": "RD13790DM",
+          "name": "Loreto (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Loreto (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13790DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_17_tax_revenue",
+      "regionId": "17",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13791DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13791DM/html",
+      "sources": [
+        {
+          "code": "RD13791DM",
+          "name": "Madre de Dios (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Madre de Dios (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13791DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_18_tax_revenue",
+      "regionId": "18",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13792DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13792DM/html",
+      "sources": [
+        {
+          "code": "RD13792DM",
+          "name": "Moquegua (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Moquegua (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13792DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_19_tax_revenue",
+      "regionId": "19",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13793DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13793DM/html",
+      "sources": [
+        {
+          "code": "RD13793DM",
+          "name": "Pasco (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Pasco (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13793DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_20_tax_revenue",
+      "regionId": "20",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13794DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13794DM/html",
+      "sources": [
+        {
+          "code": "RD13794DM",
+          "name": "Piura (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Piura (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13794DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_21_tax_revenue",
+      "regionId": "21",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13795DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13795DM/html",
+      "sources": [
+        {
+          "code": "RD13795DM",
+          "name": "Puno (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Puno (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13795DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_22_tax_revenue",
+      "regionId": "22",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13796DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13796DM/html",
+      "sources": [
+        {
+          "code": "RD13796DM",
+          "name": "San Martín (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - San Martín (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13796DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_23_tax_revenue",
+      "regionId": "23",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13797DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13797DM/html",
+      "sources": [
+        {
+          "code": "RD13797DM",
+          "name": "Tacna (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Tacna (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13797DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_24_tax_revenue",
+      "regionId": "24",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13798DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13798DM/html",
+      "sources": [
+        {
+          "code": "RD13798DM",
+          "name": "Tumbes (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Tumbes (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13798DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_25_tax_revenue",
+      "regionId": "25",
+      "indicatorId": "tax_revenue",
+      "name": "Tributos internos · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "SUNAT",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13799DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13799DM/html",
+      "sources": [
+        {
+          "code": "RD13799DM",
+          "name": "Ucayali (millones de soles)",
+          "description": "Ingresos tributarios recaudados por SUNAT - tributos internos según departamento - Ucayali (millones de soles)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13799DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Recaudación mensual de tributos internos por departamento. La asignación tributaria no mide el lugar donde se produce toda la actividad económica."
+    },
+    {
+      "id": "regional_01_investment_national",
+      "regionId": "01",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14092DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14092DM/html",
+      "sources": [
+        {
+          "code": "RD14092DM",
+          "name": "Amazonas",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Amazonas",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14092DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_02_investment_national",
+      "regionId": "02",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14093DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14093DM/html",
+      "sources": [
+        {
+          "code": "RD14093DM",
+          "name": "Ancash",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Ancash",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14093DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_03_investment_national",
+      "regionId": "03",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14094DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14094DM/html",
+      "sources": [
+        {
+          "code": "RD14094DM",
+          "name": "Apurímac",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Apurímac",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14094DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_04_investment_national",
+      "regionId": "04",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14095DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14095DM/html",
+      "sources": [
+        {
+          "code": "RD14095DM",
+          "name": "Arequipa",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Arequipa",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14095DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_05_investment_national",
+      "regionId": "05",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14096DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14096DM/html",
+      "sources": [
+        {
+          "code": "RD14096DM",
+          "name": "Ayacucho",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Ayacucho",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14096DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_06_investment_national",
+      "regionId": "06",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14097DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14097DM/html",
+      "sources": [
+        {
+          "code": "RD14097DM",
+          "name": "Cajamarca",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Cajamarca",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14097DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_07_investment_national",
+      "regionId": "07",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14098DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14098DM/html",
+      "sources": [
+        {
+          "code": "RD14098DM",
+          "name": "Callao",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Callao",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14098DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_08_investment_national",
+      "regionId": "08",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14099DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14099DM/html",
+      "sources": [
+        {
+          "code": "RD14099DM",
+          "name": "Cusco",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Cusco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14099DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_09_investment_national",
+      "regionId": "09",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14100DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14100DM/html",
+      "sources": [
+        {
+          "code": "RD14100DM",
+          "name": "Huancavelica",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Huancavelica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14100DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_10_investment_national",
+      "regionId": "10",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14101DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14101DM/html",
+      "sources": [
+        {
+          "code": "RD14101DM",
+          "name": "Huánuco",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Huánuco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14101DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_11_investment_national",
+      "regionId": "11",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14102DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14102DM/html",
+      "sources": [
+        {
+          "code": "RD14102DM",
+          "name": "Ica",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Ica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14102DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_12_investment_national",
+      "regionId": "12",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14103DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14103DM/html",
+      "sources": [
+        {
+          "code": "RD14103DM",
+          "name": "Junín",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Junín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14103DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_13_investment_national",
+      "regionId": "13",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14104DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14104DM/html",
+      "sources": [
+        {
+          "code": "RD14104DM",
+          "name": "La Libertad",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - La Libertad",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14104DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_14_investment_national",
+      "regionId": "14",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14105DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14105DM/html",
+      "sources": [
+        {
+          "code": "RD14105DM",
+          "name": "Lambayeque",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Lambayeque",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14105DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_15_investment_national",
+      "regionId": "15",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14106DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14106DM/html",
+      "sources": [
+        {
+          "code": "RD14106DM",
+          "name": "Lima",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Lima",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14106DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_16_investment_national",
+      "regionId": "16",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14107DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14107DM/html",
+      "sources": [
+        {
+          "code": "RD14107DM",
+          "name": "Loreto",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Loreto",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14107DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_17_investment_national",
+      "regionId": "17",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14108DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14108DM/html",
+      "sources": [
+        {
+          "code": "RD14108DM",
+          "name": "Madre de Dios",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Madre de Dios",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14108DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_18_investment_national",
+      "regionId": "18",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14109DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14109DM/html",
+      "sources": [
+        {
+          "code": "RD14109DM",
+          "name": "Moquegua",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Moquegua",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14109DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_19_investment_national",
+      "regionId": "19",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14110DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14110DM/html",
+      "sources": [
+        {
+          "code": "RD14110DM",
+          "name": "Pasco",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Pasco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14110DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_20_investment_national",
+      "regionId": "20",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14111DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14111DM/html",
+      "sources": [
+        {
+          "code": "RD14111DM",
+          "name": "Piura",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Piura",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14111DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_21_investment_national",
+      "regionId": "21",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14112DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14112DM/html",
+      "sources": [
+        {
+          "code": "RD14112DM",
+          "name": "Puno",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Puno",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14112DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_22_investment_national",
+      "regionId": "22",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14113DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14113DM/html",
+      "sources": [
+        {
+          "code": "RD14113DM",
+          "name": "San Martín",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - San Martín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14113DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_23_investment_national",
+      "regionId": "23",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14114DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14114DM/html",
+      "sources": [
+        {
+          "code": "RD14114DM",
+          "name": "Tacna",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Tacna",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14114DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_24_investment_national",
+      "regionId": "24",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14115DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14115DM/html",
+      "sources": [
+        {
+          "code": "RD14115DM",
+          "name": "Tumbes",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Tumbes",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14115DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_25_investment_national",
+      "regionId": "25",
+      "indicatorId": "investment_national",
+      "name": "Inversión del Gobierno Nacional · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14116DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14116DM/html",
+      "sources": [
+        {
+          "code": "RD14116DM",
+          "name": "Ucayali",
+          "description": "Inversión bruta fija del gobierno nacional por departamentos (millones S/) - Ucayali",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14116DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual del Gobierno Nacional según departamento; no incluye inversión de los gobiernos regionales ni locales."
+    },
+    {
+      "id": "regional_01_investment_local",
+      "regionId": "01",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14118DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14118DM/html",
+      "sources": [
+        {
+          "code": "RD14118DM",
+          "name": "Amazonas",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Amazonas",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14118DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_02_investment_local",
+      "regionId": "02",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14119DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14119DM/html",
+      "sources": [
+        {
+          "code": "RD14119DM",
+          "name": "Ancash",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Ancash",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14119DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_03_investment_local",
+      "regionId": "03",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14120DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14120DM/html",
+      "sources": [
+        {
+          "code": "RD14120DM",
+          "name": "Apurímac",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Apurímac",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14120DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_04_investment_local",
+      "regionId": "04",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14121DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14121DM/html",
+      "sources": [
+        {
+          "code": "RD14121DM",
+          "name": "Arequipa",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Arequipa",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14121DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_05_investment_local",
+      "regionId": "05",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14122DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14122DM/html",
+      "sources": [
+        {
+          "code": "RD14122DM",
+          "name": "Ayacucho",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Ayacucho",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14122DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_06_investment_local",
+      "regionId": "06",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14123DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14123DM/html",
+      "sources": [
+        {
+          "code": "RD14123DM",
+          "name": "Cajamarca",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Cajamarca",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14123DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_07_investment_local",
+      "regionId": "07",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14124DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14124DM/html",
+      "sources": [
+        {
+          "code": "RD14124DM",
+          "name": "Callao",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Callao",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14124DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_08_investment_local",
+      "regionId": "08",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14125DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14125DM/html",
+      "sources": [
+        {
+          "code": "RD14125DM",
+          "name": "Cusco",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Cusco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14125DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_09_investment_local",
+      "regionId": "09",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14126DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14126DM/html",
+      "sources": [
+        {
+          "code": "RD14126DM",
+          "name": "Huancavelica",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Huancavelica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14126DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_10_investment_local",
+      "regionId": "10",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14127DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14127DM/html",
+      "sources": [
+        {
+          "code": "RD14127DM",
+          "name": "Huánuco",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Huánuco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14127DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_11_investment_local",
+      "regionId": "11",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14128DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14128DM/html",
+      "sources": [
+        {
+          "code": "RD14128DM",
+          "name": "Ica",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Ica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14128DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_12_investment_local",
+      "regionId": "12",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14129DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14129DM/html",
+      "sources": [
+        {
+          "code": "RD14129DM",
+          "name": "Junín",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Junín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14129DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_13_investment_local",
+      "regionId": "13",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14130DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14130DM/html",
+      "sources": [
+        {
+          "code": "RD14130DM",
+          "name": "La Libertad",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - La Libertad",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14130DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_14_investment_local",
+      "regionId": "14",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14131DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14131DM/html",
+      "sources": [
+        {
+          "code": "RD14131DM",
+          "name": "Lambayeque",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Lambayeque",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14131DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_15_investment_local",
+      "regionId": "15",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14132DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14132DM/html",
+      "sources": [
+        {
+          "code": "RD14132DM",
+          "name": "Lima",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Lima",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14132DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_16_investment_local",
+      "regionId": "16",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14133DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14133DM/html",
+      "sources": [
+        {
+          "code": "RD14133DM",
+          "name": "Loreto",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Loreto",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14133DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_17_investment_local",
+      "regionId": "17",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14134DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14134DM/html",
+      "sources": [
+        {
+          "code": "RD14134DM",
+          "name": "Madre de Dios",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Madre de Dios",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14134DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_18_investment_local",
+      "regionId": "18",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14135DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14135DM/html",
+      "sources": [
+        {
+          "code": "RD14135DM",
+          "name": "Moquegua",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Moquegua",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14135DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_19_investment_local",
+      "regionId": "19",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14136DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14136DM/html",
+      "sources": [
+        {
+          "code": "RD14136DM",
+          "name": "Pasco",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Pasco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14136DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_20_investment_local",
+      "regionId": "20",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14137DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14137DM/html",
+      "sources": [
+        {
+          "code": "RD14137DM",
+          "name": "Piura",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Piura",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14137DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_21_investment_local",
+      "regionId": "21",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14138DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14138DM/html",
+      "sources": [
+        {
+          "code": "RD14138DM",
+          "name": "Puno",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Puno",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14138DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_22_investment_local",
+      "regionId": "22",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14139DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14139DM/html",
+      "sources": [
+        {
+          "code": "RD14139DM",
+          "name": "San Martín",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - San Martín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14139DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_23_investment_local",
+      "regionId": "23",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14140DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14140DM/html",
+      "sources": [
+        {
+          "code": "RD14140DM",
+          "name": "Tacna",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Tacna",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14140DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_24_investment_local",
+      "regionId": "24",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14141DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14141DM/html",
+      "sources": [
+        {
+          "code": "RD14141DM",
+          "name": "Tumbes",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Tumbes",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14141DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_25_investment_local",
+      "regionId": "25",
+      "indicatorId": "investment_local",
+      "name": "Inversión de gobiernos locales · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "MEF",
+      "unit": "S/ millones",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD14142DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14142DM/html",
+      "sources": [
+        {
+          "code": "RD14142DM",
+          "name": "Ucayali",
+          "description": "Inversión bruta fija de gobiernos locales por departamentos (millones S/) - Ucayali",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD14142DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Inversión bruta fija mensual de los gobiernos locales según departamento; no es el total de inversión pública."
+    },
+    {
+      "id": "regional_01_pension_members",
+      "regionId": "01",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13716DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13716DM/html",
+      "sources": [
+        {
+          "code": "RD13716DM",
+          "name": "Amazonas",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Amazonas",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13716DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_02_pension_members",
+      "regionId": "02",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13717DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13717DM/html",
+      "sources": [
+        {
+          "code": "RD13717DM",
+          "name": "Ancash",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Ancash",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13717DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_03_pension_members",
+      "regionId": "03",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13718DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13718DM/html",
+      "sources": [
+        {
+          "code": "RD13718DM",
+          "name": "Apurímac",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Apurímac",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13718DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_04_pension_members",
+      "regionId": "04",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13719DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13719DM/html",
+      "sources": [
+        {
+          "code": "RD13719DM",
+          "name": "Arequipa",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Arequipa",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13719DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_05_pension_members",
+      "regionId": "05",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13720DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13720DM/html",
+      "sources": [
+        {
+          "code": "RD13720DM",
+          "name": "Ayacucho",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Ayacucho",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13720DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_06_pension_members",
+      "regionId": "06",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13721DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13721DM/html",
+      "sources": [
+        {
+          "code": "RD13721DM",
+          "name": "Cajamarca",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Cajamarca",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13721DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_07_pension_members",
+      "regionId": "07",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Callao",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13722DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13722DM/html",
+      "sources": [
+        {
+          "code": "RD13722DM",
+          "name": "Callao",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Callao",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13722DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_08_pension_members",
+      "regionId": "08",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13723DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13723DM/html",
+      "sources": [
+        {
+          "code": "RD13723DM",
+          "name": "Cusco",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Cusco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13723DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_09_pension_members",
+      "regionId": "09",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13724DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13724DM/html",
+      "sources": [
+        {
+          "code": "RD13724DM",
+          "name": "Huancavelica",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Huancavelica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13724DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_10_pension_members",
+      "regionId": "10",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13725DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13725DM/html",
+      "sources": [
+        {
+          "code": "RD13725DM",
+          "name": "Huánuco",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Huánuco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13725DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_11_pension_members",
+      "regionId": "11",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13726DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13726DM/html",
+      "sources": [
+        {
+          "code": "RD13726DM",
+          "name": "Ica",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Ica",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13726DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_12_pension_members",
+      "regionId": "12",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13727DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13727DM/html",
+      "sources": [
+        {
+          "code": "RD13727DM",
+          "name": "Junín",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Junín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13727DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_13_pension_members",
+      "regionId": "13",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13728DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13728DM/html",
+      "sources": [
+        {
+          "code": "RD13728DM",
+          "name": "La Libertad",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - La Libertad",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13728DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_14_pension_members",
+      "regionId": "14",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13729DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13729DM/html",
+      "sources": [
+        {
+          "code": "RD13729DM",
+          "name": "Lambayeque",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Lambayeque",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13729DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_15_pension_members",
+      "regionId": "15",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13730DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13730DM/html",
+      "sources": [
+        {
+          "code": "RD13730DM",
+          "name": "Lima",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Lima",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13730DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_16_pension_members",
+      "regionId": "16",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13731DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13731DM/html",
+      "sources": [
+        {
+          "code": "RD13731DM",
+          "name": "Loreto",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Loreto",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13731DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_17_pension_members",
+      "regionId": "17",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13732DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13732DM/html",
+      "sources": [
+        {
+          "code": "RD13732DM",
+          "name": "Madre de Dios",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Madre de Dios",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13732DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_18_pension_members",
+      "regionId": "18",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13733DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13733DM/html",
+      "sources": [
+        {
+          "code": "RD13733DM",
+          "name": "Moquegua",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Moquegua",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13733DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_19_pension_members",
+      "regionId": "19",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13734DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13734DM/html",
+      "sources": [
+        {
+          "code": "RD13734DM",
+          "name": "Pasco",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Pasco",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13734DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_20_pension_members",
+      "regionId": "20",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13735DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13735DM/html",
+      "sources": [
+        {
+          "code": "RD13735DM",
+          "name": "Piura",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Piura",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13735DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_21_pension_members",
+      "regionId": "21",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13736DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13736DM/html",
+      "sources": [
+        {
+          "code": "RD13736DM",
+          "name": "Puno",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Puno",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13736DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_22_pension_members",
+      "regionId": "22",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13737DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13737DM/html",
+      "sources": [
+        {
+          "code": "RD13737DM",
+          "name": "San Martín",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - San Martín",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13737DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_23_pension_members",
+      "regionId": "23",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13738DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13738DM/html",
+      "sources": [
+        {
+          "code": "RD13738DM",
+          "name": "Tacna",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Tacna",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13738DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_24_pension_members",
+      "regionId": "24",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13739DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13739DM/html",
+      "sources": [
+        {
+          "code": "RD13739DM",
+          "name": "Tumbes",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Tumbes",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13739DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_25_pension_members",
+      "regionId": "25",
+      "indicatorId": "pension_members",
+      "name": "Afiliados activos al SPP · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "BCRP",
+      "unit": "personas",
+      "frequency": "monthly",
+      "kind": "stock",
+      "sourceCode": "RD13740DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13740DM/html",
+      "sources": [
+        {
+          "code": "RD13740DM",
+          "name": "Ucayali",
+          "description": "Afiliados activos del Sistema Privado de Pensiones por departamentos (número) - Ucayali",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13740DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Número de afiliados activos al Sistema Privado de Pensiones. No equivale a cotizantes del mes, puestos de trabajo ni cobertura de toda la población."
+    },
+    {
+      "id": "regional_01_electricity",
+      "regionId": "01",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Amazonas",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13043DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13043DM/html",
+      "sources": [
+        {
+          "code": "RD13043DM",
+          "name": "Amazonas (gwh)",
+          "description": "Producción de electricidad por departamento - Amazonas (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13043DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_02_electricity",
+      "regionId": "02",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Áncash",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13044DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13044DM/html",
+      "sources": [
+        {
+          "code": "RD13044DM",
+          "name": "Ancash (gwh)",
+          "description": "Producción de electricidad por departamento - Ancash (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13044DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_03_electricity",
+      "regionId": "03",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Apurímac",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13045DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13045DM/html",
+      "sources": [
+        {
+          "code": "RD13045DM",
+          "name": "Apurímac (gwh)",
+          "description": "Producción de electricidad por departamento - Apurímac (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13045DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_04_electricity",
+      "regionId": "04",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Arequipa",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13046DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13046DM/html",
+      "sources": [
+        {
+          "code": "RD13046DM",
+          "name": "Arequipa (gwh)",
+          "description": "Producción de electricidad por departamento - Arequipa (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13046DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_05_electricity",
+      "regionId": "05",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Ayacucho",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13047DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13047DM/html",
+      "sources": [
+        {
+          "code": "RD13047DM",
+          "name": "Ayacucho (gwh)",
+          "description": "Producción de electricidad por departamento - Ayacucho (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13047DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_06_electricity",
+      "regionId": "06",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Cajamarca",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13048DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13048DM/html",
+      "sources": [
+        {
+          "code": "RD13048DM",
+          "name": "Cajamarca (gwh)",
+          "description": "Producción de electricidad por departamento - Cajamarca (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13048DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_08_electricity",
+      "regionId": "08",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Cusco",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13049DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13049DM/html",
+      "sources": [
+        {
+          "code": "RD13049DM",
+          "name": "Cusco (gwh)",
+          "description": "Producción de electricidad por departamento - Cusco (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13049DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_09_electricity",
+      "regionId": "09",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Huancavelica",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13050DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13050DM/html",
+      "sources": [
+        {
+          "code": "RD13050DM",
+          "name": "Huancavelica (gwh)",
+          "description": "Producción de electricidad por departamento - Huancavelica (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13050DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_10_electricity",
+      "regionId": "10",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Huánuco",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13051DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13051DM/html",
+      "sources": [
+        {
+          "code": "RD13051DM",
+          "name": "Huánuco (gwh)",
+          "description": "Producción de electricidad por departamento - Huánuco (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13051DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_11_electricity",
+      "regionId": "11",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Ica",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13052DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13052DM/html",
+      "sources": [
+        {
+          "code": "RD13052DM",
+          "name": "Ica (gwh)",
+          "description": "Producción de electricidad por departamento - Ica (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13052DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_12_electricity",
+      "regionId": "12",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Junín",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13053DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13053DM/html",
+      "sources": [
+        {
+          "code": "RD13053DM",
+          "name": "Junín (gwh)",
+          "description": "Producción de electricidad por departamento - Junín (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13053DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_13_electricity",
+      "regionId": "13",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · La Libertad",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13054DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13054DM/html",
+      "sources": [
+        {
+          "code": "RD13054DM",
+          "name": "La Libertad (gwh)",
+          "description": "Producción de electricidad por departamento - La Libertad (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13054DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_14_electricity",
+      "regionId": "14",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Lambayeque",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13055DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13055DM/html",
+      "sources": [
+        {
+          "code": "RD13055DM",
+          "name": "Lambayeque (gwh)",
+          "description": "Producción de electricidad por departamento - Lambayeque (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13055DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_15_electricity",
+      "regionId": "15",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Lima",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13056DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13056DM/html",
+      "sources": [
+        {
+          "code": "RD13056DM",
+          "name": "Lima (gwh)",
+          "description": "Producción de electricidad por departamento - Lima (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13056DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor.",
+      "territoryNote": "Se conserva la delimitación «Lima» publicada por MINEM/BCRP; Callao no tiene serie separada en este indicador."
+    },
+    {
+      "id": "regional_16_electricity",
+      "regionId": "16",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Loreto",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13057DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13057DM/html",
+      "sources": [
+        {
+          "code": "RD13057DM",
+          "name": "Loreto (gwh)",
+          "description": "Producción de electricidad por departamento - Loreto (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13057DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_17_electricity",
+      "regionId": "17",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Madre de Dios",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13058DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13058DM/html",
+      "sources": [
+        {
+          "code": "RD13058DM",
+          "name": "Madre de Dios (gwh)",
+          "description": "Producción de electricidad por departamento - Madre de Dios (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13058DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_18_electricity",
+      "regionId": "18",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Moquegua",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13059DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13059DM/html",
+      "sources": [
+        {
+          "code": "RD13059DM",
+          "name": "Moquegua (gwh)",
+          "description": "Producción de electricidad por departamento - Moquegua (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13059DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_19_electricity",
+      "regionId": "19",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Pasco",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13060DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13060DM/html",
+      "sources": [
+        {
+          "code": "RD13060DM",
+          "name": "Pasco (gwh)",
+          "description": "Producción de electricidad por departamento - Pasco (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13060DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_20_electricity",
+      "regionId": "20",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Piura",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13061DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13061DM/html",
+      "sources": [
+        {
+          "code": "RD13061DM",
+          "name": "Piura (gwh)",
+          "description": "Producción de electricidad por departamento - Piura (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13061DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_21_electricity",
+      "regionId": "21",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Puno",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13062DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13062DM/html",
+      "sources": [
+        {
+          "code": "RD13062DM",
+          "name": "Puno (gwh)",
+          "description": "Producción de electricidad por departamento - Puno (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13062DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_22_electricity",
+      "regionId": "22",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · San Martín",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13063DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13063DM/html",
+      "sources": [
+        {
+          "code": "RD13063DM",
+          "name": "San Martín (gwh)",
+          "description": "Producción de electricidad por departamento - San Martín (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13063DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_23_electricity",
+      "regionId": "23",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Tacna",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13064DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13064DM/html",
+      "sources": [
+        {
+          "code": "RD13064DM",
+          "name": "Tacna (gwh)",
+          "description": "Producción de electricidad por departamento - Tacna (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13064DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_24_electricity",
+      "regionId": "24",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Tumbes",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13065DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13065DM/html",
+      "sources": [
+        {
+          "code": "RD13065DM",
+          "name": "Tumbes (gwh)",
+          "description": "Producción de electricidad por departamento - Tumbes (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13065DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    },
+    {
+      "id": "regional_25_electricity",
+      "regionId": "25",
+      "indicatorId": "electricity",
+      "name": "Producción de electricidad · Ucayali",
+      "provider": "BCRP",
+      "sourceInstitution": "MINEM",
+      "unit": "GWh",
+      "frequency": "monthly",
+      "kind": "flow",
+      "sourceCode": "RD13066DM",
+      "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13066DM/html",
+      "sources": [
+        {
+          "code": "RD13066DM",
+          "name": "Ucayali (gwh)",
+          "description": "Producción de electricidad por departamento - Ucayali (gwh)",
+          "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/RD13066DM/html"
+        }
+      ],
+      "aggregation": "direct",
+      "description": "Generación eléctrica mensual, no consumo de energía. La fuente publica 24 departamentos, sin una serie separada de Callao; no se imputa ese valor."
+    }
+  ],
+  "notes": [
+    "24 departamentos y la Provincia Constitucional del Callao. Lima corresponde al departamento, no solo a Lima Metropolitana.",
+    "Montos monetarios nominales. Se comparan periodos coincidentes; las ausencias no se rellenan con cero.",
+    "La inversión del Gobierno Nacional y de los gobiernos locales se presenta por separado; no representa toda la inversión pública.",
+    "La fuente regional de electricidad no publica Callao por separado."
+  ],
+  "catalogUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+}

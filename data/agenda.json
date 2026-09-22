@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "fetchedAt": "2026-09-22T09:45:18.622088Z",
+  "fetchedAt": "2026-09-22T10:55:15.574713Z",
   "timezone": "America/Lima",
-  "horizonDays": 60,
+  "horizonDays": 120,
   "windowStart": "2026-09-22",
-  "windowEnd": "2026-11-21",
+  "windowEnd": "2027-01-20",
   "coverage": {
     "peru": {
-      "events": 33,
+      "events": 49,
       "nextDate": "2026-09-22",
-      "lastEventDate": "2026-11-20",
+      "lastEventDate": "2026-12-25",
       "coversMonth": true,
-      "freshSources": 1,
-      "totalSources": 1
+      "freshSources": 2,
+      "totalSources": 4
     },
     "world": {
-      "events": 23,
+      "events": 41,
       "nextDate": "2026-09-24",
-      "lastEventDate": "2026-11-17",
+      "lastEventDate": "2027-01-18",
       "coversMonth": true,
-      "freshSources": 3,
-      "totalSources": 4
+      "freshSources": 5,
+      "totalSources": 6
     }
   },
   "sources": [
@@ -30,15 +30,62 @@
       "region": "peru",
       "country": "Perú",
       "url": "https://www.inei.gob.pe/calendario/",
-      "attemptedAt": "2026-09-22T09:45:18.622088Z",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
       "status": "ok",
-      "fetchedAt": "2026-09-22T09:45:18.622088Z",
-      "lastSuccessAt": "2026-09-22T09:45:18.622088Z",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
       "message": "Calendario oficial consultado",
       "feedUrl": "https://calendar.google.com/calendar/ical/inei.servicios%40gmail.com/public/basic.ics",
       "provenance": "Calendario público incrustado por INEI en su página oficial.",
       "publishedThrough": "2026-12-22",
-      "eventsInWindow": 33,
+      "eventsInWindow": 44,
+      "coversMonth": true
+    },
+    {
+      "id": "bcrp-policy",
+      "institution": "BCRP · Programa monetario",
+      "region": "peru",
+      "country": "Perú",
+      "url": "https://www.bcrp.gob.pe/politica-monetaria/notas-informativas-del-programa-monetario.html",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
+      "status": "unavailable",
+      "fetchedAt": null,
+      "lastSuccessAt": null,
+      "publishedThrough": null,
+      "message": "Sin fechas verificadas disponibles",
+      "error": "El proveedor no permite la consulta automática en este momento",
+      "eventsInWindow": 0,
+      "coversMonth": false
+    },
+    {
+      "id": "bcrp-inflation",
+      "institution": "BCRP · Reporte de Inflación",
+      "region": "peru",
+      "country": "Perú",
+      "url": "https://www.bcrp.gob.pe/publicaciones/reporte-de-inflacion.html",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
+      "status": "unavailable",
+      "fetchedAt": null,
+      "lastSuccessAt": null,
+      "publishedThrough": null,
+      "message": "Sin fechas verificadas disponibles",
+      "error": "El proveedor no permite la consulta automática en este momento",
+      "eventsInWindow": 0,
+      "coversMonth": false
+    },
+    {
+      "id": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "url": "https://www.gob.pe/feriados",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
+      "status": "ok",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
+      "message": "Calendario oficial consultado",
+      "publishedThrough": "2026-12-25",
+      "eventsInWindow": 5,
       "coversMonth": true
     },
     {
@@ -47,7 +94,7 @@
       "region": "world",
       "country": "Estados Unidos",
       "url": "https://www.bls.gov/schedule/news_release/current_year.asp",
-      "attemptedAt": "2026-09-22T09:45:18.622088Z",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
       "status": "retained",
       "fetchedAt": "2026-09-22T09:44:58.821494Z",
       "lastSuccessAt": "2026-09-22T09:44:58.821494Z",
@@ -64,13 +111,13 @@
       "region": "world",
       "country": "Estados Unidos",
       "url": "https://www.bea.gov/news/schedule",
-      "attemptedAt": "2026-09-22T09:45:18.622088Z",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
       "status": "ok",
-      "fetchedAt": "2026-09-22T09:45:18.622088Z",
-      "lastSuccessAt": "2026-09-22T09:45:18.622088Z",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
       "message": "Calendario oficial consultado",
       "publishedThrough": "2026-12-23",
-      "eventsInWindow": 7,
+      "eventsInWindow": 14,
       "coversMonth": true
     },
     {
@@ -79,13 +126,13 @@
       "region": "world",
       "country": "Estados Unidos",
       "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
-      "attemptedAt": "2026-09-22T09:45:18.622088Z",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
       "status": "ok",
-      "fetchedAt": "2026-09-22T09:45:18.622088Z",
-      "lastSuccessAt": "2026-09-22T09:45:18.622088Z",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
       "message": "Calendario oficial consultado",
       "publishedThrough": "2027-12-08",
-      "eventsInWindow": 1,
+      "eventsInWindow": 2,
       "coversMonth": true
     },
     {
@@ -94,13 +141,43 @@
       "region": "world",
       "country": "Zona euro",
       "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
-      "attemptedAt": "2026-09-22T09:45:18.622088Z",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
       "status": "ok",
-      "fetchedAt": "2026-09-22T09:45:18.622088Z",
-      "lastSuccessAt": "2026-09-22T09:45:18.622088Z",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
       "message": "Calendario oficial consultado",
       "publishedThrough": "2028-12-07",
-      "eventsInWindow": 1,
+      "eventsInWindow": 2,
+      "coversMonth": true
+    },
+    {
+      "id": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "url": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
+      "status": "ok",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
+      "message": "Calendario oficial consultado",
+      "publishedThrough": "2029-12-25",
+      "eventsInWindow": 6,
+      "coversMonth": true
+    },
+    {
+      "id": "target-holidays",
+      "institution": "BCE · TARGET",
+      "region": "world",
+      "country": "Zona euro",
+      "url": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html",
+      "attemptedAt": "2026-09-22T10:55:15.574713Z",
+      "status": "ok",
+      "fetchedAt": "2026-09-22T10:55:15.574713Z",
+      "lastSuccessAt": "2026-09-22T10:55:15.574713Z",
+      "message": "Calendario oficial consultado",
+      "publishedThrough": "2028-12-26",
+      "eventsInWindow": 3,
       "coversMonth": true
     }
   ],
@@ -124,7 +201,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-e5e45c17f8e9caca",
@@ -145,7 +222,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-faa2f21e74874ae3",
@@ -166,7 +243,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-bac05e881ddbce16",
@@ -187,7 +264,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bea-5301783fecb926b6",
@@ -208,7 +285,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-a9095cdf076da2e8",
@@ -229,7 +306,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-3479a7080e293b25",
@@ -250,7 +327,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-b55a6150bd6feab7",
@@ -271,7 +348,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-ea5b43f219bd51a5",
@@ -313,7 +390,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bea-c562c3d03cb3c448",
@@ -334,7 +411,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bea-5b488e3b35173260",
@@ -355,7 +432,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-0a4a075664936645",
@@ -376,7 +453,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-f20d24370a9b5c5c",
@@ -397,7 +474,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-f89791e3af64216d",
@@ -418,7 +495,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-d56b91859ea5c61d",
@@ -460,7 +537,53 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "peru-holidays-5f098bc924e30ba3",
+      "sourceId": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Combate de Angamos",
+      "description": "",
+      "date": "2026-10-08",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.gob.pe/feriados",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado nacional · Perú",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "us-holidays-728f4190016e032e",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Columbus Day",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2026-10-12",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-ec2db50f6084e357",
@@ -481,7 +604,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-b9ac6b6a1830de58",
@@ -565,7 +688,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-d8666bdfbec4e3ae",
@@ -586,7 +709,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-d0ebf93c8023c7b8",
@@ -628,7 +751,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-e40600edf2f5ba27",
@@ -649,7 +772,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-50594bcd28ce59fd",
@@ -670,7 +793,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-34e05a40a49b7a23",
@@ -691,7 +814,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-12532be9c295b24e",
@@ -712,7 +835,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-101b50bc803d3867",
@@ -733,7 +856,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "fed-ccfaad14eec82f98",
@@ -754,7 +877,7 @@
       "status": "scheduled",
       "note": "Fecha publicada por la Fed; las reuniones futuras pueden ser revisadas. Hora por confirmar.",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bea-51eac7654cb6053e",
@@ -775,7 +898,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bea-c833afc0d09d8e1a",
@@ -796,7 +919,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "ecb-bd6fbccc89c3b8fe",
@@ -817,7 +940,7 @@
       "status": "scheduled",
       "note": "Último día de la reunión y rueda de prensa. Hora por confirmar.",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-e9c5cb5d06f1da59",
@@ -859,7 +982,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-2a40fb6c39e028a5",
@@ -880,7 +1003,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-0801875fd48d8d93",
@@ -901,7 +1024,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-7a15e55146188e07",
@@ -922,7 +1045,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-b51670e97dd1ce1e",
@@ -943,7 +1066,30 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "peru-holidays-e835f20824504d63",
+      "sourceId": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Día de Todos los Santos",
+      "description": "",
+      "date": "2026-11-01",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.gob.pe/feriados",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado nacional · Perú",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-d10c6ddacb5aa48a",
@@ -964,7 +1110,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-0ab6411292f458c6",
@@ -1006,7 +1152,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-ebb3574bab77cff1",
@@ -1093,6 +1239,29 @@
       "verifiedAt": "2026-09-22T09:44:58.821494Z"
     },
     {
+      "id": "us-holidays-da07f19c1944b242",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Día de los Veteranos",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2026-11-11",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
       "id": "inei-0a2cba66a5d090e2",
       "sourceId": "inei",
       "institution": "INEI",
@@ -1111,7 +1280,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-6ad2680085206cd6",
@@ -1153,7 +1322,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-110c2a68f1ca6277",
@@ -1174,7 +1343,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-d04cc0b01cb81eec",
@@ -1195,7 +1364,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "bls-fd6624575e335b9f",
@@ -1237,7 +1406,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-cc5113faaf0882eb",
@@ -1258,7 +1427,7 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     },
     {
       "id": "inei-ffff298aa130734b",
@@ -1279,7 +1448,657 @@
       "status": "scheduled",
       "note": "",
       "sourceStatus": "ok",
-      "verifiedAt": "2026-09-22T09:45:18.622088Z"
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-82186e9858dcb2d6",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Producto Bruto Interno Trimestral",
+      "description": "Producto Bruto Interno Trimestral (Jul-Ago-Set 2026)",
+      "date": "2026-11-23",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "actividad",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-397a8d4b80267c2b",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Índice de Precios Productor - IPP",
+      "description": "Índice de Precios Productor - IPP (Set 2026)",
+      "date": "2026-11-24",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "precios",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-b8a3b80aeecde498",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Ingresos, consumo e inflación PCE",
+      "description": "Personal Income and Outlays, October 2026",
+      "date": "2026-11-25",
+      "time": "08:30",
+      "startsAt": "2026-11-25T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "precios",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-121066a9f4bca7ff",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "PIB y cuentas nacionales",
+      "description": "GDP (Second Estimate) and Corporate Profits, 3rd Quarter 2026",
+      "date": "2026-11-25",
+      "time": "08:30",
+      "startsAt": "2026-11-25T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "actividad",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-73636ca7ed913a46",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Perú: Panorama Económico Departamental",
+      "description": "Perú: Panorama Económico Departamental (Set 2026)",
+      "date": "2026-11-25",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "actividad",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-92fdc2a21dfbdc1c",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Estadísticas Ambientales",
+      "description": "Estadísticas Ambientales (Oct 2026)",
+      "date": "2026-11-26",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "bienestar",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "us-holidays-c51e9fe79eed27fa",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Acción de Gracias",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2026-11-26",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-851b70639ed43e9d",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Perú: Percepción Ciudadana sobre Gobernabilidad, Democracia y Confianza en las Instituciones",
+      "description": "Perú: Percepción Ciudadana sobre Gobernabilidad, Democracia y Confianza en las Instituciones (Abr-Set 2026)",
+      "date": "2026-11-30",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "actividad",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-8eb49c168e05cc8b",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Avance Coyuntural de la Actividad Económica",
+      "description": "Avance Coyuntural de la Actividad Económica (Oct 2026)",
+      "date": "2026-12-01",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "bienestar",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-43ec3a265f807267",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Variación de los Indicadores de Precios de la Economía",
+      "description": "Variación de los Indicadores de Precios de la Economía (Nov. 2026)",
+      "date": "2026-12-01",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "precios",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-72b0feaaf088a34e",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "PIB y cuentas nacionales",
+      "description": "GDP by County and Personal Income by County, 2025",
+      "date": "2026-12-02",
+      "time": "08:30",
+      "startsAt": "2026-12-02T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "actividad",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-a9a2e6db29a341b3",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Comercio internacional",
+      "description": "U.S. International Trade in Goods and Services, October 2026",
+      "date": "2026-12-08",
+      "time": "08:30",
+      "startsAt": "2026-12-08T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "externo",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "peru-holidays-70b1288ea3bc278f",
+      "sourceId": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Inmaculada Concepción",
+      "description": "",
+      "date": "2026-12-08",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.gob.pe/feriados",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado nacional · Perú",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "peru-holidays-fd6631b861e1edbe",
+      "sourceId": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Batalla de Ayacucho",
+      "description": "",
+      "date": "2026-12-09",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.gob.pe/feriados",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado nacional · Perú",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "fed-45100e15841ee72a",
+      "sourceId": "fed",
+      "institution": "Reserva Federal",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Decisión de política monetaria — Fed",
+      "description": "Último día de la reunión del FOMC; incluye proyecciones económicas.",
+      "date": "2026-12-09",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "category": "tasas",
+      "key": true,
+      "status": "scheduled",
+      "note": "Fecha publicada por la Fed; las reuniones futuras pueden ser revisadas. Hora por confirmar.",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-d799b1b8101120d0",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Evolución de las Exportaciones e Importaciones",
+      "description": "Evolución de las Exportaciones e Importaciones (Oct 2026)",
+      "date": "2026-12-14",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "externo",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-72d52be5c4a1a439",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Producción Nacional",
+      "description": "Producción Nacional (Oct 2026)",
+      "date": "2026-12-15",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "actividad",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-85a7cf88179f5461",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Situación del Mercado Laboral en Lima Metropolitana (EPEN)",
+      "description": "Situación del Mercado Laboral en Lima Metropolitana (EPEN) (Set-Oct-Nov 2026)",
+      "date": "2026-12-15",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "empleo",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "ecb-edb264ecf94ff74d",
+      "sourceId": "ecb",
+      "institution": "BCE",
+      "region": "world",
+      "country": "Zona euro",
+      "title": "Decisión de política monetaria — BCE",
+      "description": "Governing Council of the ECB: monetary policy meeting in Frankfurt (Day 2), followed by press conference",
+      "date": "2026-12-17",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "category": "tasas",
+      "key": true,
+      "status": "scheduled",
+      "note": "Último día de la reunión y rueda de prensa. Hora por confirmar.",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-4cbb0c0ce46367f7",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Balanza de pagos y posición internacional",
+      "description": "U.S. International Transactions and Investment Position, 3rd Quarter 2026",
+      "date": "2026-12-18",
+      "time": "08:30",
+      "startsAt": "2026-12-18T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "externo",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "inei-23458a3bab8b6911",
+      "sourceId": "inei",
+      "institution": "INEI",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Encuesta Mensual del Sector Servicios",
+      "description": "Encuesta Mensual del Sector Servicios (Oct 2026)",
+      "date": "2026-12-22",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.inei.gob.pe/calendario/",
+      "category": "actividad",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-c0876590514c54c1",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Ingresos, consumo e inflación PCE",
+      "description": "Personal Income and Outlays, November 2026",
+      "date": "2026-12-23",
+      "time": "08:30",
+      "startsAt": "2026-12-23T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "precios",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "bea-033349261be017da",
+      "sourceId": "bea",
+      "institution": "BEA",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "PIB y cuentas nacionales",
+      "description": "GDP (Third Estimate), Industries, Corporate Profits, State GDP, and State Personal Income, 3rd Quarter 2026",
+      "date": "2026-12-23",
+      "time": "08:30",
+      "startsAt": "2026-12-23T08:30:00-05:00",
+      "timezone": "America/Lima",
+      "precision": "time",
+      "sourceUrl": "https://www.bea.gov/news/schedule",
+      "category": "actividad",
+      "key": true,
+      "status": "scheduled",
+      "note": "",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "us-holidays-b641ea1d3ab34afd",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Navidad",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2026-12-25",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "target-holidays-b641ea1d3ab34afd",
+      "sourceId": "target-holidays",
+      "institution": "BCE · TARGET",
+      "region": "world",
+      "country": "Zona euro",
+      "title": "Navidad",
+      "description": "Día de cierre TARGET identificado por el BCE. No es un feriado de todos los países de la zona euro.",
+      "date": "2026-12-25",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Cierre TARGET · Zona euro",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "peru-holidays-b641ea1d3ab34afd",
+      "sourceId": "peru-holidays",
+      "institution": "Gob.pe",
+      "region": "peru",
+      "country": "Perú",
+      "title": "Navidad",
+      "description": "",
+      "date": "2026-12-25",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.gob.pe/feriados",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado nacional · Perú",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "target-holidays-3b1dbf7e36b0aadf",
+      "sourceId": "target-holidays",
+      "institution": "BCE · TARGET",
+      "region": "world",
+      "country": "Zona euro",
+      "title": "Segundo día de Navidad",
+      "description": "Día de cierre TARGET identificado por el BCE. No es un feriado de todos los países de la zona euro.",
+      "date": "2026-12-26",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Cierre TARGET · Zona euro",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "us-holidays-88049bb8d49f23f6",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Año Nuevo",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2027-01-01",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "target-holidays-88049bb8d49f23f6",
+      "sourceId": "target-holidays",
+      "institution": "BCE · TARGET",
+      "region": "world",
+      "country": "Zona euro",
+      "title": "Año Nuevo",
+      "description": "Día de cierre TARGET identificado por el BCE. No es un feriado de todos los países de la zona euro.",
+      "date": "2027-01-01",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Cierre TARGET · Zona euro",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
+    },
+    {
+      "id": "us-holidays-602835dab31f15a2",
+      "sourceId": "us-holidays",
+      "institution": "Fed de Nueva York",
+      "region": "world",
+      "country": "Estados Unidos",
+      "title": "Día de Martin Luther King Jr.",
+      "description": "Calendario de la Reserva Federal; no determina el cierre de las bolsas de valores.",
+      "date": "2027-01-18",
+      "time": null,
+      "startsAt": null,
+      "timezone": "America/Lima",
+      "precision": "date",
+      "sourceUrl": "https://www.newyorkfed.org/aboutthefed/holiday_schedule",
+      "category": "feriados",
+      "key": false,
+      "status": "scheduled",
+      "note": "",
+      "kind": "holiday",
+      "jurisdiction": "Feriado bancario · Reserva Federal",
+      "sourceStatus": "ok",
+      "verifiedAt": "2026-09-22T10:55:15.574713Z"
     }
   ],
   "note": "Fechas publicadas por las instituciones, sujetas a revisión. Sin previsiones ni consensos de mercado. Las publicaciones sin hora se muestran como fecha, sin inventar un horario."

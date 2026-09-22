@@ -66,6 +66,7 @@ jobs:
         run: |
           python scripts/validate_data.py
           python scripts/sync_agenda.py --validate
+          python scripts/sync_regional.py --validate
           python -m unittest discover -s tests -p 'test_*.py'
           npm test
           node --check assets/app.js
