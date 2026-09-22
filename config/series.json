@@ -12,7 +12,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "inflation",
-    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC"
+    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01728AM",
@@ -27,7 +29,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD04722MM",
@@ -42,7 +46,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés del Banco Central de Reserva - Tasa de Referencia de la Política Monetaria"
+    "description": "Tasas de interés del Banco Central de Reserva - Tasa de Referencia de la Política Monetaria",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01277PM",
@@ -57,7 +63,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "inflation",
-    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos y Energía"
+    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Sin Alimentos y Energía",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01731AM",
@@ -72,7 +80,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI Desestacionalizado - Var% mensual"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - PBI Desestacionalizado - Var% mensual",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00027MM",
@@ -87,7 +97,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Cuentas monetarias del Banco Central de Reserva del Perú - Reservas Internacionales Netas (millones US$)"
+    "description": "Cuentas monetarias del Banco Central de Reserva del Perú - Reservas Internacionales Netas (millones US$)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01207PM",
@@ -102,7 +114,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "markets",
-    "description": "Tipo de cambio - promedio del periodo (S/ por US$) - Interbancario - Promedio"
+    "description": "Tipo de cambio - promedio del periodo (S/ por US$) - Interbancario - Promedio",
+    "primarySource": "BCRP, SBS, Reuters, Datatec",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38714BM",
@@ -117,7 +131,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Balanza comercial - valores FOB (millones US$) - Exportaciones"
+    "description": "Balanza comercial - valores FOB (millones US$) - Exportaciones",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38718BM",
@@ -132,7 +148,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Balanza comercial - valores FOB (millones US$) - Importaciones"
+    "description": "Balanza comercial - valores FOB (millones US$) - Importaciones",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38723BM",
@@ -147,7 +165,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Balanza comercial - valores FOB (millones US$) - Balanza Comercial"
+    "description": "Balanza comercial - valores FOB (millones US$) - Balanza Comercial",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN39524FM",
@@ -163,7 +183,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Resultado económico (Acumulado 12 meses - Porcentaje del PBI)",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD31896MM",
@@ -178,7 +200,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés de bonos del gobierno peruano - Rendimiento del Bono del gobierno peruano a 10 años (en US$)"
+    "description": "Tasas de interés de bonos del gobierno peruano - Rendimiento del Bono del gobierno peruano a 10 años (en US$)",
+    "primarySource": "Ministerio de Economía y Finanzas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01652XM",
@@ -193,7 +217,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "commodities",
-    "description": "Cotizaciones de productos (promedio del periodo) - Cobre - LME (¢US$ por libras)"
+    "description": "Cotizaciones de productos (promedio del periodo) - Cobre - LME (¢US$ por libras)",
+    "primarySource": "Reuters, Creed Rice y Oryza (para el arroz tailandés)",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD31895MM",
@@ -208,7 +234,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés de bonos del gobierno peruano - Rendimiento del Bono del gobierno peruano a 10 años (en S/)"
+    "description": "Tasas de interés de bonos del gobierno peruano - Rendimiento del Bono del gobierno peruano a 10 años (en S/)",
+    "primarySource": "Ministerio de Economía y Finanzas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01654XM",
@@ -223,7 +251,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "commodities",
-    "description": "Cotizaciones de productos (promedio del periodo) - Oro - LME (US$ por onzas troy)"
+    "description": "Cotizaciones de productos (promedio del periodo) - Oro - LME (US$ por onzas troy)",
+    "primarySource": "Reuters, Creed Rice y Oryza (para el arroz tailandés)",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01713AM",
@@ -238,7 +268,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Agropecuario"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Agropecuario",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01716AM",
@@ -253,7 +285,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Pesca"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Pesca",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38705PM",
@@ -268,7 +302,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "inflation",
-    "description": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - Índice de Precios al Consumidor (IPC)"
+    "description": "Índice de precios Lima Metropolitana (índice Dic.2021 = 100) - Índice de Precios al Consumidor (IPC)",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01717AM",
@@ -283,7 +319,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Minería e Hidrocarburos"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Minería e Hidrocarburos",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01720AM",
@@ -298,7 +336,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Manufactura"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Manufactura",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01725AM",
@@ -313,7 +353,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Comercio"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Comercio",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01724AM",
@@ -328,7 +370,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Construcción"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Construcción",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01723AM",
@@ -343,7 +387,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Electricidad y Agua"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Electricidad y Agua",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02207FM",
@@ -359,7 +405,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN01726AM",
@@ -374,7 +422,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "activity",
-    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Otros Servicios"
+    "description": "Producto bruto interno y demanda interna (variación porcentual interanual) - Otros Servicios",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02218FM",
@@ -390,7 +440,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Resultado Económico",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02204FM",
@@ -406,7 +458,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Ingresos Corrientes del Gobierno General",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN03432FQ",
@@ -422,7 +476,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Saldo de la deuda del sector público no financiero (porcentaje del PBI) - Deuda Pública",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Ministerio de Transporte y Comunicaciones, ONP, Cofide",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
   },
   {
     "id": "fred_DFF",
@@ -437,7 +493,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "DFF",
-    "description": "Fed Funds efectiva"
+    "description": "Fed Funds efectiva",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_T10Y2Y",
@@ -452,7 +509,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "T10Y2Y",
-    "description": "Pendiente UST 10a − 2a"
+    "description": "Pendiente UST 10a − 2a",
+    "primarySource": "Federal Reserve Bank of St. Louis / U.S. Treasury"
   },
   {
     "id": "fred_DGS2",
@@ -467,7 +525,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "DGS2",
-    "description": "UST 2 años"
+    "description": "UST 2 años",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS10",
@@ -482,7 +541,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "DGS10",
-    "description": "UST 10 años"
+    "description": "UST 10 años",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS30",
@@ -497,7 +557,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "DGS30",
-    "description": "UST 30 años"
+    "description": "UST 30 años",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_GDPC1",
@@ -512,7 +573,8 @@
     "countryName": "Estados Unidos",
     "category": "activity",
     "sourceCode": "GDPC1",
-    "description": "PBI real estadounidense, miles de millones de dólares encadenados de 2017, tasa anualizada y ajustada estacionalmente. Fuente BEA vía FRED."
+    "description": "PBI real estadounidense, miles de millones de dólares encadenados de 2017, tasa anualizada y ajustada estacionalmente. Fuente BEA vía FRED.",
+    "primarySource": "U.S. Bureau of Economic Analysis"
   },
   {
     "id": "fred_CPIAUCSL",
@@ -527,7 +589,8 @@
     "countryName": "Estados Unidos",
     "category": "inflation",
     "sourceCode": "CPIAUCSL",
-    "description": "Índice IPC urbano de EE. UU., ajustado estacionalmente; no es una tasa de inflación. Calcular variación interanual contra el mismo mes del año anterior. Fuente BLS vía FRED."
+    "description": "Índice IPC urbano de EE. UU., ajustado estacionalmente; no es una tasa de inflación. Calcular variación interanual contra el mismo mes del año anterior. Fuente BLS vía FRED.",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_UNRATE",
@@ -542,7 +605,8 @@
     "countryName": "Estados Unidos",
     "category": "labor",
     "sourceCode": "UNRATE",
-    "description": "Desempleo EE. UU."
+    "description": "Desempleo EE. UU.",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_PAYEMS",
@@ -557,7 +621,8 @@
     "countryName": "Estados Unidos",
     "category": "labor",
     "sourceCode": "PAYEMS",
-    "description": "Empleo no agrícola EE. UU."
+    "description": "Empleo no agrícola EE. UU.",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_CPILFESL",
@@ -572,7 +637,8 @@
     "countryName": "Estados Unidos",
     "category": "inflation",
     "sourceCode": "CPILFESL",
-    "description": "Índice IPC urbano de EE. UU., ajustado estacionalmente; no es una tasa de inflación. Calcular variación interanual contra el mismo mes del año anterior. Fuente BLS vía FRED."
+    "description": "Índice IPC urbano de EE. UU., ajustado estacionalmente; no es una tasa de inflación. Calcular variación interanual contra el mismo mes del año anterior. Fuente BLS vía FRED.",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_T10YIE",
@@ -587,7 +653,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "T10YIE",
-    "description": "Inflación implícita EE. UU. 10a"
+    "description": "Inflación implícita EE. UU. 10a",
+    "primarySource": "Federal Reserve Bank of St. Louis / U.S. Treasury"
   },
   {
     "id": "fred_FEDFUNDS",
@@ -602,7 +669,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "sourceCode": "FEDFUNDS",
-    "description": "Fed Funds efectiva mensual"
+    "description": "Fed Funds efectiva mensual",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DTWEXBGS",
@@ -617,7 +685,8 @@
     "countryName": "Estados Unidos",
     "category": "markets",
     "sourceCode": "DTWEXBGS",
-    "description": "Dólar amplio ponderado"
+    "description": "Dólar amplio ponderado",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DCOILWTICO",
@@ -632,7 +701,8 @@
     "countryName": "Estados Unidos",
     "category": "commodities",
     "sourceCode": "DCOILWTICO",
-    "description": "Petróleo WTI"
+    "description": "Petróleo WTI",
+    "primarySource": "U.S. Energy Information Administration"
   },
   {
     "id": "fred_VIXCLS",
@@ -647,7 +717,8 @@
     "countryName": "Estados Unidos",
     "category": "markets",
     "sourceCode": "VIXCLS",
-    "description": "Volatilidad VIX"
+    "description": "Volatilidad VIX",
+    "primarySource": "Chicago Board Options Exchange"
   },
   {
     "id": "fred_USREC",
@@ -662,7 +733,8 @@
     "countryName": "Estados Unidos",
     "category": "activity",
     "sourceCode": "USREC",
-    "description": "Recesión EE. UU. (NBER)"
+    "description": "Recesión EE. UU. (NBER)",
+    "primarySource": "National Bureau of Economic Research"
   },
   {
     "id": "wb_PER_NY.GDP.MKTP.KD.ZG",
@@ -3227,7 +3299,9 @@
     "countryName": "Perú",
     "category": "labor",
     "description": "Empleo Mensual en Lima Metropolitana - Promedio móvil tres meses (porcentaje) - Tasa de Desempleo (%)",
-    "coverage": "Lima Metropolitana; promedio móvil de tres meses"
+    "coverage": "Lima Metropolitana; promedio móvil de tres meses",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38066GM",
@@ -3242,7 +3316,9 @@
     "countryName": "Perú",
     "category": "labor",
     "description": "Empleo Mensual en Lima Metropolitana - Promedio móvil tres meses (porcentaje) - Tasa de Desempleo (%) - Por Grupos de Edad - 14 a 24 años",
-    "coverage": "Lima Metropolitana; promedio móvil de tres meses"
+    "coverage": "Lima Metropolitana; promedio móvil de tres meses",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38051GM",
@@ -3257,7 +3333,9 @@
     "countryName": "Perú",
     "category": "labor",
     "description": "Empleo Mensual en Lima Metropolitana - Promedio móvil tres meses (miles de personas) - PEA Ocupada",
-    "coverage": "Lima Metropolitana; promedio móvil de tres meses"
+    "coverage": "Lima Metropolitana; promedio móvil de tres meses",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN31879GM",
@@ -3271,7 +3349,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo del sector formal total (miles)"
+    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo del sector formal total (miles)",
+    "primarySource": "Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN31881GM",
@@ -3285,7 +3365,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo en el sector formal privado (miles)"
+    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo en el sector formal privado (miles)",
+    "primarySource": "Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN31880GM",
@@ -3299,7 +3381,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo del sector formal total (var.% 12 meses)"
+    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo del sector formal total (var.% 12 meses)",
+    "primarySource": "Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN31882GM",
@@ -3313,7 +3397,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo en el sector formal privado (var.% 12 meses)"
+    "description": "Puestos de trabajo e ingresos del sector formal - Puestos de trabajo en el sector formal privado (var.% 12 meses)",
+    "primarySource": "Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN31883GM",
@@ -3327,7 +3413,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Puestos de trabajo e ingresos del sector formal - Ingresos promedio del sector formal total nominal (S/)"
+    "description": "Puestos de trabajo e ingresos del sector formal - Ingresos promedio del sector formal total nominal (S/)",
+    "primarySource": "Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN37696PM",
@@ -3341,7 +3429,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Remuneraciones - Ingreso promedio del sector formal privado - Nominal (S/)"
+    "description": "Remuneraciones - Ingreso promedio del sector formal privado - Nominal (S/)",
+    "primarySource": "Ministerio de Trabajo y Promoción del Empleo",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN37697PM",
@@ -3355,7 +3445,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Remuneraciones - Ingreso promedio del sector formal privado - Real (S/ de 2009)"
+    "description": "Remuneraciones - Ingreso promedio del sector formal privado - Real (S/ de 2009)",
+    "primarySource": "Ministerio de Trabajo y Promoción del Empleo",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02124PM",
@@ -3369,7 +3461,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "labor",
-    "description": "Remuneraciones - Remuneración Mínima Vital - Nominal (S/)"
+    "description": "Remuneraciones - Remuneración Mínima Vital - Nominal (S/)",
+    "primarySource": "Ministerio de Trabajo y Promoción del Empleo",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD38045AM",
@@ -3383,7 +3477,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "expectations",
-    "description": "Expectativas empresariales totales - Índice de expectativas de la economía a 3 meses"
+    "description": "Expectativas empresariales totales - Índice de expectativas de la economía a 3 meses",
+    "primarySource": "Encuesta de Expectativas Macroeconómicas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD37981AM",
@@ -3397,7 +3493,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "expectations",
-    "description": "Expectativas empresariales totales - Índice de expectativas de la economía a 12 meses"
+    "description": "Expectativas empresariales totales - Índice de expectativas de la economía a 12 meses",
+    "primarySource": "Encuesta de Expectativas Macroeconómicas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD38047AM",
@@ -3411,7 +3509,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "expectations",
-    "description": "Expectativas empresariales totales - Índice de expectativas de la demanda a 3 meses"
+    "description": "Expectativas empresariales totales - Índice de expectativas de la demanda a 3 meses",
+    "primarySource": "Encuesta de Expectativas Macroeconómicas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PD39751AM",
@@ -3425,7 +3525,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "expectations",
-    "description": "Expectativas empresariales totales - Índice de expectativas de demanda por sus productos a 12 meses"
+    "description": "Expectativas empresariales totales - Índice de expectativas de demanda por sus productos a 12 meses",
+    "primarySource": "Encuesta de Expectativas Macroeconómicas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00532MM",
@@ -3439,7 +3541,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - A Empresas (millones S/)"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - A Empresas (millones S/)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00533MM",
@@ -3453,7 +3557,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - Consumo (millones S/)"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - Consumo (millones S/)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00534MM",
@@ -3467,7 +3573,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - Hipotecario (millones S/)"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos - Hipotecario (millones S/)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00535MM",
@@ -3481,7 +3589,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos (millones S/)"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Saldos (millones S/)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00536MM",
@@ -3495,7 +3605,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - A Empresas"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - A Empresas",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00537MM",
@@ -3509,7 +3621,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - Consumo"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - Consumo",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00538MM",
@@ -3523,7 +3637,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - Hipotecario"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%) - Hipotecario",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00539MM",
@@ -3537,7 +3653,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%)"
+    "description": "Crédito al sector privado de las sociedades creadoras de depósito, por tipo de crédito - Tasas de Crecimiento Anual (%)",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00281MM",
@@ -3551,7 +3669,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Saldo de obligaciones domésticas de las empresas bancarias en MN por institución - Sector Privado (millones S/) - Depósitos"
+    "description": "Saldo de obligaciones domésticas de las empresas bancarias en MN por institución - Sector Privado (millones S/) - Depósitos",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN00389MM",
@@ -3565,7 +3685,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "credit",
-    "description": "Saldo de obligaciones internas de las empresas bancarias en ME por institución - Sector Privado (millones US$) - Depósitos"
+    "description": "Saldo de obligaciones internas de las empresas bancarias en ME por institución - Sector Privado (millones US$) - Depósitos",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07809NM",
@@ -3579,7 +3701,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Activas - Preferencial Corporativa a 90 días"
+    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Activas - Preferencial Corporativa a 90 días",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07829NM",
@@ -3593,7 +3717,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en ME (términos efectivos anuales) - Activas - Preferencial Corporativa a 90 días"
+    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en ME (términos efectivos anuales) - Activas - Preferencial Corporativa a 90 días",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07814NM",
@@ -3607,7 +3733,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Pasivas - Plazos (días) - 181 - 360 días"
+    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Pasivas - Plazos (días) - 181 - 360 días",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07834NM",
@@ -3621,7 +3749,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en ME (términos efectivos anuales) - Pasivas - Plazos (días) - 181 - 360 días"
+    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en ME (términos efectivos anuales) - Pasivas - Plazos (días) - 181 - 360 días",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07845NM",
@@ -3635,7 +3765,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Consumo - Tarjeta de Crédito"
+    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Consumo - Tarjeta de Crédito",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07847NM",
@@ -3649,7 +3781,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Consumo - Préstamos - Más 360 días"
+    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Consumo - Préstamos - Más 360 días",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07848NM",
@@ -3663,7 +3797,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Hipotecario"
+    "description": "Tasas de interés activas promedio de las empresas bancarias por modalidad (términos efectivos anuales) - MN - Hipotecario",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN07819NM",
@@ -3677,7 +3813,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "rates",
-    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Tasa Interbancaria Promedio"
+    "description": "Tasas de interés activas y pasivas promedio de las empresas bancarias en MN (términos efectivos anuales) - Tasa Interbancaria Promedio",
+    "primarySource": "SBS",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02205FM",
@@ -3692,7 +3830,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Ingresos Corrientes del Gobierno General - Ingresos Tributarios",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02208FM",
@@ -3707,7 +3847,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Corriente",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02209FM",
@@ -3722,7 +3864,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Capital",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02210FM",
@@ -3737,7 +3881,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Capital - Formación Bruta de Capital",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02211FM",
@@ -3752,7 +3898,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Capital - Formación Bruta de Capital - Gobierno Nacional",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02212FM",
@@ -3767,7 +3915,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Capital - Formación Bruta de Capital - Gobiernos Regionales",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02213FM",
@@ -3782,7 +3932,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Gasto No Financiero del Gobierno General - Capital - Formación Bruta de Capital - Gobiernos Locales",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN02217FM",
@@ -3797,7 +3949,9 @@
     "countryName": "Perú",
     "category": "fiscal",
     "description": "Operaciones del sector público no financiero (millones S/) - Intereses",
-    "originalSource": "MEF y otras entidades públicas; distribución BCRPData"
+    "originalSource": "MEF y otras entidades públicas; distribución BCRPData",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat, EsSalud, sociedades de beneficencia pública, empresas estatales",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38738BM",
@@ -3811,7 +3965,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38743BM",
@@ -3825,7 +3981,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38741BM",
@@ -3839,7 +3997,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales - Mineros"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales - Mineros",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38742BM",
@@ -3853,7 +4013,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales - Petróleo y Gas Natural"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos Tradicionales - Petróleo y Gas Natural",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38744BM",
@@ -3867,7 +4029,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Agropecuarios"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Agropecuarios",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38745BM",
@@ -3881,7 +4045,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Pesqueros"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Pesqueros",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38746BM",
@@ -3895,7 +4061,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Textiles"
+    "description": "Exportaciones por grupo de productos - valores FOB (millones US$) - Productos no Tradicionales - Textiles",
+    "primarySource": "BCRP, Sunat, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38923BM",
@@ -3909,7 +4077,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Términos de Intercambio"
+    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Términos de Intercambio",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38915BM",
@@ -3923,7 +4093,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Índice de Precios Nominales - Exportaciones"
+    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Índice de Precios Nominales - Exportaciones",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN38919BM",
@@ -3937,7 +4109,9 @@
     "country": "PER",
     "countryName": "Perú",
     "category": "external",
-    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Índice de Precios Nominales - Importaciones"
+    "description": "Términos de intercambio de comercio exterior (índice 2007 = 100) - Índice de Precios Nominales - Importaciones",
+    "primarySource": "BCRP, Sunat, Zofratacna, Banco de la Nación, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "fred_DGS3MO",
@@ -3951,7 +4125,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "rates",
-    "description": "Market Yield on U.S. Treasury Securities at 3-Month Constant Maturity, Quoted on an Investment Basis (DGS3MO)"
+    "description": "Market Yield on U.S. Treasury Securities at 3-Month Constant Maturity, Quoted on an Investment Basis (DGS3MO)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS1",
@@ -3965,7 +4140,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "rates",
-    "description": "Market Yield on U.S. Treasury Securities at 1-Year Constant Maturity, Quoted on an Investment Basis (DGS1)"
+    "description": "Market Yield on U.S. Treasury Securities at 1-Year Constant Maturity, Quoted on an Investment Basis (DGS1)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS5",
@@ -3979,7 +4155,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "rates",
-    "description": "Market Yield on U.S. Treasury Securities at 5-Year Constant Maturity, Quoted on an Investment Basis (DGS5)"
+    "description": "Market Yield on U.S. Treasury Securities at 5-Year Constant Maturity, Quoted on an Investment Basis (DGS5)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS7",
@@ -3993,7 +4170,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "rates",
-    "description": "Market Yield on U.S. Treasury Securities at 7-Year Constant Maturity, Quoted on an Investment Basis (DGS7)"
+    "description": "Market Yield on U.S. Treasury Securities at 7-Year Constant Maturity, Quoted on an Investment Basis (DGS7)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_DGS20",
@@ -4007,7 +4185,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "rates",
-    "description": "Market Yield on U.S. Treasury Securities at 20-Year Constant Maturity, Quoted on an Investment Basis (DGS20)"
+    "description": "Market Yield on U.S. Treasury Securities at 20-Year Constant Maturity, Quoted on an Investment Basis (DGS20)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_PCEPI",
@@ -4021,7 +4200,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "inflation",
-    "description": "Personal Consumption Expenditures: Chain-type Price Index (PCEPI)"
+    "description": "Personal Consumption Expenditures: Chain-type Price Index (PCEPI)",
+    "primarySource": "U.S. Bureau of Economic Analysis"
   },
   {
     "id": "fred_PCEPILFE",
@@ -4035,7 +4215,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "inflation",
-    "description": "Personal Consumption Expenditures Excluding Food and Energy (Chain-Type Price Index) (PCEPILFE)"
+    "description": "Personal Consumption Expenditures Excluding Food and Energy (Chain-Type Price Index) (PCEPILFE)",
+    "primarySource": "U.S. Bureau of Economic Analysis"
   },
   {
     "id": "fred_PCEC96",
@@ -4049,7 +4230,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "activity",
-    "description": "Real Personal Consumption Expenditures (PCEC96)"
+    "description": "Real Personal Consumption Expenditures (PCEC96)",
+    "primarySource": "U.S. Bureau of Economic Analysis"
   },
   {
     "id": "fred_RSAFS",
@@ -4063,7 +4245,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "activity",
-    "description": "Advance Retail Sales: Retail Trade and Food Services (RSAFS)"
+    "description": "Advance Retail Sales: Retail Trade and Food Services (RSAFS)",
+    "primarySource": "U.S. Census Bureau"
   },
   {
     "id": "fred_INDPRO",
@@ -4077,7 +4260,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "activity",
-    "description": "Industrial Production: Total Index (INDPRO)"
+    "description": "Industrial Production: Total Index (INDPRO)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_TCU",
@@ -4091,7 +4275,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "activity",
-    "description": "Capacity Utilization: Total Index (TCU)"
+    "description": "Capacity Utilization: Total Index (TCU)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_ICSA",
@@ -4105,7 +4290,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "labor",
-    "description": "Initial Claims (ICSA)"
+    "description": "Initial Claims (ICSA)",
+    "primarySource": "U.S. Employment and Training Administration"
   },
   {
     "id": "fred_CIVPART",
@@ -4119,7 +4305,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "labor",
-    "description": "Labor Force Participation Rate (CIVPART)"
+    "description": "Labor Force Participation Rate (CIVPART)",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_JTSJOL",
@@ -4133,7 +4320,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "labor",
-    "description": "Job Openings: Total Nonfarm (JTSJOL)"
+    "description": "Job Openings: Total Nonfarm (JTSJOL)",
+    "primarySource": "U.S. Bureau of Labor Statistics"
   },
   {
     "id": "fred_HOUST",
@@ -4147,7 +4335,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "housing",
-    "description": "New Privately-Owned Housing Units Started: Total Units (HOUST)"
+    "description": "New Privately-Owned Housing Units Started: Total Units (HOUST)",
+    "primarySource": "U.S. Census Bureau"
   },
   {
     "id": "fred_PERMIT",
@@ -4161,7 +4350,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "housing",
-    "description": "New Privately-Owned Housing Units Authorized in Permit-Issuing Places: Total Units (PERMIT)"
+    "description": "New Privately-Owned Housing Units Authorized in Permit-Issuing Places: Total Units (PERMIT)",
+    "primarySource": "U.S. Census Bureau"
   },
   {
     "id": "fred_MORTGAGE30US",
@@ -4175,7 +4365,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "housing",
-    "description": "30-Year Fixed Rate Mortgage Average in the United States (MORTGAGE30US)"
+    "description": "30-Year Fixed Rate Mortgage Average in the United States (MORTGAGE30US)",
+    "primarySource": "Freddie Mac"
   },
   {
     "id": "fred_BAMLH0A0HYM2",
@@ -4190,7 +4381,8 @@
     "countryName": "Estados Unidos",
     "category": "risk",
     "description": "ICE BofA US High Yield Index Option-Adjusted Spread (BAMLH0A0HYM2) · Historia pública limitada a los últimos tres años por la fuente.",
-    "coverageNote": "FRED limita esta serie ICE a aproximadamente tres años de historia desde abril de 2026."
+    "coverageNote": "FRED limita esta serie ICE a aproximadamente tres años de historia desde abril de 2026.",
+    "primarySource": "ICE Data Indices, LLC"
   },
   {
     "id": "fred_BAMLC0A0CM",
@@ -4205,7 +4397,8 @@
     "countryName": "Estados Unidos",
     "category": "risk",
     "description": "ICE BofA US Corporate Index Option-Adjusted Spread (BAMLC0A0CM) · Historia pública limitada a los últimos tres años por la fuente.",
-    "coverageNote": "FRED limita esta serie ICE a aproximadamente tres años de historia desde abril de 2026."
+    "coverageNote": "FRED limita esta serie ICE a aproximadamente tres años de historia desde abril de 2026.",
+    "primarySource": "ICE Data Indices, LLC"
   },
   {
     "id": "fred_NFCI",
@@ -4219,7 +4412,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "risk",
-    "description": "Chicago Fed National Financial Conditions Index (NFCI)"
+    "description": "Chicago Fed National Financial Conditions Index (NFCI)",
+    "primarySource": "Federal Reserve Bank of Chicago"
   },
   {
     "id": "fred_STLFSI4",
@@ -4233,7 +4427,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "risk",
-    "description": "St. Louis Fed Financial Stress Index (STLFSI4)"
+    "description": "St. Louis Fed Financial Stress Index (STLFSI4)",
+    "primarySource": "Federal Reserve Bank of St. Louis"
   },
   {
     "id": "fred_WALCL",
@@ -4247,7 +4442,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "liquidity",
-    "description": "Assets: Total Assets: Total Assets (Less Eliminations from Consolidation): Wednesday Level (WALCL)"
+    "description": "Assets: Total Assets: Total Assets (Less Eliminations from Consolidation): Wednesday Level (WALCL)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_M2SL",
@@ -4261,7 +4457,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "liquidity",
-    "description": "M2 (M2SL)"
+    "description": "M2 (M2SL)",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "fred_UMCSENT",
@@ -4275,7 +4472,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "expectations",
-    "description": "University of Michigan: Consumer Sentiment (UMCSENT)"
+    "description": "University of Michigan: Consumer Sentiment (UMCSENT)",
+    "primarySource": "University of Michigan"
   },
   {
     "id": "fred_DCOILBRENTEU",
@@ -4289,7 +4487,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "commodities",
-    "description": "Crude Oil Prices: Brent - Europe (DCOILBRENTEU)"
+    "description": "Crude Oil Prices: Brent - Europe (DCOILBRENTEU)",
+    "primarySource": "U.S. Energy Information Administration"
   },
   {
     "id": "fred_DHHNGSP",
@@ -4303,7 +4502,8 @@
     "country": "USA",
     "countryName": "Estados Unidos",
     "category": "commodities",
-    "description": "Henry Hub Natural Gas Spot Price (DHHNGSP)"
+    "description": "Henry Hub Natural Gas Spot Price (DHHNGSP)",
+    "primarySource": "U.S. Energy Information Administration"
   },
   {
     "id": "wb_PER_SI.POV.NAHC",
@@ -9658,7 +9858,8 @@
     "countryName": "Estados Unidos",
     "category": "rates",
     "description": "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis, Inflation-Indexed",
-    "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2010-01-01"
+    "apiUrl": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2010-01-01",
+    "primarySource": "Board of Governors of the Federal Reserve System"
   },
   {
     "id": "wb_PER_SI.POV.UMIC",
@@ -9963,7 +10164,9 @@
     "category": "inflation",
     "coverage": "Lima Metropolitana",
     "apiUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN09822PM/json/2010-1/2026-9",
-    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Alimentos y Bebidas"
+    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Alimentos y Bebidas",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
   },
   {
     "id": "bcrp_PN09819PM",
@@ -9979,6 +10182,748 @@
     "category": "inflation",
     "coverage": "Lima Metropolitana",
     "apiUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN09819PM/json/2010-1/2026-9",
-    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Alimentos y Energía"
+    "description": "Índice de precios Lima Metropolitana (var% 12 meses) - IPC Alimentos y Energía",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01873AM",
+    "sourceCode": "PN01873AM",
+    "code": "PN01873AM",
+    "name": "Producción de cobre",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01873AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de toneladas recuperables",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01876AM",
+    "sourceCode": "PN01876AM",
+    "code": "PN01876AM",
+    "name": "Producción de oro",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01876AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de kg recuperables",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales",
+    "methodologyNote": "Se respeta la escala del cuadro BCRP: miles de unidades recuperables. Oro y plata están expresados en miles de kilogramos (equivalentes a toneladas); no en kilogramos individuales."
+  },
+  {
+    "id": "bcrp_PN01879AM",
+    "sourceCode": "PN01879AM",
+    "code": "PN01879AM",
+    "name": "Producción de zinc",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01879AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de toneladas recuperables",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01877AM",
+    "sourceCode": "PN01877AM",
+    "code": "PN01877AM",
+    "name": "Producción de plata",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01877AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de kg recuperables",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales",
+    "methodologyNote": "Se respeta la escala del cuadro BCRP: miles de unidades recuperables. Oro y plata están expresados en miles de kilogramos (equivalentes a toneladas); no en kilogramos individuales."
+  },
+  {
+    "id": "bcrp_PN01880AM",
+    "sourceCode": "PN01880AM",
+    "code": "PN01880AM",
+    "name": "Producción de molibdeno",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01880AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de toneladas recuperables",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01882AM",
+    "sourceCode": "PN01882AM",
+    "code": "PN01882AM",
+    "name": "Producción de petróleo",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01882AM/html",
+    "frequency": "monthly",
+    "unit": "Miles de barriles",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01884AM",
+    "sourceCode": "PN01884AM",
+    "code": "PN01884AM",
+    "name": "Producción de gas natural",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01884AM/html",
+    "frequency": "monthly",
+    "unit": "Millones de pies cúbicos",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Energía y Minas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01729AM",
+    "sourceCode": "PN01729AM",
+    "code": "PN01729AM",
+    "name": "PBI de sectores primarios",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01729AM/html",
+    "frequency": "monthly",
+    "unit": "% interanual",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN01730AM",
+    "sourceCode": "PN01730AM",
+    "code": "PN01730AM",
+    "name": "PBI de sectores no primarios",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01730AM/html",
+    "frequency": "monthly",
+    "unit": "% interanual",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, Ministerio de Agricultura, Ministerio de Energía y Minas, Ministerio de la Producción",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02296FM",
+    "sourceCode": "PN02296FM",
+    "code": "PN02296FM",
+    "name": "Recaudación del impuesto a la renta",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02296FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02297FM",
+    "sourceCode": "PN02297FM",
+    "code": "PN02297FM",
+    "name": "Impuesto a la renta de personas naturales",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02297FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02298FM",
+    "sourceCode": "PN02298FM",
+    "code": "PN02298FM",
+    "name": "Impuesto a la renta de personas jurídicas",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02298FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02301FM",
+    "sourceCode": "PN02301FM",
+    "code": "PN02301FM",
+    "name": "Recaudación del IGV",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02301FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02302FM",
+    "sourceCode": "PN02302FM",
+    "code": "PN02302FM",
+    "name": "Recaudación del IGV interno",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02302FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02303FM",
+    "sourceCode": "PN02303FM",
+    "code": "PN02303FM",
+    "name": "Recaudación del IGV de importaciones",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02303FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02304FM",
+    "sourceCode": "PN02304FM",
+    "code": "PN02304FM",
+    "name": "Recaudación del ISC",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02304FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN02308FM",
+    "sourceCode": "PN02308FM",
+    "code": "PN02308FM",
+    "name": "Devoluciones de impuestos",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN02308FM/html",
+    "frequency": "monthly",
+    "unit": "Millones S/",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Sunat",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales",
+    "methodologyNote": "Las devoluciones se publican con signo negativo porque reducen la recaudación neta."
+  },
+  {
+    "id": "bcrp_PN01287PM",
+    "sourceCode": "PN01287PM",
+    "code": "PN01287PM",
+    "name": "Inflación de precios al por mayor",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01287PM/html",
+    "frequency": "monthly",
+    "unit": "% interanual",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "inflation",
+    "primarySource": "INEI",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN00511MM",
+    "sourceCode": "PN00511MM",
+    "code": "PN00511MM",
+    "name": "Dolarización del crédito de sociedades de depósito",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN00511MM/html",
+    "frequency": "monthly",
+    "unit": "%",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "credit",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN00025MM",
+    "sourceCode": "PN00025MM",
+    "code": "PN00025MM",
+    "name": "Dolarización de la liquidez de sociedades de depósito",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN00025MM/html",
+    "frequency": "monthly",
+    "unit": "%",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "liquidity",
+    "primarySource": "BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales"
+  },
+  {
+    "id": "bcrp_PN38986BQ",
+    "sourceCode": "PN38986BQ",
+    "code": "PN38986BQ",
+    "name": "Remesas recibidas del exterior",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN38986BQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones USD",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "BCRP, Ministerio de Economía y Finanzas, SBS, Sunat, Ministerio de Comercio Exterior y Turismo, Promperu, Ministerio de Relaciones Exteriores, Cofide, ONP, FCR, Zofratacna, Banco de la Nación, Cavali, ICLV, PROINVERSION, BIS, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN39244BQ",
+    "sourceCode": "PN39244BQ",
+    "code": "PN39244BQ",
+    "name": "Ingresos por viajes del exterior",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN39244BQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones USD",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "BCRP, SBS, Sunat, Ministerio de Comercio Exterior y Turismo, Promperu, Ministerio de Relaciones Exteriores, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales",
+    "methodologyNote": "Flujos de servicios de viajes de la balanza de pagos; no representan el número de turistas."
+  },
+  {
+    "id": "bcrp_PN39245BQ",
+    "sourceCode": "PN39245BQ",
+    "code": "PN39245BQ",
+    "name": "Egresos por viajes al exterior",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN39245BQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones USD",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "BCRP, SBS, Sunat, Ministerio de Comercio Exterior y Turismo, Promperu, Ministerio de Relaciones Exteriores, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales",
+    "methodologyNote": "Flujos de servicios de viajes de la balanza de pagos; no representan el número de turistas."
+  },
+  {
+    "id": "bcrp_PN38975BQ",
+    "sourceCode": "PN38975BQ",
+    "code": "PN38975BQ",
+    "name": "Balanza en cuenta corriente",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN38975BQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones USD",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "BCRP, Ministerio de Economía y Finanzas, SBS, Sunat, Ministerio de Comercio Exterior y Turismo, Promperu, Ministerio de Relaciones Exteriores, Cofide, ONP, FCR, Zofratacna, Banco de la Nación, Cavali, ICLV, PROINVERSION, BIS, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN39002BQ",
+    "sourceCode": "PN39002BQ",
+    "code": "PN39002BQ",
+    "name": "Cuenta corriente respecto al PBI",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN39002BQ/html",
+    "frequency": "quarterly",
+    "unit": "% PBI",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "BCRP, Ministerio de Economía y Finanzas, SBS, Sunat, Ministerio de Comercio Exterior y Turismo, Promperu, Ministerio de Relaciones Exteriores, Cofide, ONP, FCR, Zofratacna, Banco de la Nación, Cavali, ICLV, PROINVERSION, BIS, empresas",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02529AQ",
+    "sourceCode": "PN02529AQ",
+    "code": "PN02529AQ",
+    "name": "Consumo privado real",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02529AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02530AQ",
+    "sourceCode": "PN02530AQ",
+    "code": "PN02530AQ",
+    "name": "Consumo público real",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02530AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02533AQ",
+    "sourceCode": "PN02533AQ",
+    "code": "PN02533AQ",
+    "name": "Inversión privada real",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02533AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02534AQ",
+    "sourceCode": "PN02534AQ",
+    "code": "PN02534AQ",
+    "name": "Inversión pública real",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02534AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02536AQ",
+    "sourceCode": "PN02536AQ",
+    "code": "PN02536AQ",
+    "name": "Exportaciones reales de bienes y servicios",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02536AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02537AQ",
+    "sourceCode": "PN02537AQ",
+    "code": "PN02537AQ",
+    "name": "Importaciones reales de bienes y servicios",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02537AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "external",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN02538AQ",
+    "sourceCode": "PN02538AQ",
+    "code": "PN02538AQ",
+    "name": "PBI real trimestral Perú",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN02538AQ/html",
+    "frequency": "quarterly",
+    "unit": "Millones S/ de 2007",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "activity",
+    "primarySource": "INEI, BCRP",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN03433FQ",
+    "sourceCode": "PN03433FQ",
+    "code": "PN03433FQ",
+    "name": "Deuda pública externa del SPNF",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN03433FQ/html",
+    "frequency": "quarterly",
+    "unit": "% PBI",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Ministerio de Transporte y Comunicaciones, ONP, Cofide",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "bcrp_PN03442FQ",
+    "sourceCode": "PN03442FQ",
+    "code": "PN03442FQ",
+    "name": "Deuda pública interna del SPNF",
+    "provider": "BCRP",
+    "sourceUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales/resultados/PN03442FQ/html",
+    "frequency": "quarterly",
+    "unit": "% PBI",
+    "country": "PER",
+    "countryName": "Perú",
+    "category": "fiscal",
+    "primarySource": "Ministerio de Economía y Finanzas, Banco de la Nación, Ministerio de Transporte y Comunicaciones, ONP, Cofide",
+    "metadataUrl": "https://estadisticas.bcrp.gob.pe/estadisticas/series/trimestrales"
+  },
+  {
+    "id": "fred_SAHMREALTIME",
+    "sourceCode": "SAHMREALTIME",
+    "code": "SAHMREALTIME",
+    "name": "Regla de Sahm en tiempo real EE. UU.",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/SAHMREALTIME",
+    "frequency": "monthly",
+    "unit": "p.p.",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "risk",
+    "primarySource": "Claudia Sahm",
+    "description": "Diferencia entre la media móvil de tres meses del desempleo y el mínimo de esas medias en los 12 meses previos. Serie en tiempo real publicada por FRED; umbral de referencia 0,50 p.p.; no es una probabilidad."
+  },
+  {
+    "id": "fred_CFNAI",
+    "sourceCode": "CFNAI",
+    "code": "CFNAI",
+    "name": "Actividad nacional de Chicago Fed",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/CFNAI",
+    "frequency": "monthly",
+    "unit": "Índice",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "activity",
+    "primarySource": "Federal Reserve Bank of Chicago",
+    "description": "Cero representa el crecimiento tendencial histórico; valores positivos indican crecimiento superior a la tendencia y negativos inferior."
+  },
+  {
+    "id": "fred_CFNAIMA3",
+    "sourceCode": "CFNAIMA3",
+    "code": "CFNAIMA3",
+    "name": "Actividad de Chicago Fed, media de 3 meses",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/CFNAIMA3",
+    "frequency": "monthly",
+    "unit": "Índice",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "activity",
+    "primarySource": "Federal Reserve Bank of Chicago",
+    "description": "Media móvil de tres meses del CFNAI publicada por Chicago Fed. No es crecimiento porcentual del PBI."
+  },
+  {
+    "id": "fred_T10Y3M",
+    "sourceCode": "T10Y3M",
+    "code": "T10Y3M",
+    "name": "Pendiente UST 10 años − 3 meses",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/T10Y3M",
+    "frequency": "daily",
+    "unit": "p.p.",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "rates",
+    "primarySource": "Federal Reserve Bank of St. Louis / U.S. Treasury",
+    "description": "Diferencia entre los rendimientos del Tesoro a 10 años y a 3 meses; una cifra negativa indica inversión de este tramo de la curva."
+  },
+  {
+    "id": "fred_CES0500000003",
+    "sourceCode": "CES0500000003",
+    "code": "CES0500000003",
+    "name": "Salario por hora privado EE. UU.",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/CES0500000003",
+    "frequency": "monthly",
+    "unit": "USD por hora",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "labor",
+    "primarySource": "U.S. Bureau of Labor Statistics",
+    "description": "Promedio de ingresos brutos por hora de todos los empleados privados; desestacionalizado. Los cambios de composición del empleo afectan el promedio."
+  },
+  {
+    "id": "fred_UNEMPLOY",
+    "sourceCode": "UNEMPLOY",
+    "code": "UNEMPLOY",
+    "name": "Personas desempleadas EE. UU.",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/UNEMPLOY",
+    "frequency": "monthly",
+    "unit": "Miles de personas",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "labor",
+    "primarySource": "U.S. Bureau of Labor Statistics",
+    "description": "Desempleados de 16 años y más de la encuesta de hogares CPS, desestacionalizado. Compatible temporalmente con JOLTS, aunque proviene de una encuesta diferente."
+  },
+  {
+    "id": "fred_T5YIE",
+    "sourceCode": "T5YIE",
+    "code": "T5YIE",
+    "name": "Inflación implícita EE. UU. a 5 años",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/T5YIE",
+    "frequency": "daily",
+    "unit": "%",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "inflation",
+    "primarySource": "Federal Reserve Bank of St. Louis / U.S. Treasury",
+    "description": "Diferencia entre rendimiento nominal y real de títulos del Tesoro a cinco años; incluye expectativas y primas de riesgo/liquidez."
+  },
+  {
+    "id": "fred_ECBDFR",
+    "sourceCode": "ECBDFR",
+    "code": "ECBDFR",
+    "name": "Tasa de facilidad de depósito del BCE",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/ECBDFR",
+    "frequency": "daily",
+    "unit": "%",
+    "country": "EMU",
+    "countryName": "Zona euro",
+    "category": "rates",
+    "primarySource": "European Central Bank",
+    "description": "Tasa de depósitos a un día en el Eurosistema. Composición cambiante de la zona euro; serie diaria de siete días."
+  },
+  {
+    "id": "fred_CLVMNACSCAB1GQEA19",
+    "sourceCode": "CLVMNACSCAB1GQEA19",
+    "code": "CLVMNACSCAB1GQEA19",
+    "name": "PBI real de la zona euro, 19 países",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/CLVMNACSCAB1GQEA19",
+    "frequency": "quarterly",
+    "unit": "Millones EUR encadenados de 2010",
+    "country": "EA19",
+    "countryName": "Zona euro (19 países)",
+    "category": "activity",
+    "primarySource": "Eurostat",
+    "description": "PBI real trimestral, desestacionalizado, en millones de euros encadenados de 2010. Cobertura fija de 19 países de la zona euro, no todos sus miembros actuales."
+  },
+  {
+    "id": "fred_CP0000EZ19M086NEST",
+    "sourceCode": "CP0000EZ19M086NEST",
+    "code": "CP0000EZ19M086NEST",
+    "name": "IPCA de la zona euro, 19 países",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/CP0000EZ19M086NEST",
+    "frequency": "monthly",
+    "unit": "Índice 2025=100",
+    "country": "EA19",
+    "countryName": "Zona euro (19 países)",
+    "category": "inflation",
+    "primarySource": "Eurostat",
+    "description": "Índice armonizado de precios al consumidor, total; sin ajuste estacional. Base 2025=100 según metadatos vigentes; cobertura de 19 países."
+  },
+  {
+    "id": "fred_RRPONTSYD",
+    "sourceCode": "RRPONTSYD",
+    "code": "RRPONTSYD",
+    "name": "Repos inversos a un día de la Reserva Federal",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/RRPONTSYD",
+    "frequency": "daily",
+    "unit": "Miles de millones USD",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "liquidity",
+    "primarySource": "Federal Reserve Bank of New York",
+    "description": "Valor agregado diario de operaciones temporales de recompra inversa de la Fed. Es una operación de mercado abierto, no una medida directa de dinero invertible."
+  },
+  {
+    "id": "fred_BUSLOANS",
+    "sourceCode": "BUSLOANS",
+    "code": "BUSLOANS",
+    "name": "Crédito comercial e industrial EE. UU.",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/BUSLOANS",
+    "frequency": "monthly",
+    "unit": "Miles de millones USD",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "credit",
+    "primarySource": "Board of Governors of the Federal Reserve System",
+    "description": "Préstamos comerciales e industriales de todos los bancos comerciales; nivel mensual desestacionalizado (H.8)."
+  },
+  {
+    "id": "fred_TOTBKCR",
+    "sourceCode": "TOTBKCR",
+    "code": "TOTBKCR",
+    "name": "Crédito bancario total EE. UU.",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/TOTBKCR",
+    "frequency": "weekly",
+    "unit": "Miles de millones USD",
+    "country": "USA",
+    "countryName": "Estados Unidos",
+    "category": "credit",
+    "primarySource": "Board of Governors of the Federal Reserve System",
+    "description": "Crédito de todos los bancos comerciales, desestacionalizado. Semanas terminadas en miércoles (H.8); comprende préstamos y valores."
+  },
+  {
+    "id": "fred_DEXCHUS",
+    "sourceCode": "DEXCHUS",
+    "code": "DEXCHUS",
+    "name": "Yuan por dólar estadounidense",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/DEXCHUS",
+    "frequency": "daily",
+    "unit": "CNY por USD",
+    "country": "CHN",
+    "countryName": "China",
+    "category": "markets",
+    "primarySource": "Board of Governors of the Federal Reserve System",
+    "description": "Tipo comprador al mediodía en Nueva York (H.10). Una subida indica depreciación del yuan frente al dólar."
+  },
+  {
+    "id": "fred_DEXUSEU",
+    "sourceCode": "DEXUSEU",
+    "code": "DEXUSEU",
+    "name": "Dólar estadounidense por euro",
+    "provider": "FRED",
+    "sourceUrl": "https://fred.stlouisfed.org/series/DEXUSEU",
+    "frequency": "daily",
+    "unit": "USD por EUR",
+    "country": "EMU",
+    "countryName": "Zona euro",
+    "category": "markets",
+    "primarySource": "Board of Governors of the Federal Reserve System",
+    "description": "Tipo comprador al mediodía en Nueva York (H.10). Una subida indica apreciación del euro frente al dólar."
   }
 ]

@@ -8,16 +8,18 @@ El proyecto está preparado para alojar **código, datos, fuentes tipográficas,
 
 ## Qué incluye
 
-La versión 3 añade diez vistas temáticas y 49 gráficos a las vistas de panorama y comparación. La cobertura contiene **155 indicadores distintos** distribuidos en **644 series** (indicador y economía): **635 con datos**, **112 series de Perú**, 15 países y los agregados Mundo/Latinoamérica. No se presenta como cobertura exhaustiva de toda estadística existente; consulta la fecha y la definición de cada serie.
+La entrega contiene **204 indicadores distintos**, **693 series configuradas**, **684 con datos**, **146 series de Perú** y **143.457 observaciones**. Los 78 gráficos temáticos se complementan con los panoramas, Latinoamérica y el Explorador. Los conteos corresponden a esta entrega y se actualizan en Fuentes.
 
+La versión 4 organiza la herramienta en **Pulso económico → tendencias → análisis por tema → agenda**. Mantiene la cabecera y las medidas compartidas con SBS.
 
-- **Perú:** PBI real, inflación de Lima, IPC sin alimentos y energía, tasa BCRP, USD/PEN, comercio, fiscal, deuda, reservas y materias primas.
-- **Latinoamérica:** comparación por año, trayectorias y mapa de crecimiento; selección de países; agregados mundiales oficiales en la vista global.
-- **Mundo y mercados:** Fed, rendimientos y curva UST 2/10/30 años, IPC, empleo, dólar amplio, WTI, VIX y breakeven.
-- **Explorador:** catálogo ampliado de series, comparación de hasta cuatro, base 100, cambio interanual o absoluto, dispersión y correlación, zoom, modal, tablas, CSV y PNG.
-- **Fuentes:** observación, descarga, periodicidad, cobertura, estado y enlaces originales por serie.
-- Gráficos: valores finales, leyendas con periodos, rangos históricos, percentiles, dispersión con ajuste lineal, mapas sectoriales, ocho vencimientos Treasury y recesiones estadounidenses identificadas. Exportación PNG con nombres, valores, unidades y fuentes; CSV con definición.
-- Diseño adaptable, modo claro/oscuro, controles de lectura, actualización al volver a la pestaña y cada cinco minutos.
+- **Pulso económico:** cinco lecturas para Perú y cinco para EE. UU., con evidencia, fechas, reglas de interpretación y aviso de rezago. No son calificaciones oficiales ni probabilidades de recesión.
+- **Perú:** actividad y sectores, precios e ingresos, trabajo y crédito, finanzas públicas, sector externo, desarrollo, tasas y moneda. La cobertura incorpora también producción minera, remesas, viajes, recaudación y demanda interna.
+- **Mundo y mercados:** ciclo, inflación, empleo, riesgo, tasas, liquidez y materias primas. Las señales estadounidenses se identifican como tales; los agregados mundiales provienen del Banco Mundial.
+- **Agendas:** publicaciones estadísticas y decisiones programadas para Perú y el mundo, con ventana móvil de 60 días, fechas verificadas, horarios de Lima, filtros y exportación a calendario. Cada organismo muestra su estado y horizonte publicado.
+- **Latinoamérica:** comparación del mismo indicador y año, trayectoria, mapa de crecimiento, lectura entre pares e indicadores de desarrollo. Los datos faltantes no se sustituyen por los de otro año.
+- **Explorador:** búsqueda por economía, tema y fuente; hasta cuatro series; transformaciones; intervalo de fechas; comparaciones guardadas; dispersión y correlaciones calculadas sobre fechas coincidentes.
+- **Gráficos:** etiquetas finales, leyendas con fechas, contexto histórico desplegable, referencias explícitas, mapas y dispersión, ocho vencimientos Treasury, bandas de recesión estadounidense. PNG con fuentes y CSV con unidades y definiciones.
+- **Fuentes:** periodos económicos, fechas de descarga, cobertura, salud del conector y ficha original de cada serie. Diseño adaptable y tema claro/oscuro.
 
 La cobertura y el número de observaciones se muestran en **Fuentes** y `data/manifest.json`. El catálogo puede incluir series sin cobertura en algunos países. No se usan datos simulados, y las ausencias se muestran expresamente. Ninguna fuente cubre por sí sola toda la economía; la herramienta distingue lo disponible de lo pendiente.
 
@@ -44,13 +46,23 @@ El ZIP no sube cambios a tu cuenta por sí solo. Estas instrucciones actualizan 
 - Descarga automática: todos los días a las **12:35 UTC / 7:35 a. m. de Lima**.
 - Descarga manual: **Actions → Sincronizar Treasury Macro Hub → Run workflow**, marca **Descargar datos nuevos antes de publicar**, selecciona `main` y ejecuta.
 - Publicación manual sin descarga: deja esa casilla desmarcada. Es la opción más rápida para aplicar un cambio de diseño o corregir la publicación.
-- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Si todas las solicitudes fallan, esa ejecución se detiene sin cambiar la publicación anterior.
+- Los nuevos datos se validan antes de guardarse en `data/` y publicarse. Si falla una parte de la descarga, conserva el último dato válido de cada serie afectada y muestra su estado real. Los indicadores y la agenda se consultan de forma independiente: si una descarga completa falla, se puede publicar la otra conservando el archivo válido anterior y su fecha. Si ambas fallan, esa ejecución se detiene sin publicar.
 - El flujo soporta Pages desde rama: después del commit del bot solicita explícitamente un build de Pages y espera a que GitHub confirme la versión. Un commit realizado con `GITHUB_TOKEN` no dispara por sí solo ese build.
 - En modo Actions, publica únicamente `index.html`, `assets/`, `data/` y `.nojekyll`, copiados a `dist` por el build. `dist` es una salida generada; no es la carpeta que debes editar.
 - Permisos: **Settings → Actions → General → Workflow permissions → Read and write permissions**. Si GitHub pide habilitar workflows, acéptalo para activar la programación. Las reglas de protección de `main` también deben permitir los commits de datos del bot.
 - Si `main` cambia mientras corre la actualización, el flujo se detiene para no publicar encima de un cambio más reciente. Reejecútalo sobre `main`.
-- La web consulta la versión publicada cada cinco minutos mientras está visible y al volver a la pestaña. El botón **Actualizar** recarga la publicación; no ejecuta GitHub Actions.
+- La agenda y los indicadores se consultan independientemente cada cinco minutos mientras está visible y al volver a la pestaña. El botón **Actualizar** recarga la publicación; no ejecuta GitHub Actions.
 - GitHub puede retrasar cron o suspenderlo en repositorios públicos tras 60 días sin actividad. Revisa Actions si la fecha de descarga deja de avanzar.
+
+### Agenda económica
+
+`scripts/sync_agenda.py` consulta calendarios publicados por los organismos y conserva una ventana móvil de 60 días. No inventa recurrencias ni fechas probables. Las fuentes que no responden quedan como no disponibles o conservadas; la vista muestra si existe cobertura confirmada de al menos un mes. Las fechas pueden cambiar en origen.
+
+- El calendario del INEI se obtiene de su agenda oficial y de su feed público enlazado.
+- La agenda internacional incluye las fuentes oficiales disponibles, como BEA, Reserva Federal y BCE. Cada evento permite abrir la publicación original.
+- Las publicaciones sin hora se muestran como tales. Las horas confirmadas se convierten a **America/Lima**, respetando el horario de verano del lugar de origen.
+- El archivo ICS permite importar las fechas mostradas. Una importación de archivo no crea una suscripción que se actualice sola en el calendario personal; la agenda web sí se actualiza con GitHub Actions.
+- El botón Actualizar también consulta la agenda aunque no haya cambiado la versión de las series económicas.
 
 **No necesitas Supabase, servidor, API key ni mantener encendida tu PC.** Todo el código, los datos y los recursos visuales se sirven desde tu proyecto. Una descarga reciente no significa que una estadística anual también sea reciente: cada gráfico conserva su periodo de observación.
 
@@ -104,7 +116,10 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 | `index.html` | Entrada de la web en la raíz, compatible con main/(root) |
 | `assets/app.js` | Vistas, controles y explorador |
 | `assets/chart-engine.js` | Gráficos analíticos, percentiles y estadísticas |
-| `assets/economic-views.js` | 49 paneles temáticos y sus definiciones |
+| `assets/economic-views.js` | Paneles temáticos y sus definiciones |
+| `assets/economic-monitor.js` | Señales, reglas y evidencia del Pulso económico |
+| `assets/comparison-lab.js` | Comparaciones regionales y herramientas del Explorador |
+| `assets/agenda.js` y `data/agenda.json` | Eventos, cobertura y estado de calendarios |
 | `assets/treasury-core.css` | Base visual compartida extraída del CSS de SBS |
 | `assets/macro.css` | Estilos exclusivos de esta herramienta |
 | `assets/treasury-shell.js` y `mobile-topbar.js` | Altura de cabecera, tema y comportamiento móvil |
@@ -115,6 +130,8 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 | `data/health.json` | Control de cobertura y errores |
 | `data/revisions.json` | Cambios en observaciones anteriores de la última ejecución |
 | `config/series.json` | Catálogo editable |
+| `scripts/refresh_publication.py` | Actualiza indicadores y agenda de forma independiente |
+| `scripts/sync_agenda.py` | Descarga y valida fechas de calendarios oficiales |
 | `scripts/sync_data.py` | Descarga, normalización y preservación de datos en `data/` |
 | `scripts/build_site.py` | Valida y copia solo archivos de producción a `dist/` |
 | `.github/workflows/sync-macro.yml` | Programación, commit y publicación Pages |
@@ -123,6 +140,7 @@ Consulta [UI-COMPATIBILIDAD.md](UI-COMPATIBILIDAD.md) antes de modificar compone
 
 ```bash
 python scripts/validate_data.py
+python scripts/sync_agenda.py --validate
 python -m unittest discover -s tests -p "test_*.py"
 npm test
 python scripts/build_site.py

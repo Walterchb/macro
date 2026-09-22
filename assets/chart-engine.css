@@ -32,3 +32,17 @@
 .chart-tooltip-meta{grid-column:1/-1;color:#b5c5d7;font-size:9px;line-height:1.4}
 @media(max-width:760px){.chart-series-legend{gap:4px 10px}.chart-legend-name{max-width:175px}.chart-distribution{gap:6px}.chart-range-stat span,.chart-percentile span{font-size:.56rem}.chart-range-stat strong,.chart-percentile strong{font-size:.73rem}.chart-history-caption{font-size:.57rem}.chart-percentile{padding-left:0}.chart-tooltip{max-width:270px}.chart-tooltip-row{gap:2px 7px}}
 @media(max-width:380px){.chart-distribution{grid-template-columns:1fr 1fr 1fr}.chart-percentile{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}.chart-percentile-track{margin:0 4px}.chart-legend-name{max-width:140px}}
+/* Keep the reading hierarchy on the plot and its latest observations. */
+.chart-stat-details{border-top:1px solid var(--line);margin-top:5px;padding-top:5px}
+.chart-stat-details>summary{display:flex;justify-content:space-between;gap:12px;align-items:center;list-style:none;cursor:pointer;color:var(--muted);font-size:.61rem;padding:4px 0;line-height:1.5}
+.chart-stat-details>summary::-webkit-details-marker{display:none}
+.chart-stat-details>summary>span:first-child:before{content:'＋';display:inline-block;width:15px;color:var(--accent)}
+.chart-stat-details[open]>summary>span:first-child:before{content:'−'}
+.chart-stat-details>summary>span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink);font-size:.63rem}
+.chart-stat-details>summary small{font-size:.57rem;color:var(--muted);font-weight:400}
+.chart-stat-details .chart-distribution{margin-top:5px;border-bottom:0}
+.chart-source-line{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:6px;color:var(--muted);font-size:.59rem;line-height:1.5}
+.chart-source-line a{color:var(--muted);text-decoration:none}
+.chart-source-line a:hover{text-decoration:underline;color:var(--accent)}
+.chart-stat-details>summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+@media print{.chart-stat-details{display:none}.chart-source-line{font-size:8px}}

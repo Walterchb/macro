@@ -3,6 +3,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 import shutil
 import tempfile
+import re
 from urllib.parse import unquote, urlsplit
 from validate_data import validate_data
 
@@ -37,6 +38,24 @@ def build_site(root=ROOT):
         path = (root / unquote(url.path)).resolve()
         if not path.is_relative_to(root) or not path.is_file():
             raise ValueError('Recurso local no encontrado: ' + ref)
+    # A missing imported module produces a blank page even when index.html exists.
+    pending = [root / unquote(urlsplit(ref).path) for ref in parser.paths
+               if not urlsplit(ref).scheme and urlsplit(ref).path.endswith('.js')]
+    checked = set()
+    while pending:
+        module = pending.pop().resolve()
+        if module in checked:
+            continue
+        checked.add(module)
+        for ref in re.findall(r'''(?:import\s+(?:[^;'\"]*?\s+from\s+)?|export\s+[^;'\"]*?\s+from\s+)["']([^"']+)["']''', module.read_text(encoding='utf-8')):
+            if ref.startswith('/'):
+                raise ValueError('Usa rutas relativas en módulos: ' + ref)
+            if not ref.startswith('.'):
+                continue
+            dependency = (module.parent / unquote(urlsplit(ref).path)).resolve()
+            if not dependency.is_relative_to(root) or not dependency.is_file():
+                raise ValueError('Módulo local no encontrado: ' + ref)
+            pending.append(dependency)
     staging = Path(tempfile.mkdtemp(prefix='.macro-build-', dir=root))
     try:
         shutil.copy2(root / 'index.html', staging / 'index.html')
@@ -54,5 +73,7 @@ def build_site(root=ROOT):
 
 
 if __name__ == '__main__':
+    from sync_agenda import validate_agenda
     print(validate_data())
+    validate_agenda()
     print('Web lista para publicar:', build_site())

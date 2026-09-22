@@ -20,6 +20,13 @@ def validate_data(root=ROOT):
     exp, imp, trade = [lookup['bcrp_' + c] for c in ('PN38714BM', 'PN38718BM', 'PN38723BM')]
     for d in exp.keys() & imp.keys() & trade.keys():
         assert math.isclose(exp[d] - imp[d], trade[d], abs_tol=.001), 'Comercio no reconcilia ' + d
+    for total_code, first_code, second_code, label in (
+        ('PN02301FM', 'PN02302FM', 'PN02303FM', 'IGV interno + importaciones'),
+        ('PN03432FQ', 'PN03433FQ', 'PN03442FQ', 'Deuda externa + interna'),
+    ):
+        total, first, second = [lookup.get('bcrp_' + c, {}) for c in (total_code, first_code, second_code)]
+        for d in total.keys() & first.keys() & second.keys():
+            assert math.isclose(total[d], first[d] + second[d], abs_tol=.001), label + ' no reconcilia ' + d
     idx = lookup['bcrp_PN38705PM']
     inflation = lookup['bcrp_PN01273PM']
     for d, value in inflation.items():
@@ -32,7 +39,7 @@ def validate_data(root=ROOT):
     assert manifest['series'] == len(ids), 'Conteo de series no coincide'
     assert manifest['observations'] == observations, 'Conteo de observaciones no coincide'
     assert {s['id'] for s in health['series']} == set(ids), 'Control de calidad incompleto'
-    return f'VALIDADO: {len(ids)} series; {observations} observaciones; IPC y comercio conciliados.'
+    return f'VALIDADO: {len(ids)} series; {observations} observaciones; IPC, comercio, IGV y deuda conciliados.'
 
 
 if __name__ == '__main__':

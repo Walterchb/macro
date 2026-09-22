@@ -1,5 +1,5 @@
 """Official-source refresh. Python 3.12 standard library; never substitute invented data."""
-import csv, io, json, math, os, re, hashlib, time, tempfile, sys
+import argparse, csv, io, json, math, os, re, hashlib, time, tempfile, sys
 from pathlib import Path
 from datetime import datetime, timezone, date
 from urllib.request import Request, urlopen
@@ -110,8 +110,8 @@ def publish(snapshot):
         'indicators':len({(s['provider'],s['sourceCode']) for s in series}),
         'observations':sum(len(s['observations']) for s in series),
         'providers':{provider:sum(s['provider']==provider for s in series) for provider in sorted({s['provider'] for s in series})},
-        'countries':len({s['country'] for s in series if s['country'] not in ('LCN','WLD')}),
-        'aggregates':sorted({s['countryName'] for s in series if s['country'] in ('LCN','WLD')}),
+        'countries':len({s['country'] for s in series if s['country'] not in ('LCN','WLD','EMU','EA19')}),
+        'aggregates':sorted({s['countryName'] for s in series if s['country'] in ('LCN','WLD','EMU','EA19')}),
         'peruSeriesWithData':sum(s['country']=='PER' for s in populated),
     })
     snapshot['version']=hashlib.sha256(json.dumps(snapshot,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
@@ -121,17 +121,26 @@ def publish(snapshot):
     atomic_json(OUT/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
     atomic_json(coverage_path,coverage)
 
-def main():
+def main(argv=None):
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--only-new',action='store_true',help='Incorpora nuevas series sin volver a descargar historiales ya publicados.')
+    args=parser.parse_args(argv)
     now=datetime.now(timezone.utc);stamp=now.isoformat()
     catalog=json.loads((ROOT/'config/series.json').read_text(encoding='utf-8'))
     old=json.loads((OUT/'snapshot.json').read_text(encoding='utf-8')) if (OUT/'snapshot.json').exists() else {'series':[]}
     previous={s['id']:s for s in old['series']};results={};errors=[];revisions=[]
+    if args.only_new:
+        results={s['id']:{**previous[s['id']],**s} for s in catalog if s['id'] in previous}
     wb={}
     jobs=[]
     for s in catalog:
+        if args.only_new and s['id'] in previous:continue
         if s['provider']=='World Bank':wb.setdefault(s['sourceCode'],[]).append(s)
-        else:jobs.append((fetch_bcrp if s['provider']=='BCRP' else fetch_fred,[s],s))
+        elif s['provider'] in ('BCRP','FRED'):jobs.append((fetch_bcrp if s['provider']=='BCRP' else fetch_fred,[s],s))
+        else:raise ValueError('Proveedor no implementado: '+s['provider'])
     jobs.extend((fetch_wb,g,g) for g in wb.values())
+    if not jobs:
+        print('No hay nuevas series que descargar.');return
     success=0
     with ThreadPoolExecutor(max_workers=4) as pool:
         futures={pool.submit(fun,arg,now):group for fun,group,arg in jobs}

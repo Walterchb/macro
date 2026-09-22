@@ -24,3 +24,52 @@ test('Cambio semanal compara exactamente siete días antes',()=>{
  const s={frequency:'weekly',unit:'Miles USD',observations:[{date:'2026-09-02',value:100},{date:'2026-09-09',value:110}]};
  assert.equal(change(s).value,10);assert.equal(change(s).unit,'%');
 });
+
+test('El impulso anualizado exige meses consecutivos y conserva la capitalización',async()=>{
+ const {monthlyAnnualizedRows}=await import('../assets/chart-engine.js');
+ const rows=[{date:'2024-01-01',value:100},{date:'2024-02-01',value:101},{date:'2024-03-01',value:102.01},{date:'2024-04-01',value:103.0301}];
+ const out=monthlyAnnualizedRows(rows,3);
+ assert.equal(out[2].value,null);
+ assert.ok(Math.abs(out[3].value-((1.01**12)-1)*100)<1e-9);
+ assert.equal(monthlyAnnualizedRows(rows.filter(r=>r.date!=='2024-03-01'),3).at(-1).value,null);
+ assert.equal(monthlyAnnualizedRows([{date:'2024-01-01',value:0},{date:'2024-02-01',value:1}],1).at(-1).value,null);
+});
+test('La media móvil mensual no confunde tres filas con tres meses',async()=>{
+ const {monthlyRollingMeanRows}=await import('../assets/chart-engine.js');
+ const rows=[{date:'2023-12-01',value:10},{date:'2024-01-01',value:20},{date:'2024-02-01',value:30},{date:'2024-04-01',value:60}];
+ assert.equal(monthlyRollingMeanRows(rows,3)[2].value,20);
+ assert.equal(monthlyRollingMeanRows(rows,3)[3].value,null);
+});
+
+test('En Lima, ECharts mantiene el último punto y las anotaciones dentro del rango UTC',async()=>{
+ const {execFileSync}=await import('node:child_process');
+ const engineUrl=new URL('../assets/chart-engine.js',import.meta.url).href;
+ const vendorPath=new URL('../assets/vendor/echarts.min.js',import.meta.url).pathname;
+ const result=execFileSync(process.execPath,['--input-type=module','-e',`
+  import assert from 'node:assert/strict';
+  import fs from 'node:fs';
+  import vm from 'node:vm';
+  import {createChartEngine} from ${JSON.stringify(engineUrl)};
+  const expected=[Date.parse('2026-01-01T00:00:00Z'),Date.parse('2026-02-01T00:00:00Z')];
+  assert.equal(new Date(expected[0]).getTimezoneOffset(),300);
+  const source={id:'test',name:'Nivel',provider:'FRED',sourceCode:'TEST',unit:'Índice',frequency:'monthly',observations:[{date:'2026-01-01',value:1},{date:'2026-02-01',value:2}]};
+  const recession={provider:'FRED',sourceCode:'USREC',observations:[{date:'2026-01-01',value:1},{date:'2026-02-01',value:0}]};
+  globalThis.document={getElementById:()=>({clientWidth:640})};
+  let option;
+  const renderer=createChartEngine({colors:Array(8).fill('#123456'),css:()=> '#789abc',theme:()=>false,fmt:String,date:String,chart:(_id,o)=>{option=o;return null},chartRows:new Map(),unitKey:s=>s.unit,windowRows:rows=>rows,withGaps:rows=>rows,cut:s=>s.observations,transform:()=>[],commonDates:()=>[],isRate:()=>false,range:()=> 'all'});
+  renderer.timeChart('chart',[source],{recession});
+  assert.equal(option.useUTC,true);
+  assert.equal(option.series[0].markPoint.data[0].coord[0],expected[1]);
+  assert.deepEqual(option.series[0].markArea.data[0].map(p=>p.xAxis),expected);
+  const mod={exports:{}};
+  vm.runInNewContext(fs.readFileSync(${JSON.stringify(vendorPath)},'utf8'),{module:mod,exports:mod.exports,setTimeout,clearTimeout});
+  const chart=mod.exports.init(null,null,{renderer:'svg',ssr:true,width:640,height:320});
+  chart.setOption(option);
+  const actual=Array.from(chart.getModel().getSeriesByIndex(0).getData().getDataExtent('x'));
+  assert.deepEqual(actual,expected);
+  assert.equal(actual[1],option.xAxis.max);
+  chart.dispose();
+  process.stdout.write('UTC verified in America/Lima');
+ `],{env:{...process.env,TZ:'America/Lima'},encoding:'utf8'});
+ assert.equal(result,'UTC verified in America/Lima');
+});

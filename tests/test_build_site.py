@@ -41,6 +41,11 @@ class PublishingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'rutas relativas'):
             build_site(self.root)
 
+    def test_missing_import_cannot_publish_a_blank_application(self):
+        (self.root / 'assets/app.js').write_text("import {render} from './missing-module.js';")
+        with self.assertRaisesRegex(ValueError, 'Módulo local no encontrado'):
+            build_site(self.root)
+
 
 if __name__ == '__main__':
     unittest.main()

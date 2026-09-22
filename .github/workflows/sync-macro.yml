@@ -59,12 +59,13 @@ jobs:
             core.setOutput('mode', mode);
             core.setOutput('page_url', site.html_url);
             core.info(`Pages: ${mode}; ${site.html_url}`);
-      - name: Descargar fuentes (solo programación o solicitud expresa)
+      - name: Actualizar indicadores y agenda (programación o solicitud expresa)
         if: github.event_name == 'schedule' || inputs.refresh == true
-        run: python scripts/sync_data.py
+        run: python scripts/refresh_publication.py
       - name: Verificar datos y cálculos del snapshot
         run: |
           python scripts/validate_data.py
+          python scripts/sync_agenda.py --validate
           python -m unittest discover -s tests -p 'test_*.py'
           npm test
           node --check assets/app.js
@@ -75,7 +76,7 @@ jobs:
           if ! git diff --cached --quiet; then
             git config user.name "macro-data-bot"
             git config user.email "actions@users.noreply.github.com"
-            git commit -m "Macro: actualizar series oficiales y control de calidad"
+            git commit -m "Macro: actualizar indicadores, agenda y control de calidad"
             git fetch origin main
             if ! git merge-base --is-ancestor origin/main HEAD; then
               echo "::error::main cambió durante la descarga. Reejecutar sobre la nueva versión."
@@ -108,6 +109,7 @@ jobs:
           path: |
             data/health.json
             data/revisions.json
+            data/agenda.json
           retention-days: 30
   deploy:
     needs: sync

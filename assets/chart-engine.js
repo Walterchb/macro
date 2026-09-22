@@ -54,6 +54,37 @@ export function spreadRows(left, right) {
   return left.filter(o => finite(o.value) && lookup.has(o.date)).map(o => ({date:o.date,value:o.value-lookup.get(o.date)}));
 }
 
+
+/** Complete consecutive monthly windows only; missing periods stay missing. */
+export function monthlyRollingMeanRows(rows, months=3) {
+  if (!Number.isInteger(months) || months<1) return [];
+  const lookup=new Map(rows.map(o=>[o.date,o.value]));
+  return rows.map(o=>{
+    const dt=new Date(stamp(o.date));let total=0;
+    for(let i=0;i<months;i++){
+      const value=lookup.get(dt.toISOString().slice(0,10));
+      if(!finite(value))return {date:o.date,value:null};
+      total+=value;dt.setUTCMonth(dt.getUTCMonth()-1);
+    }
+    return {date:o.date,value:total/months};
+  });
+}
+
+/** Annualized change of a positive monthly index; not a forecast. */
+export function monthlyAnnualizedRows(rows, months=3) {
+  if (!Number.isInteger(months) || months<1 || months>12) return [];
+  const lookup=new Map(rows.map(o=>[o.date,o.value]));
+  return rows.map(o=>{
+    const dt=new Date(stamp(o.date));let previous=null;
+    for(let i=0;i<=months;i++){
+      previous=lookup.get(dt.toISOString().slice(0,10));
+      if(!finite(previous)||previous<=0)return {date:o.date,value:null};
+      dt.setUTCMonth(dt.getUTCMonth()-1);
+    }
+    return {date:o.date,value:(Math.pow(o.value/previous,12/months)-1)*100};
+  });
+}
+
 /** USREC denotes US recessions only. Missing months end a band. */
 export function recessionBands(series, startDate, endDate) {
   if (!series || series.sourceCode !== 'USREC' || series.provider !== 'FRED') return [];
@@ -87,6 +118,7 @@ export function createChartEngine(context) {
   function baseOption() {
     return {
       animation:false,
+      useUTC:true,
       color:palette(),
       textStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',color:css('--muted')},
       backgroundColor:'transparent',
@@ -109,7 +141,7 @@ export function createChartEngine(context) {
   }
 
   function timeChart(id, input, options={}) {
-    const {names=[],types=[],target=false,zero=false,index=false,area=false,recession=null,stats=true} = options;
+    const {names=[],types=[],target=false,zero=false,index=false,area=false,recession=null,stats=true,referenceLines=[],lineStyles=[]} = options;
     const el=document.getElementById(id);
     if (!el) return;
     const mapped=input.map((s,i)=>({s,name:names[i]||s?.name,type:types[i]||'line'})).filter(x=>x.s);
@@ -135,10 +167,15 @@ export function createChartEngine(context) {
     opt.xAxis.min=stamp(firstDate);
     opt.xAxis.max=stamp(lastDate);
     opt.xAxis.splitNumber=narrow?4:6;
+    const spanDays=(stamp(lastDate)-stamp(firstDate))/86400000;
+    opt.xAxis.axisLabel={...opt.xAxis.axisLabel,formatter:value=>{
+      const d=new Date(value);
+      return new Intl.DateTimeFormat('es-PE',spanDays>365*3?{year:'numeric',timeZone:'UTC'}:spanDays>180?{month:'short',year:'2-digit',timeZone:'UTC'}:{day:'numeric',month:'short',timeZone:'UTC'}).format(d).replace('.','');
+    }};
     opt.yAxis=(index?['Base 100']:units).slice(0,2).map((u,i)=>({
       ...opt.yAxis,position:i?'right':'left',name:u.length<28?u:'',nameGap:15,
       nameTextStyle:{fontFamily:'Manrope, Segoe UI, sans-serif',fontSize:10,color:css('--muted'),align:i?'right':'left'},
-      scale:!zero&&!index&&ss.length===1&&!isRate(ss[0]),
+      scale:index||(!zero&&ss.length===1&&!isRate(ss[0])),
       axisLabel:{...opt.yAxis.axisLabel,margin:8},
     }));
     const allRendered=rows.map(({s,rows})=>withGaps(rows,s.frequency));
@@ -155,28 +192,29 @@ export function createChartEngine(context) {
       const color=colorsHere[i%colorsHere.length], type=mapped[i].type, final=observations.filter(o=>finite(o.value)).at(-1);
       return {
         id:`${id}-${i}`,name:mapped[i].name,type,
-        data:allRendered[i].map(o=>[o.date,o.value]),
+        data:allRendered[i].map(o=>[stamp(o.date),o.value]),
         showSymbol:false,symbol:'circle',symbolSize:5,connectNulls:false,
         yAxisIndex:index?0:Math.min(units.indexOf(unitKey(s)),1),smooth:false,
-        lineStyle:{width:ss.length>4?1.4:1.8,color},itemStyle:{color,opacity:type==='bar'?.78:1,borderRadius:type==='bar'?[2,2,0,0]:undefined},
+        lineStyle:{width:ss.length>4?1.4:1.9,color,type:lineStyles[i]||'solid'},itemStyle:{color,opacity:type==='bar'?.78:1,borderRadius:type==='bar'?[2,2,0,0]:undefined},
         emphasis:{focus:'series',lineStyle:{width:2.4},itemStyle:{opacity:1}},
         blur:{lineStyle:{opacity:.25},itemStyle:{opacity:.22}},
         areaStyle:area&&i===0?{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:opacity(color,.13)},{offset:1,color:opacity(color,.01)}]}}:undefined,
         barMaxWidth:18,barMinWidth:1,
         endLabel:type==='line'&&!twoAxes?{show:true,formatter:p=>compact(p.value?.[1]),color,fontSize:10,fontWeight:650,distance:7,backgroundColor:css('--panel'),padding:[2,3],borderRadius:3}:undefined,
         labelLayout:{moveOverlap:'shiftY',hideOverlap:true},
-        markPoint:final?{silent:true,symbol:'circle',symbolSize:5,itemStyle:{color,borderColor:css('--panel'),borderWidth:1.2},label:{show:false},data:[{coord:[final.date,final.value]}]}:undefined,
+        markPoint:final?{silent:true,symbol:'circle',symbolSize:5,itemStyle:{color,borderColor:css('--panel'),borderWidth:1.2},label:{show:false},data:[{coord:[stamp(final.date),final.value]}]}:undefined,
         z:type==='bar'?2:4,
       };
     });
     const markAreas=[],markLines=[];
+    referenceLines.filter(r=>finite(r.value)).forEach(r=>markLines.push({yAxis:r.value,name:r.label||'',lineStyle:{color:r.color||css('--muted'),opacity:.7,type:'dashed',width:1},label:{show:!!r.label,formatter:r.label,position:'insideEndTop',fontSize:9,color:css('--muted'),backgroundColor:css('--panel'),padding:[2,3]}}));
     const targetBand=target===true?{min:1,max:3,label:'Meta BCRP · 1–3%'}:target;
     if(targetBand&&finite(targetBand.min)&&finite(targetBand.max)) {
       markAreas.push([{yAxis:targetBand.min,itemStyle:{color:theme()?'#13b9c810':'#009bae0c'}},{yAxis:targetBand.max}]);
       markLines.push({yAxis:targetBand.max,name:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,lineStyle:{color:colors[0],opacity:.5,type:'dashed'},label:{show:true,formatter:targetBand.label||`Banda ${targetBand.min}–${targetBand.max}`,position:'insideEndTop',fontSize:9,color:css('--muted')}});
     }
     const bands=recessionBands(recession,firstDate,lastDate);
-    for(const [a,b] of bands)markAreas.push([{xAxis:a,itemStyle:{color:theme()?'#b4c2d312':'#152c4010'}},{xAxis:b}]);
+    for(const [a,b] of bands)markAreas.push([{xAxis:stamp(a),itemStyle:{color:theme()?'#b4c2d312':'#152c4010'}},{xAxis:stamp(b)}]);
     if(zero)markLines.push({yAxis:0,lineStyle:{color:css('--muted'),opacity:.55,type:'solid',width:1},label:{show:false}});
     if(index)markLines.push({yAxis:100,lineStyle:{color:css('--muted'),opacity:.4,type:'dashed',width:1},label:{show:false}});
     if(markAreas.length)opt.series[0].markArea={silent:true,label:{show:false},data:markAreas};
@@ -193,7 +231,7 @@ export function createChartEngine(context) {
       footer.innerHTML=`<div class="chart-series-legend" aria-label="Series del gráfico">${groups.map(({s,rows:obs},i)=>{
         const final=obs.filter(o=>finite(o.value)).at(-1);
         return `<button type="button" class="chart-legend-item" data-legend-index="${i}" aria-pressed="true" title="Mostrar u ocultar ${escapeHtml(mapped[i].name)}"><i style="--series-color:${colorsHere[i%colorsHere.length]}" aria-hidden="true"></i><span class="chart-legend-name">${escapeHtml(mapped[i].name)}</span><strong>${escapeHtml(fmt(final?.value))}<small> ${escapeHtml(index?'Base 100':s.unit)}</small></strong><span class="chart-legend-period">${final?escapeHtml(date(final.date,s.frequency)):'Sin dato'}</span></button>`;
-      }).join('')}</div>${stats&&primary&&groups.length<=3?`<div class="chart-distribution"><div class="chart-range-stat"><span>Mín. ventana</span><strong>${escapeHtml(compact(primary.min))}</strong></div><div class="chart-range-stat"><span>Mediana</span><strong>${escapeHtml(compact(primary.median))}</strong></div><div class="chart-range-stat"><span>Máx. ventana</span><strong>${escapeHtml(compact(primary.max))}</strong></div><div class="chart-percentile" title="${statHelp}"><div><span>Percentil histórico</span><strong>P${escapeHtml(fmt(primary.percentile,0))}</strong></div><div class="chart-percentile-track"><i style="left:${Math.max(0,Math.min(100,primary.percentile))}%"></i></div></div></div><div class="chart-history-caption">${groups.length>1?escapeHtml(mapped[0].name)+' · ':''}${escapeHtml(date(primary.firstDate,ss[0].frequency))}–${escapeHtml(date(primary.lastDate,ss[0].frequency))} · ${primary.count} obs. en ventana${finite(primary.percentile)?` · percentil sobre ${primary.historyCount} obs. desde ${escapeHtml(date(primary.historyStart,ss[0].frequency))}`:''}</div>`:''}${bands.length?'<div class="chart-recession-key"><i></i> Sombreado: recesiones de EE. UU. · FRED / NBER (USREC)</div>':''}`;
+      }).join('')}</div>${stats&&primary&&groups.length<=3?`<details class="chart-stat-details"><summary><span>Contexto histórico</span><span>${escapeHtml(compact(primary.min))} — ${escapeHtml(compact(primary.max))} <small>en ventana</small></span></summary><div class="chart-distribution"><div class="chart-range-stat"><span>Mín. ventana</span><strong>${escapeHtml(compact(primary.min))}</strong></div><div class="chart-range-stat"><span>Mediana</span><strong>${escapeHtml(compact(primary.median))}</strong></div><div class="chart-range-stat"><span>Máx. ventana</span><strong>${escapeHtml(compact(primary.max))}</strong></div><div class="chart-percentile" title="${statHelp}"><div><span>Percentil histórico</span><strong>P${escapeHtml(fmt(primary.percentile,0))}</strong></div><div class="chart-percentile-track"><i style="left:${Math.max(0,Math.min(100,primary.percentile))}%"></i></div></div></div><div class="chart-history-caption">${groups.length>1?escapeHtml(mapped[0].name)+' · ':''}${escapeHtml(date(primary.firstDate,ss[0].frequency))}–${escapeHtml(date(primary.lastDate,ss[0].frequency))} · ${primary.count} obs. en ventana${finite(primary.percentile)?` · percentil sobre ${primary.historyCount} obs. desde ${escapeHtml(date(primary.historyStart,ss[0].frequency))}`:''}</div></details>`:''}<div class="chart-source-line"><span>${escapeHtml(date(groups.flatMap(g=>g.rows).map(o=>o.date).sort()[0]||firstDate,ss[0].frequency))}–${escapeHtml(date(groups.flatMap(g=>g.rows).map(o=>o.date).sort().at(-1)||lastDate,ss[0].frequency))}</span><span>${[...new Map(ss.map(s=>[s.provider,s])).values()].map(s=>`<a href="${escapeHtml(s.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.provider)} ↗</a>`).join(' · ')}</span></div>${bands.length?'<div class="chart-recession-key"><i></i> Sombreado: recesiones de EE. UU. · FRED / NBER (USREC)</div>':''}`;
       const selected=instance.getOption().legend?.[0]?.selected||{};
       footer.querySelectorAll('[data-legend-index]').forEach(button=>{
         const name=mapped[Number(button.dataset.legendIndex)].name;
