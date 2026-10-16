@@ -97,7 +97,16 @@ test('calendar includes stored past entries and spillover without mixing ICS mon
 test('calendar markup provides local flags, no-coverage dates, and safe modal entry attributes',async()=>{
   const {createAgenda}=await import('../assets/agenda.js');
   const fixture={...data,windowStart:'2026-09-22',events:[...data.events,{...base,id:'inject',title:'<script>bad</script>',date:'2026-09-23'}]};
-  const agenda=createAgenda({getData:()=>fixture}),html=agenda.render('all');
+  // This fixture covers September. Freeze the clock so the test does not
+  // silently switch to the real current month and lose its fixture events.
+  const RealDate=globalThis.Date;
+  globalThis.Date=class extends RealDate {
+    constructor(...args){super(...(args.length?args:[now.getTime()]));}
+    static now(){return now.getTime();}
+  };
+  let agenda,html;
+  try {agenda=createAgenda({getData:()=>fixture});html=agenda.render('all');}
+  finally {globalThis.Date=RealDate;}
   assert.match(html,/assets\/flags\/pe\.svg/);
   assert.match(html,/Fuera de cobertura publicada/);
   assert.match(html,/Mes siguiente/);

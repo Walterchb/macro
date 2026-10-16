@@ -4,6 +4,7 @@ from pathlib import Path
 from datetime import datetime, timezone, date
 from urllib.request import Request, urlopen
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from fred_client import observations as fred_observations
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'data'
 MONTHS={'ene':1,'feb':2,'mar':3,'abr':4,'may':5,'jun':6,'jul':7,'ago':8,'sep':9,'set':9,'oct':10,'nov':11,'dic':12,'jan':1,'apr':4,'aug':8,'dec':12}
@@ -18,12 +19,12 @@ def parse_period(value):
     raise ValueError('Formato de periodo no reconocido: '+value)
 
 def request(url):
-    for attempt in range(3):
+    for attempt in range(2):
         try:
-            with urlopen(Request(url,headers={'User-Agent':'TreasuryMacroHub/1.0 (public economic research)'}),timeout=35) as response:
+            with urlopen(Request(url,headers={'User-Agent':'TreasuryMacroHub/1.0 (public economic research)'}),timeout=15) as response:
                 return response.read().decode('utf-8-sig')
         except Exception:
-            if attempt==2:raise
+            if attempt==1:raise
             time.sleep(1+attempt)
 
 def numeric(v):
@@ -47,15 +48,8 @@ def fetch_bcrp(s,now):
     return [(s,rows,{'apiUrl':url,'description':configs[0]['name']})]
 
 def fetch_fred(s,now):
-    code=s['sourceCode'];url=f'https://fred.stlouisfed.org/graph/fredgraph.csv?id={code}&cosd=2010-01-01'
-    text=request(url);reader=csv.DictReader(io.StringIO(text))
-    if code not in (reader.fieldnames or []):raise ValueError('Esquema CSV FRED inesperado')
-    rows=[]
-    for r in reader:
-        v=numeric(r.get(code));d=r.get('observation_date',r.get('DATE',''))
-        if v is not None and d>='2010-01-01':rows.append({'date':d,'value':v})
-    if not rows:raise ValueError('FRED sin observaciones numéricas')
-    return [(s,rows,{'apiUrl':url})]
+    rows,metadata=fred_observations(s['sourceCode'],now.date().isoformat())
+    return [(s,rows,metadata)]
 
 def fetch_wb(group,now):
     code=group[0]['sourceCode'];countries=';'.join(s['country'] for s in group)
@@ -96,11 +90,12 @@ def atomic_json(path,data):
     finally:
         if os.path.exists(temp):os.unlink(temp)
 
-def publish(snapshot):
+def publish(snapshot,output=None):
+    output=OUT if output is None else output
     for s in snapshot['series']:validate_series(s)
     ids=[s['id'] for s in snapshot['series']]
     if len(ids)!=len(set(ids)):raise ValueError('IDs duplicados')
-    coverage_path=OUT/'coverage.json'
+    coverage_path=output/'coverage.json'
     coverage=json.loads(coverage_path.read_text(encoding='utf-8')) if coverage_path.exists() else {}
     series=snapshot['series'];populated=[s for s in series if s['observations']]
     coverage.update({
@@ -115,25 +110,32 @@ def publish(snapshot):
         'peruSeriesWithData':sum(s['country']=='PER' for s in populated),
     })
     snapshot['version']=hashlib.sha256(json.dumps(snapshot,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
-    atomic_json(OUT/'snapshot.json',snapshot)
+    atomic_json(output/'snapshot.json',snapshot)
     health={'version':snapshot['version'],'checkedAt':snapshot['fetchedAt'],'series':[{k:s.get(k) for k in ['id','name','provider','frequency','status','fetchedAt','lastObservationDate','error']}|{'observations':len(s['observations'])} for s in snapshot['series']]}
-    atomic_json(OUT/'health.json',health)
-    atomic_json(OUT/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
+    atomic_json(output/'health.json',health)
+    atomic_json(output/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
     atomic_json(coverage_path,coverage)
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--only-new',action='store_true',help='Incorpora nuevas series sin volver a descargar historiales ya publicados.')
+    parser.add_argument('--provider',action='append',choices=['FRED','BCRP','World Bank'],help='Actualizar solo este proveedor; repetir para varios. Los demás conservan datos y fechas.')
     args=parser.parse_args(argv)
     now=datetime.now(timezone.utc);stamp=now.isoformat()
     catalog=json.loads((ROOT/'config/series.json').read_text(encoding='utf-8'))
     old=json.loads((OUT/'snapshot.json').read_text(encoding='utf-8')) if (OUT/'snapshot.json').exists() else {'series':[]}
     previous={s['id']:s for s in old['series']};results={};errors=[];revisions=[]
+    if args.provider:
+        for s in catalog:
+            if s['provider'] not in args.provider:
+                if s['id'] not in previous:raise RuntimeError('Falta historial previo del proveedor no seleccionado: '+s['id'])
+                results[s['id']]={**s,**previous[s['id']]}
     if args.only_new:
-        results={s['id']:{**previous[s['id']],**s} for s in catalog if s['id'] in previous}
+        results.update({s['id']:{**s,**previous[s['id']]} for s in catalog if s['id'] in previous})
     wb={}
     jobs=[]
     for s in catalog:
+        if args.provider and s['provider'] not in args.provider:continue
         if args.only_new and s['id'] in previous:continue
         if s['provider']=='World Bank':wb.setdefault(s['sourceCode'],[]).append(s)
         elif s['provider'] in ('BCRP','FRED'):jobs.append((fetch_bcrp if s['provider']=='BCRP' else fetch_fred,[s],s))
@@ -167,14 +169,23 @@ def main(argv=None):
                     prior=previous.get(s['id']);results[s['id']]={**(prior or s),'status':'retained' if prior and prior.get('observations') else 'unavailable','error':str(error),'lastAttemptAt':stamp,'observations':prior.get('observations',[]) if prior else []}
                 errors.append({'provider':group[0]['provider'],'code':group[0]['sourceCode'],'error':str(error)})
                 print('AVISO',group[0]['sourceCode'],str(error),flush=True)
+    atomic_json(ROOT/('refresh-status-'+('-'.join(p.replace(' ','-') for p in args.provider) if args.provider else 'all')+'.json'),{'checkedAt':stamp,'successes':success,'errors':errors})
+    if any(e['provider']=='FRED' for e in errors):
+        raise RuntimeError('FRED no se actualizó completamente. No se altera la publicación; revisar el artefacto refresh-status-FRED.json.')
     if success==0:raise RuntimeError('Todas las fuentes fallaron. No se altera la publicación.')
-    snapshot={'schemaVersion':'1.0','fetchedAt':stamp,'series':[results[s['id']] for s in catalog],'errors':errors,'notes':old.get('notes',[])}
+    retained_errors=[e for e in old.get('errors',[]) if args.provider and e.get('provider') not in args.provider]
+    snapshot={'schemaVersion':'1.0','fetchedAt':stamp,'series':[results[s['id']] for s in catalog],'errors':retained_errors+errors,'notes':old.get('notes',[])}
     if not any(s['observations'] for s in snapshot['series']):raise RuntimeError('Sin observaciones válidas')
     # Validate the snapshot before replacing the published file.
     for s in snapshot['series']:validate_series(s)
     publish(snapshot)
+    for revision in revisions:revision['checkedAt']=stamp
+    if args.provider and (OUT/'revisions.json').exists():
+        audit=json.loads((OUT/'revisions.json').read_text(encoding='utf-8'))
+        providers={s['id']:s['provider'] for s in catalog}
+        revisions.extend({**r,'checkedAt':r.get('checkedAt',audit.get('checkedAt'))} for r in audit.get('revisions',[]) if providers.get(r['id']) not in args.provider)
     atomic_json(OUT/'revisions.json',{'checkedAt':stamp,'revisions':revisions})
-    summary=f'{len(catalog)} series; {len(errors)} solicitudes conservadas/fallidas; {len(revisions)} series revisadas.'
+    summary=f'Proveedores: {", ".join(args.provider) if args.provider else "todos"}; {success}/{len(jobs)} solicitudes correctas; {len(catalog)} series en catálogo; {len(errors)} solicitudes conservadas/fallidas; {len(revisions)} series revisadas.'
     print(summary)
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('## Sincronización macro\n\n'+summary+'\n')
