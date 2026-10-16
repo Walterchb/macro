@@ -6,7 +6,7 @@ on:
         description: 'Descargar datos nuevos antes de publicar (más lento)'
         type: boolean
         required: false
-        default: false
+        default: true
   schedule:
     - cron: '35 12 * * *'
   push:
@@ -22,7 +22,7 @@ jobs:
   sync:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     outputs:
       ready: ${{ steps.ready.outputs.ready }}
       revision: ${{ steps.ready.outputs.revision }}
@@ -61,6 +61,8 @@ jobs:
             core.info(`Pages: ${mode}; ${site.html_url}`);
       - name: Actualizar fuentes (programación o solicitud expresa)
         if: github.event_name == 'schedule' || inputs.refresh == true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python scripts/refresh_publication.py
       - name: Verificar datos y cálculos del snapshot
         run: |
@@ -110,6 +112,7 @@ jobs:
         with:
           name: macro-quality-${{ github.run_number }}
           path: |
+            refresh-status-*.json
             data/health.json
             data/revisions.json
             data/agenda.json
