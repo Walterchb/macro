@@ -3,6 +3,8 @@ import argparse, csv, io, json, math, os, re, hashlib, time, tempfile, sys
 from pathlib import Path
 from datetime import datetime, timezone, date
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
+from email.utils import parsedate_to_datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from fred_client import observations as fred_observations
 ROOT=Path(__file__).resolve().parents[1]
@@ -26,6 +28,59 @@ def request(url):
         except Exception:
             if attempt==1:raise
             time.sleep(1+attempt)
+
+# WB alone gets more tolerance. These cooperative budgets include queue time
+# behind BCRP jobs and aim to leave 40 s for finalization. urllib timeouts are
+# socket-operation limits, not strict wall-clock limits (e.g. DNS/slow reads).
+# The parent process remains the hard 240 s stop for this combined phase.
+WB_PHASE_SECONDS = 200
+WB_BATCH_SECONDS = 100
+WB_TIMEOUT_SECONDS = 30
+WB_ATTEMPTS = 3
+
+def request_wb(url, deadline):
+    """Retry transient WB errors, checking the shared/batch budget between calls."""
+    for attempt in range(WB_ATTEMPTS):
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError('Banco Mundial agotó el presupuesto de descarga; historial conservado')
+        retry_after = None
+        try:
+            with urlopen(Request(url, headers={'User-Agent':'TreasuryMacroHub/1.0 (public economic research)'}),
+                         timeout=min(WB_TIMEOUT_SECONDS, remaining)) as response:
+                body = response.read().decode('utf-8-sig')
+            if time.monotonic() >= deadline:
+                raise TimeoutError('Banco Mundial excedió el presupuesto de descarga')
+            return body
+        except HTTPError as error:
+            error.close()
+            if error.code not in (408, 429, 500, 502, 503, 504):
+                raise
+            retry_after = error.headers.get('Retry-After') if error.headers else None
+            if attempt == WB_ATTEMPTS - 1:
+                raise
+        except (TimeoutError, URLError, ConnectionError):
+            if attempt == WB_ATTEMPTS - 1:
+                raise
+        delay = 2 ** (attempt + 1)
+        if retry_after:
+            try:
+                seconds = float(retry_after)
+                if not math.isfinite(seconds):
+                    raise ValueError('Invalid Retry-After')
+            except ValueError:
+                try:
+                    moment = parsedate_to_datetime(retry_after)
+                    if moment.tzinfo is None:
+                        moment = moment.replace(tzinfo=timezone.utc)
+                    seconds = (moment - datetime.now(timezone.utc)).total_seconds()
+                except (TypeError, ValueError, OverflowError):
+                    seconds = 0
+            delay = max(delay, seconds)
+        if time.monotonic() + delay >= deadline:
+            raise TimeoutError('Banco Mundial requiere una espera que supera el presupuesto; historial conservado')
+        time.sleep(delay)
+
 
 def numeric(v):
     try:
@@ -51,14 +106,15 @@ def fetch_fred(s,now):
     rows,metadata=fred_observations(s['sourceCode'],now.date().isoformat())
     return [(s,rows,metadata)]
 
-def fetch_wb(group,now):
+def fetch_wb(group,now,phase_deadline=None):
+    deadline = min(time.monotonic() + WB_BATCH_SECONDS, phase_deadline if phase_deadline is not None else float("inf"))
     code=group[0]['sourceCode'];countries=';'.join(s['country'] for s in group)
     base=f'https://api.worldbank.org/v2/country/{countries}/indicator/{code}?format=json&date=2000:{now.year}&per_page=20000&source=2'
-    data=json.loads(request(base))
+    data=json.loads(request_wb(base,deadline))
     if not isinstance(data,list) or len(data)!=2 or not isinstance(data[0],dict):raise ValueError('Esquema Banco Mundial inesperado')
     all_rows=data[1] or []
     for page in range(2,int(data[0].get('pages',1))+1):
-        nxt=json.loads(request(base+f'&page={page}'))
+        nxt=json.loads(request_wb(base+f'&page={page}',deadline))
         if len(nxt)!=2:raise ValueError('Paginación Banco Mundial incompleta')
         all_rows.extend(nxt[1] or [])
     if not all_rows:raise ValueError('Respuesta Banco Mundial vacía para todo el indicador')
@@ -144,8 +200,9 @@ def main(argv=None):
     if not jobs:
         print('No hay nuevas series que descargar.');return
     success=0
+    wb_deadline=time.monotonic()+WB_PHASE_SECONDS
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futures={pool.submit(fun,arg,now):group for fun,group,arg in jobs}
+        futures={pool.submit(fun,arg,now,*([wb_deadline] if fun is fetch_wb else [])):group for fun,group,arg in jobs}
         for future in as_completed(futures):
             group=futures[future]
             try:
