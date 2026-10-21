@@ -32,7 +32,7 @@ test('invalid, missing and future observations cannot appear fresh',()=>{
   for(const observation of [null,{date:'2026-02-31',value:1},{date:'oops',value:1},{date:'2026-11-01',value:1},{date:'2026-08-01',value:NaN}])assert.equal(seriesFreshness(s,observation,'2026-10-21').state,'missing');
 });
 test('release registry is bounded evidence with valid dates and official links',()=>{
-  for(const r of VERIFIED_ORIGIN_RELEASES){assert.ok(r.referenceDate<r.publicationDate);assert.ok(r.publicationDate<=r.verifiedAt);assert.equal(new URL(r.url).hostname,'www.inei.gob.pe');}
+  for(const r of VERIFIED_ORIGIN_RELEASES){assert.ok(r.referenceDate<r.publicationDate);assert.ok(r.publicationDate<=r.verifiedAt);assert.equal(new URL(r.url).hostname,r.provider==='FRED'?'www.federalreserve.gov':'www.inei.gob.pe');if(r.provider==='FRED')assert.ok(['DGS10','DGS2','DFII10'].includes(r.sourceCode));}
   assert.equal(FRESHNESS_LIMIT_DAYS.monthly,100);
 });
 test('future dates age existing data but do not invent later origin releases',()=>{
@@ -44,3 +44,5 @@ test('future dates age existing data but do not invent later origin releases',()
   assert.equal(lagging.sourceRelease.referenceDate,'2026-08-01');
   assert.equal(lagging.sourceRelease.verifiedAt,'2026-10-21');
 });
+
+test("verified H15 release warns only until FRED catches up",()=>{for(const sourceCode of ["DGS10","DGS2","DFII10"]){const s={provider:"FRED",sourceCode,frequency:"daily",status:"ok"};assert.equal(seriesFreshness(s,{date:"2026-10-16",value:5},"2026-10-21").reason,"origin-release");assert.equal(seriesFreshness(s,{date:"2026-10-19",value:5},"2026-10-21").state,"fresh");}});

@@ -13,7 +13,8 @@ const isoDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test
 export const VERIFIED_ORIGIN_RELEASES = Object.freeze([
   Object.freeze({provider:'BCRP',sourceCode:'PN01728AM',origin:'INEI',referenceDate:'2026-08-01',publicationDate:'2026-10-15',verifiedAt:'2026-10-21',
     url:'https://www.inei.gob.pe/media/MenuRecursivo/boletines/10-informe-tecnico-produccion-nacional-agosto-2026.pdf',
-    title:'Producción Nacional · agosto 2026'})
+    title:'Producción Nacional · agosto 2026'}),
+  ...['DGS10','DGS2','DFII10'].map(sourceCode=>Object.freeze({provider:'FRED',sourceCode,origin:'Federal Reserve H.15',referenceDate:'2026-10-19',publicationDate:'2026-10-20',verifiedAt:'2026-10-21',url:'https://www.federalreserve.gov/releases/h15/',title:'Selected Interest Rates · H.15'}))
 ]);
 
 export function seriesFreshness(series, observation, now = new Date()) {
