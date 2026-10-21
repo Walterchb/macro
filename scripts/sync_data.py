@@ -5,7 +5,7 @@ from datetime import datetime, timezone, date
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from email.utils import parsedate_to_datetime
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, Future
 from fred_client import observations as fred_observations, FredError
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'data'
@@ -196,6 +196,31 @@ def publish(snapshot,output=None):
     atomic_json(output/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
     atomic_json(coverage_path,coverage)
 
+def fred_preflight(jobs, now):
+    """Reuse first real FRED download; stop global maintenance before submitting others."""
+    for index, (fun, group, arg) in enumerate(jobs):
+        if fun is not fetch_fred:
+            continue
+        future = Future()
+        try:
+            future.set_result(fun(arg, now))
+        except FredError as error:
+            if 'failureReason=provider-maintenance' in str(error):
+                remaining = sum(fun is fetch_fred for fun, _, _ in jobs) - 1
+                atomic_json(ROOT / 'refresh-status-FRED.json', {
+                    'checkedAt': now.isoformat(), 'successes': 0,
+                    'failureReason': 'provider-maintenance', 'attemptedSeries': 1,
+                    'notQueriedSeries': remaining,
+                    'errors': [{'provider': 'FRED', 'code': group[0]['sourceCode'],
+                                'error': 'FRED: failureReason=provider-maintenance'}]})
+                raise RuntimeError('FRED en mantenimiento: una serie consultada; resto no consultado. Publicación anterior conservada.') from None
+            future.set_exception(error)
+        except Exception as error:
+            future.set_exception(error)
+        return index, future
+    return None, None
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--only-new',action='store_true',help='Incorpora nuevas series sin volver a descargar historiales ya publicados.')
@@ -224,9 +249,12 @@ def main(argv=None):
     if not jobs:
         print('No hay nuevas series que descargar.');return
     success=0
+    preflight_index, preflight_future = fred_preflight(jobs, now)
     wb_deadline=time.monotonic()+WB_PHASE_SECONDS
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futures={pool.submit(fun,arg,now,*([wb_deadline] if fun is fetch_wb else [])):group for fun,group,arg in jobs}
+        futures={pool.submit(fun,arg,now,*([wb_deadline] if fun is fetch_wb else [])):group for index,(fun,group,arg) in enumerate(jobs) if index != preflight_index}
+        if preflight_future is not None:
+            futures[preflight_future] = jobs[preflight_index][1]
         for future in as_completed(futures):
             group=futures[future]
             try:
