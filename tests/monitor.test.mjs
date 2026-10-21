@@ -132,3 +132,26 @@ test('compact pulse keeps evidence in its dialog and opens the requested scope w
   assert.equal(monitor.open('peru','nonexistent'),false);
   assert.equal(captured.length,1);
 });
+
+test('Peru labels distinguish sin alimentos y energía from subyacente and disclose mixed dates',()=>{
+  const monitor=createEconomicMonitor({series:[],now:()=>new Date('2026-10-21')});
+  const html=monitor.modal('peru','prices');
+  assert.match(html,/IPC sin alimentos y energía/);
+  assert.match(html,/no el IPC subyacente PN01279PM/);
+  assert.doesNotMatch(html,/>IPC subyacente</);
+  assert.match(monitor.render('peru'),/referencias mixtas/);
+  assert.match(html,/percentil 20/);
+  assert.doesNotMatch(monitor.modal('world','prices'),/percentil 20/);
+});
+
+test('Peru integration preserves observations while tiny 3M changes are neutral',()=>{
+  const observations=Array.from({length:48},(_,i)=>({date:new Date(Date.UTC(2022,i,1)).toISOString().slice(0,10),value:5+i*.1}));
+  observations.at(-1).value=observations.at(-4).value-.000001;
+  const corporate={...series(observations),provider:'BCRP',sourceCode:'PN07809NM'};
+  const prices={...series([{date:'2025-12-01',value:4.51}]),provider:'BCRP',sourceCode:'PN01277PM'};
+  const monitor=createEconomicMonitor({series:[corporate,prices],now:()=>new Date('2026-01-21')});
+  assert.equal(monitor.build('peru').find(c=>c.key==='prices').evidence[0].value,4.51);
+  const cost=monitor.build('peru').find(c=>c.key==='credit').signals.at(-1);
+  assert.equal(cost.value,0);
+  assert.ok(Math.abs(cost.metric.value+.000001)<1e-8);
+});
