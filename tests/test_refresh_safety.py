@@ -52,7 +52,7 @@ class RefreshSafetyTests(unittest.TestCase):
         def success(*args, **kwargs):
             (self.root / 'data/snapshot.json').write_text('changed')
             return subprocess.CompletedProcess([], 0)
-        with patch.object(refresh.subprocess, 'run', side_effect=success), patch.object(refresh, 'validate_all', side_effect=ValueError('invalid')):
+        with patch.object(refresh, 'module_has_retained_data', return_value=False), patch.object(refresh.subprocess, 'run', side_effect=success), patch.object(refresh, 'validate_all', side_effect=ValueError('invalid')):
             with self.assertRaises(ValueError):
                 refresh.refresh_publication()
         self.assert_original()
@@ -64,7 +64,7 @@ class RefreshSafetyTests(unittest.TestCase):
             count += 1
             (self.root / 'data/snapshot.json').write_text('core' if count == 1 else 'partial' if count == 2 else (self.root / 'data/snapshot.json').read_text())
             return subprocess.CompletedProcess([], 1 if count == 2 else 0)
-        with patch.object(refresh.subprocess, 'run', side_effect=run), patch.object(refresh, 'validate_all'), patch.object(refresh, 'mark_non_fred_retained') as retained:
+        with patch.object(refresh, 'module_has_retained_data', return_value=False), patch.object(refresh.subprocess, 'run', side_effect=run), patch.object(refresh, 'validate_all'), patch.object(refresh, 'mark_non_fred_retained') as retained:
             refresh.refresh_publication()
             retained.assert_called_once()
         self.assertEqual((self.root / 'data/snapshot.json').read_text(), 'core')

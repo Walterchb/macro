@@ -1,0 +1,10 @@
+# Mundo y mercados: disponibilidad y comparabilidad
+
+- Se mantienen los últimos niveles de cada serie y sus propias fechas. La comparación Treasury calcula 10a menos 2a únicamente en la última fecha común; no sustituye los últimos valores de las tarjetas ni interpola.
+- `lastCheckedAt` acredita consulta al proveedor, no publicación nueva. `providerRealtimeStart/End` es el periodo realtime de FRED, no fecha de publicación del organismo. Las fechas de observación mensual/trimestral no son fechas de publicación.
+- Revisión completa prevista a las 12:35 UTC (07:35 Lima); dos pasadas FRED a las 17:35 y 22:35 UTC (12:35 y 17:35 Lima). Push a main hace una pasada FRED. GitHub puede demorar cron; no se garantiza actualización instantánea del origen. No se cambian proveedores silenciosamente.
+- FRED se solicita sin caché. Sólo series diarias con más de 3 días o semanales con más de 10 días requieren una segunda comprobación de cola. Una discrepancia permite un reintento completo, no mezclar dos cortes. La historia anterior a ventanas móviles se conserva y declara; huecos interiores y regresiones se rechazan.
+- El estado independiente `data/refresh-status.json` informa éxito, parcial o fallo y módulos retenidos. Un fallo no sustituye datos válidos. Una pasada FRED no acredita actualización de Perú, agenda u otros auxiliares.
+- El registro de publicaciones originadoras verificadas es evidencia fechada, no calendario automático universal. H.15 del 20/10/2026 permite advertir DGS10/DGS2/DFII10 anteriores al 19/10; deja de advertir al alcanzar ese periodo. No prueba publicaciones posteriores desconocidas.
+- PCE: nivel frente a 2% se distingue de impulso 3/6 meses y YOY. El objetivo Fed corresponde al PCE general; el subyacente es contexto. Las bandas HY/VIX son convenciones descriptivas calibradas en la propia historia, no significancia estadística ni probabilidades.
+- La actualización del navegador sólo consulta la publicación ya alojada. La falta de consulta de más de 30 horas es una alarma operativa distinta de la vigencia de la observación.

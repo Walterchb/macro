@@ -8,7 +8,10 @@ on:
         required: false
         default: true
   schedule:
+    # Full morning refresh; two smaller FRED passes after US releases and H.15.
+    # UTC: 12:35 / 17:35 / 22:35; Lima: 07:35 / 12:35 / 17:35.
     - cron: '35 12 * * *'
+    - cron: '35 17,22 * * *'
   push:
     branches: [main]
 permissions:
@@ -59,11 +62,23 @@ jobs:
             core.setOutput('mode', mode);
             core.setOutput('page_url', site.html_url);
             core.info(`Pages: ${mode}; ${site.html_url}`);
-      - name: Actualizar fuentes (programación o solicitud expresa)
-        if: github.event_name == 'schedule' || inputs.refresh == true
+      - name: Actualizar fuentes y conservar último snapshot ante fallo
+        id: refresh
+        continue-on-error: true
+        if: github.event_name == 'schedule' || github.event_name == 'push' || inputs.refresh == true
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-        run: python scripts/refresh_publication.py
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event.schedule }}" = "35 17,22 * * *" ]; then
+            python scripts/refresh_publication.py --fred-only
+          else
+            python scripts/refresh_publication.py
+          fi
+      - name: Comunicar actualización incompleta
+        if: steps.refresh.outcome == 'failure'
+        run: |
+          echo '::warning::Descarga incompleta. Datos anteriores conservados; se publica el estado de fallo, no datos parciales.'
+          echo '## Actualización incompleta: publicación anterior conservada; revisar data/refresh-status.json.' >> "$GITHUB_STEP_SUMMARY"
       - name: Verificar datos y cálculos del snapshot
         run: |
           python scripts/validate_data.py
@@ -75,7 +90,7 @@ jobs:
           npm test
           node --check assets/app.js
       - name: Conservar datos nuevos en el repositorio
-        if: github.event_name == 'schedule' || inputs.refresh == true
+        if: github.event_name == 'schedule' || github.event_name == 'push' || inputs.refresh == true
         run: |
           git add data/
           if ! git diff --cached --quiet; then
@@ -113,6 +128,7 @@ jobs:
           name: macro-quality-${{ github.run_number }}
           path: |
             refresh-status-*.json
+            data/refresh-status.json
             data/health.json
             data/revisions.json
             data/agenda.json
@@ -144,6 +160,7 @@ jobs:
           script: |
             // GITHUB_TOKEN commits do not trigger branch Pages builds by themselves.
             await github.rest.repos.requestPagesBuild(context.repo);
+            let lastBuildError = null;
             for (let attempt = 0; attempt < 60; attempt++) {
               await new Promise(resolve => setTimeout(resolve, 5000));
               let build;
@@ -159,7 +176,10 @@ jobs:
                 return;
               }
               if (build.status === 'errored') {
-                throw new Error(build.error?.message || 'GitHub Pages no pudo construir la web.');
+                lastBuildError = build.error?.message || 'GitHub Pages no pudo construir la web.';
+                // A concurrent automatic build may replace this failed/cancelled build.
+                // Keep checking the exact revision; never claim success from another SHA.
+                continue;
               }
             }
-            throw new Error('Pages no confirmó esta versión dentro de cinco minutos. Revisa pages-build-deployment antes de reejecutar.');
+            throw new Error(lastBuildError || 'Pages no confirmó esta versión dentro de cinco minutos. Revisa pages-build-deployment antes de reejecutar.');

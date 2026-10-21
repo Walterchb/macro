@@ -1,3 +1,4 @@
+import {synchronizationHTML,seriesCheck} from './synchronization.js';
 import { createChartEngine, regression } from './chart-engine.js';
 import { createEconomicViews } from './economic-views.js';
 import { createEconomicMonitor } from './economic-monitor.js';
@@ -18,7 +19,7 @@ const codes={gdp:'PN01728AM',inflation:'PN01273PM',core:'PN01277PM',rate:'PD0472
 const freqs={daily:'Diaria',weekly:'Semanal',monthly:'Mensual',quarterly:'Trimestral',annual:'Anual',irregular:'Según publicación'};
 let peruTopic='panorama',worldTopic='global',catalogQuery='',catalogCountry='',catalogCategory='',catalogProvider='',catalogLimit=100;
 let seriesById=new Map(),bcrpByCode=new Map();
-let agendaData=null,agendaFetchFailed=false;
+let agendaData=null,agendaFetchFailed=false,refreshStatus=null;
 let data=null,series=[],charts=[],chartRows=new Map(),view=tabs.some(x=>x[0]===location.hash.slice(1))?location.hash.slice(1):'peru',range=localStorage.getItem('macro:range')||'10',selected=[],mode='level',chartType='line',metric='NY.GDP.MKTP.KD.ZG',countries=['PER','CHL','COL','BRA','MEX'],year='',lastCheck=0,loading=false;
 const byCode=c=>bcrpByCode.get(c)||series.find(s=>s.sourceCode===c);
 const b=k=>byCode(codes[k]||k),f=c=>seriesById.get('fred_'+c),wb=(c,m)=>seriesById.get(`wb_${c}_${m}`);
@@ -41,7 +42,7 @@ function panel(id,title,subtitle,ss,{wide=false,tall=false,note='',help=''}={}){
 function chartInfo(id){
  const meta=chartRows.get(id);if(!meta)return;
  const sources=[...new Map(meta.ss.map(s=>[s.id,s])).values()];
- showDialog(meta.title,`<div class="chart-definition">${meta.help?`<p>${meta.help}</p>`:''}<div class="chart-definition-sources">${sources.map(s=>`<a href="${esc(s.sourceUrl)}" target="_blank" rel="noopener"><strong>${esc(s.name)}</strong><span>${esc(s.primarySource||s.originalSource||s.provider)} · ${esc(s.unit)} · ${esc(s.sourceCode)} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>`).join('')}</div></div>`);
+ showDialog(meta.title,`<div class="chart-definition">${meta.help?`<p>${meta.help}</p>`:''}<div class="chart-definition-sources">${sources.map(s=>`<a href="${esc(s.sourceUrl)}" target="_blank" rel="noopener"><strong>${esc(s.name)}</strong><span>${esc(s.primarySource||s.originalSource||s.provider)} · ${esc(s.unit)} · ${esc(s.sourceCode)} · Consulta: ${esc(seriesCheck(s).stamp||'no registrada')} · Último periodo: ${esc(seriesCheck(s).observation||'sin dato')} · Periodo realtime de la API: ${esc(s.providerRealtimeStart||'no informado')} (no es fecha de publicación) <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></a>`).join('')}</div></div>`);
 }
 
 function chart(id,option){const el=document.getElementById(id);if(!el)return;if(!window.echarts){el.innerHTML='<div class="empty">No se pudo cargar el motor gráfico. Los datos siguen disponibles.</div>';return}charts=charts.filter(c=>{if(c.__chartId===id){if(!c.isDisposed?.())c.dispose();return false}return !c.isDisposed?.()});const c=echarts.init(el,null,{renderer:'canvas'});c.setOption(option,{notMerge:true,lazyUpdate:true});c.__chartId=id;charts.push(c);return c}
@@ -153,15 +154,17 @@ async function refresh(manual=false){
    if(view==='peru'&&peruTopic==='proyecciones')forecastView.render('#economic-topic');
    if((view==='peru'&&peruTopic==='poblacion')||(view==='world'&&worldTopic==='poblacion'))demographyView.render(view,'#economic-topic');
   }
-  const [manifestResult,agendaResult]=await Promise.allSettled([
+  const [manifestResult,agendaResult,statusResult]=await Promise.allSettled([
    fetchPublished('./data/manifest.json?v='+stamp),
-   fetchPublished('./data/agenda.json?v='+stamp)
+   fetchPublished('./data/agenda.json?v='+stamp),
+   fetchPublished('./data/refresh-status.json?v='+stamp)
   ]);
+  if(statusResult.status==='fulfilled'){changed=JSON.stringify(refreshStatus)!==JSON.stringify(statusResult.value);refreshStatus=statusResult.value;}
   if(agendaResult.status==='fulfilled'&&Array.isArray(agendaResult.value.events)){
    const nextAgenda=agendaResult.value;
-   changed=agendaFetchFailed||JSON.stringify(nextAgenda)!==JSON.stringify(agendaData);
+   changed=changed||agendaFetchFailed||JSON.stringify(nextAgenda)!==JSON.stringify(agendaData);
    agendaData=nextAgenda;agendaFetchFailed=false;
-  }else{changed=!agendaFetchFailed;agendaFetchFailed=true;}
+  }else{changed=changed||!agendaFetchFailed;agendaFetchFailed=true;}
   if(manifestResult.status!=='fulfilled')throw Error('No se pudo consultar la versión de los indicadores.');
   const manifest=manifestResult.value;
   if(!data||manifest.version!==data.version){
@@ -171,7 +174,7 @@ async function refresh(manual=false){
    for(const s of series.filter(s=>s.provider==='World Bank'))if(!metrics.some(m=>m[0]===s.sourceCode))metrics.push([s.sourceCode,s.name]);
   }
   if(changed&&data)render();
-  if(manual)toast(agendaFetchFailed?'Indicadores disponibles. No se pudo actualizar la agenda.':changed?'Indicadores y agenda actualizados.':'Ya tienes la última publicación disponible.');
+  if(manual)toast(agendaFetchFailed?'Indicadores disponibles. No se pudo actualizar la agenda.':'Publicación consultada. Revisa las fechas propias y el estado de sincronización.');
  }catch(e){
   if(!data)$('#content').innerHTML=`<div class="error-notice">${esc(e.message)} <button id="retry">Reintentar</button></div>`;
   else {if(changed)render();if(manual)toast('No se pudo actualizar los indicadores. Se conserva la publicación disponible.');}
@@ -225,7 +228,7 @@ function renderWorld(){
   economicViews.renderWorldTopic(worldTopic);
  }
  $('#content .page-head').insertAdjacentHTML('afterend',topicNav('world',[['global','Panorama global'],...economicViews.worldTopics,['poblacion','Población y poder adquisitivo']],worldTopic));
- if(worldTopic==='global')decorateOverview('world');
+ if(worldTopic==='global'){decorateOverview('world');$('#content .page-head').insertAdjacentHTML('afterend',synchronizationHTML(series,refreshStatus,esc));}
 }
 function decorateOverview(region){
  const kpis=$('#content .kpi-grid');

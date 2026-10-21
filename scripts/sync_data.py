@@ -6,7 +6,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from email.utils import parsedate_to_datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from fred_client import observations as fred_observations
+from fred_client import observations as fred_observations, FredError
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'data'
 MONTHS={'ene':1,'feb':2,'mar':3,'abr':4,'may':5,'jun':6,'jul':7,'ago':8,'sep':9,'set':9,'oct':10,'nov':11,'dic':12,'jan':1,'apr':4,'aug':8,'dec':12}
@@ -103,8 +103,16 @@ def fetch_bcrp(s,now):
     return [(s,rows,{'apiUrl':url,'description':configs[0]['name']})]
 
 def fetch_fred(s,now):
-    rows,metadata=fred_observations(s['sourceCode'],now.date().isoformat())
-    return [(s,rows,metadata)]
+    # One complete retry only if the provider changed between history and tail.
+    # Network/rate-limit failures already have bounded retries in fred_client.
+    for attempt in range(2):
+        try:
+            rows,metadata=fred_observations(s['sourceCode'],now.date().isoformat(),verify_latest=s.get('frequency') if s.get('frequency') in ('daily','weekly') else False)
+            return [(s,rows,metadata)]
+        except FredError as error:
+            if attempt or 'última consulta no coincide' not in str(error):
+                raise
+    raise FredError('FRED: no se pudo verificar un corte consistente')
 
 def fetch_wb(group,now,phase_deadline=None):
     deadline = min(time.monotonic() + WB_BATCH_SECONDS, phase_deadline if phase_deadline is not None else float("inf"))
@@ -126,6 +134,22 @@ def fetch_wb(group,now,phase_deadline=None):
                 rows.append({'date':r['date']+'-01-01','value':numeric(r['value'])})
         result.append((s,rows,{'apiUrl':base,'sourceUpdatedAt':data[0].get('lastupdated')}))
     return result
+
+def preserve_fred_history(rows, previous):
+    """Archive only observations older than a provider's returned window.
+
+    No internal missing date or latest-date regression is silently filled. A
+    source may limit a rolling licensed window; previously obtained public
+    history is retained explicitly, not treated as rechecked by this download.
+    """
+    if not rows or rows[-1]['date'] < previous[-1]['date']:
+        raise ValueError('FRED: última observación retrocedió; historial conservado')
+    start = rows[0]['date']
+    current_dates = {row['date'] for row in rows}
+    if any(row['date'] >= start and row['date'] not in current_dates for row in previous):
+        raise ValueError('FRED: faltan fechas dentro del historial devuelto; versión anterior conservada')
+    archive = [row for row in previous if row['date'] < start]
+    return archive + rows, len(archive)
 
 def validate_series(s):
     seen=set()
@@ -167,7 +191,7 @@ def publish(snapshot,output=None):
     })
     snapshot['version']=hashlib.sha256(json.dumps(snapshot,sort_keys=True,ensure_ascii=False).encode()).hexdigest()[:16]
     atomic_json(output/'snapshot.json',snapshot)
-    health={'version':snapshot['version'],'checkedAt':snapshot['fetchedAt'],'series':[{k:s.get(k) for k in ['id','name','provider','frequency','status','fetchedAt','lastObservationDate','error']}|{'observations':len(s['observations'])} for s in snapshot['series']]}
+    health={'version':snapshot['version'],'checkedAt':snapshot['fetchedAt'],'series':[{k:s.get(k) for k in ['id','name','provider','frequency','status','fetchedAt','lastCheckedAt','lastAttemptAt','latestVerifiedAt','latestVerification','providerLatestObservationDate','providerRealtimeStart','providerRealtimeEnd','retainedHistoricalObservations','lastObservationDate','error']}|{'observations':len(s['observations'])} for s in snapshot['series']]}
     atomic_json(output/'health.json',health)
     atomic_json(output/'manifest.json',{'version':snapshot['version'],'fetchedAt':snapshot['fetchedAt'],'file':'snapshot.json','series':len(ids),'observations':sum(len(s['observations']) for s in snapshot['series'])})
     atomic_json(coverage_path,coverage)
@@ -210,9 +234,13 @@ def main(argv=None):
                 batch_revisions=[]
                 for s,rows,metadata in fetched:
                     rows.sort(key=lambda o:o['date']);prior=previous.get(s['id'])
-                    if prior and prior['observations'] and (len(rows)<len(prior['observations'])*.8 or (rows and rows[-1]['date']<prior['observations'][-1]['date'])):
+                    if prior and prior['observations'] and s['provider']!='FRED' and (len(rows)<len(prior['observations'])*.8 or (rows and rows[-1]['date']<prior['observations'][-1]['date'])):
                         raise ValueError('Cobertura retrocedió; se conserva última versión válida')
-                    updated={**s,**metadata,'observations':rows,'fetchedAt':stamp,'lastObservationDate':rows[-1]['date'] if rows else None,'status':'ok' if rows else 'no_data'}
+                    if s['provider']=='FRED' and prior and prior.get('observations'):
+                        rows, archive_count = preserve_fred_history(rows, prior['observations'])
+                        metadata={**metadata,'retainedHistoricalObservations':archive_count}
+                    completed=datetime.now(timezone.utc).isoformat()
+                    updated={**s,**metadata,'lastCheckedAt':metadata.get('lastCheckedAt',completed),'lastAttemptAt':completed,'observations':rows,'fetchedAt':stamp,'lastObservationDate':rows[-1]['date'] if rows else None,'status':'ok' if rows else 'no_data'}
                     validate_series(updated);results[s['id']]=updated
                     if prior:
                         lookup={o['date']:o['value'] for o in prior['observations']}
@@ -223,7 +251,7 @@ def main(argv=None):
             except Exception as error:
                 # Group rollback: do not publish a partially validated country batch.
                 for s in group:
-                    prior=previous.get(s['id']);results[s['id']]={**(prior or s),'status':'retained' if prior and prior.get('observations') else 'unavailable','error':str(error),'lastAttemptAt':stamp,'observations':prior.get('observations',[]) if prior else []}
+                    prior=previous.get(s['id']);results[s['id']]={**(prior or s),'status':'retained' if prior and prior.get('observations') else 'unavailable','error':str(error),'lastAttemptAt':datetime.now(timezone.utc).isoformat(),'observations':prior.get('observations',[]) if prior else []}
                 errors.append({'provider':group[0]['provider'],'code':group[0]['sourceCode'],'error':str(error)})
                 print('AVISO',group[0]['sourceCode'],str(error),flush=True)
     atomic_json(ROOT/('refresh-status-'+('-'.join(p.replace(' ','-') for p in args.provider) if args.provider else 'all')+'.json'),{'checkedAt':stamp,'successes':success,'errors':errors})

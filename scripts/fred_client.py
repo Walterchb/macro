@@ -38,7 +38,7 @@ def get_page(params, key):
         throttle()
         retry_after = 0
         try:
-            req = Request(url, headers={'User-Agent': 'TreasuryMacroHub/2.0', 'Accept': 'application/json'})
+            req = Request(url, headers={'User-Agent': 'TreasuryMacroHub/2.0', 'Accept': 'application/json', 'Cache-Control': 'no-cache', 'Pragma': 'no-cache'})
             with urlopen(req, timeout=TIMEOUT) as response:
                 # Socket timeout is not a total deadline. Bound body size and elapsed
                 # time here; refresh_publication also enforces a hard process deadline.
@@ -82,7 +82,7 @@ def get_page(params, key):
     raise FredError('FRED: descarga incompleta')
 
 
-def observations(series_code, end_date):
+def observations(series_code, end_date, verify_latest=False):
     key = os.environ.get('FRED_API_KEY', '').strip()
     if not key:
         raise FredError('Falta el secreto FRED_API_KEY en el entorno de ejecución')
@@ -90,6 +90,7 @@ def observations(series_code, end_date):
               'observation_start': '2010-01-01', 'observation_end': end_date,
               'sort_order': 'asc', 'limit': 100000, 'offset': 0}
     rows = []
+    realtime = {}
     expected = None
     seen = set()
     while True:
@@ -105,6 +106,15 @@ def observations(series_code, end_date):
         if expected is not None and count != expected:
             raise FredError('FRED: cambió el total durante la paginación; reintentar')
         expected = count
+        for field in ('realtime_start', 'realtime_end'):
+            if page.get(field):
+                try:
+                    date.fromisoformat(page[field])
+                except (ValueError, TypeError):
+                    raise FredError('FRED: periodo realtime inválido') from None
+                if field in realtime and realtime[field] != page[field]:
+                    raise FredError('FRED: cambió el periodo realtime durante la descarga')
+                realtime[field] = page[field]
         for item in items:
             try:
                 day = item['date']
@@ -131,4 +141,49 @@ def observations(series_code, end_date):
     rows.sort(key=lambda row: row['date'])
     # The returned public metadata MUST NOT include api_key.
     safe_url = ENDPOINT + '?' + urlencode({k: v for k, v in params.items() if k != 'offset'})
-    return rows, {'apiUrl': safe_url, 'downloadMode': 'full-history-since-2010'}
+    metadata = {'apiUrl': safe_url, 'downloadMode': 'full-history-since-2010',
+                'providerRealtimeStart': realtime.get('realtime_start'),
+                'providerRealtimeEnd': realtime.get('realtime_end'),
+                'lastCheckedAt': datetime.now(timezone.utc).isoformat(),
+                'latestVerification': 'full-history-completed'}
+    # A second request is targeted to delayed high-frequency series, not every
+    # monthly/quarterly history. This is a recheck policy, not a release calendar.
+    if verify_latest in ('daily', 'weekly'):
+        age = (date.fromisoformat(end_date) - date.fromisoformat(rows[-1]['date'])).days
+        verify_latest = age > (3 if verify_latest == 'daily' else 10)
+    if verify_latest:
+        tail_params = {**params, 'sort_order': 'desc', 'limit': 100, 'offset': 0}
+        tail = get_page(tail_params, key)
+        try:
+            items = tail['observations']
+            if int(tail['count']) != expected or int(tail['offset']) != 0 or not isinstance(items, list) or not items:
+                raise ValueError()
+            numeric_tail = []
+            seen_tail = set()
+            for item in items:
+                day = item['date']
+                date.fromisoformat(day)
+                if day < '2010-01-01' or day > end_date or day in seen_tail:
+                    raise ValueError()
+                seen_tail.add(day)
+                if item['value'] == '.':
+                    continue
+                value = float(item['value'])
+                if not math.isfinite(value):
+                    raise ValueError()
+                numeric_tail.append({'date': day, 'value': value})
+            if not numeric_tail:
+                raise ValueError()
+            numeric_tail.sort(key=lambda row: row['date'])
+            history = {row['date']: row['value'] for row in rows}
+            if numeric_tail[-1] != rows[-1] or any(history.get(row['date']) != row['value'] for row in numeric_tail):
+                raise ValueError()
+            for field, value in realtime.items():
+                if tail.get(field) and tail[field] != value:
+                    raise ValueError()
+        except (KeyError, ValueError, TypeError):
+            raise FredError('FRED: última consulta no coincide con el historial; no publicar una mezcla de cortes') from None
+        metadata.update({'latestVerification': 'provider-tail-verified',
+                         'latestVerifiedAt': datetime.now(timezone.utc).isoformat(),
+                         'providerLatestObservationDate': rows[-1]['date']})
+    return rows, metadata
