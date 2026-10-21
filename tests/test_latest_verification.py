@@ -140,6 +140,54 @@ class LatestVerificationTests(unittest.TestCase):
                 self.assertFalse(refresh.module_has_retained_data('sync_data.py', ['--provider', 'FRED']))
                 self.assertTrue(refresh.module_has_retained_data('sync_data.py', ['--provider', 'BCRP']))
 
+    def test_transport_diagnostics_do_not_expose_body_or_headers(self):
+        secret = 'secret-key-url'
+        with self.assertRaises(fred.FredError) as caught:
+            fred.decode_response(('<html>' + secret).encode(), {'Content-Type': 'text/html; private=' + secret, 'Content-Encoding': secret}, 200)
+        message = str(caught.exception)
+        self.assertNotIn(secret, message)
+        self.assertIn('tipo=text/html', message)
+        self.assertIn('formato=markup-like', message)
+        self.assertIn('HTTP=200', message)
+        with self.assertRaisesRegex(fred.FredError, 'formato=empty'):
+            fred.decode_response(b'')
+
+    def test_known_maintenance_is_distinct_from_other_html(self):
+        with self.assertRaisesRegex(fred.FredError, 'failureReason=provider-maintenance'):
+            fred.decode_response(b"<html><title>Site Maintenance | St. Louis Fed</title>We're currently performing maintenance on our site.</html>", {'Content-Type': 'text/html'}, 200)
+        with self.assertRaisesRegex(fred.FredError, 'failureReason=provider-maintenance'):
+            fred.decode_response(b'<html><title>Site Maintenance | St. Louis Fed</title>currently performing scheduled maintenance on our site</html>')
+        with self.assertRaisesRegex(fred.FredError, 'JSON inválido'):
+            fred.decode_response(b'<html>Other unavailable site</html>')
+
+    def test_maintenance_failure_reason_requires_current_attempt(self):
+        import tempfile, json
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            report = {'checkedAt': '2026-10-21T16:10:00+00:00', 'errors': [{'error': 'FRED: failureReason=provider-maintenance'}]}
+            (root / 'refresh-status-FRED.json').write_text(json.dumps(report))
+            with patch.object(refresh, 'ROOT', root):
+                self.assertEqual(refresh.known_failure_reason('2026-10-21T16:09:00+00:00'), 'provider-maintenance')
+                self.assertEqual(refresh.known_failure_reason('2026-10-21T16:11:00+00:00'), 'refresh-failed')
+
+    def test_preflight_reuses_success_and_stops_known_maintenance(self):
+        import tempfile, json
+        now = datetime.now(timezone.utc)
+        series = {'sourceCode': 'DGS10'}
+        with patch.object(sync_data, 'fetch_fred', return_value=['valid']) as fetch:
+            index, future = sync_data.fred_preflight([(fetch, [series], series), (fetch, [series], series)], now)
+            self.assertEqual(index, 0)
+            self.assertEqual(future.result(), ['valid'])
+            self.assertEqual(fetch.call_count, 1)
+        with tempfile.TemporaryDirectory() as folder, patch.object(sync_data, 'ROOT', Path(folder)), \
+             patch.object(sync_data, 'fetch_fred', side_effect=fred.FredError('failureReason=provider-maintenance')) as fetch:
+            with self.assertRaisesRegex(RuntimeError, 'resto no consultado'):
+                sync_data.fred_preflight([(fetch, [series], series)] * 58, now)
+            report = json.loads((Path(folder) / 'refresh-status-FRED.json').read_text())
+            self.assertEqual(report['notQueriedSeries'], 57)
+            self.assertEqual(report['attemptedSeries'], 1)
+            self.assertEqual(fetch.call_count, 1)
+
     def test_fred_only_cli_is_explicit_and_keeps_full_default(self):
         self.assertIn('--provider', refresh.DOWNLOADS[0][3])
         self.assertEqual(refresh.DOWNLOADS[0][3][-1], 'FRED')

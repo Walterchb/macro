@@ -32,16 +32,44 @@ def throttle():
         _last_request = time.monotonic()
 
 
+def decode_response(body, headers=None, status=None):
+    """Decode bounded transport bytes; diagnostics expose only whitelisted classes."""
+    headers = headers or {}
+    mime = str(headers.get('Content-Type', '')).split(';')[0].strip().lower()
+    mime = mime if mime in {'application/json', 'text/json', 'text/html', 'application/xml', 'text/xml', 'text/plain'} else 'other-or-missing'
+    encoding = str(headers.get('Content-Encoding', '')).strip().lower()
+    encoding = encoding if encoding in {'gzip', 'identity', 'deflate', 'br', ''} else 'other'
+    status = status if isinstance(status, int) and 100 <= status <= 599 else 'unknown'
+    wire_size = len(body)
+    stripped = bytes(body).lstrip(b'\xef\xbb\xbf \t\r\n')
+    if not stripped:
+        shape = 'empty'
+    elif stripped[:1] in (b'{', b'['):
+        shape = 'json-like'
+    elif stripped[:1] == b'<':
+        shape = 'markup-like'
+    else:
+        shape = 'other'
+    if shape == 'markup-like' and b'Site Maintenance | St. Louis Fed' in body and any(phrase in body for phrase in (b'currently performing maintenance on our site', b'currently performing scheduled maintenance on our site')):
+        raise FredError('FRED: mantenimiento confirmado del proveedor (failureReason=provider-maintenance)')
+    try:
+        return json.loads(bytes(body).decode('utf-8-sig'))
+    except (ValueError, UnicodeError):
+        raise FredError(f'FRED: JSON inválido (HTTP={status}; tipo={mime}; encoding={encoding or "none"}; bytes={wire_size}; formato={shape})') from None
+
+
 def get_page(params, key):
     url = ENDPOINT + '?' + urlencode({**params, 'api_key': key})
     for attempt in range(ATTEMPTS):
         throttle()
         retry_after = 0
         try:
-            req = Request(url, headers={'User-Agent': 'TreasuryMacroHub/2.0', 'Accept': 'application/json', 'Cache-Control': 'no-cache', 'Pragma': 'no-cache'})
+            req = Request(url, headers={'User-Agent': 'TreasuryMacroHub/2.0', 'Accept': 'application/json', 'Accept-Encoding': 'identity', 'Cache-Control': 'no-cache', 'Pragma': 'no-cache'})
             with urlopen(req, timeout=TIMEOUT) as response:
                 # Socket timeout is not a total deadline. Bound body size and elapsed
                 # time here; refresh_publication also enforces a hard process deadline.
+                headers = getattr(response, 'headers', {})
+                status = getattr(response, 'status', None)
                 started = time.monotonic()
                 body = bytearray()
                 while True:
@@ -53,7 +81,7 @@ def get_page(params, key):
                         raise FredError('FRED: respuesta demasiado grande')
                     if time.monotonic() - started > 30:
                         raise TimeoutError()
-            result = json.loads(body.decode('utf-8-sig'))
+            result = decode_response(body, headers, status)
             if not isinstance(result, dict) or 'error_code' in result:
                 raise FredError('FRED: respuesta API inválida')
             return result

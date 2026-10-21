@@ -118,6 +118,20 @@ def _refresh_publication(fred_only=False):
     return failed_modules
 
 
+def known_failure_reason(started):
+    """Read only this attempt's safe enumerated cause, never publish raw errors."""
+    try:
+        report = json.loads((ROOT / 'refresh-status-FRED.json').read_text())
+        if datetime.fromisoformat(report['checkedAt'].replace('Z', '+00:00')) < datetime.fromisoformat(started):
+            return 'refresh-failed'
+        if any('failureReason=provider-maintenance' in str(error.get('error', ''))
+               for error in report.get('errors', [])):
+            return 'provider-maintenance'
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    return 'refresh-failed'
+
+
 def refresh_publication(fred_only=False):
     """Report failed attempts without changing the last validated observations.
 
@@ -136,13 +150,15 @@ def refresh_publication(fred_only=False):
     try:
         failed_modules = _refresh_publication(fred_only=fred_only) or []
     except BaseException:
+        reason = known_failure_reason(started)
         atomic_json(status_path, {
+            'failureReason': reason,
             'attemptAt': started, 'completedAt': datetime.now(timezone.utc).isoformat(),
             'mode': 'fred-only' if fred_only else 'full', 'outcome': 'failed',
             'lastSuccessfulAt': previous.get('lastSuccessfulAt'),
             'lastSuccessfulMode': previous.get('lastSuccessfulMode'),
             'lastFullSuccessfulAt': previous.get('lastFullSuccessfulAt'),
-            'error': 'No se completó la actualización. Se conservan los datos validados anteriores; consultar el registro de ejecución.',
+            'error': ('FRED está en mantenimiento. Se conservan los datos validados anteriores.' if reason == 'provider-maintenance' else 'No se completó la actualización. Se conservan los datos validados anteriores; consultar el registro de ejecución.'),
             'lastFredSuccessfulAt': previous.get('lastFredSuccessfulAt'),
             'failedModules': [], 'retainedModules': False,
             'retainedSnapshot': True})

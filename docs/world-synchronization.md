@@ -8,3 +8,6 @@
 - El registro de publicaciones originadoras verificadas es evidencia fechada, no calendario automático universal. H.15 del 20/10/2026 permite advertir DGS10/DGS2/DFII10 anteriores al 19/10; deja de advertir al alcanzar ese periodo. No prueba publicaciones posteriores desconocidas.
 - PCE: nivel frente a 2% se distingue de impulso 3/6 meses y YOY. El objetivo Fed corresponde al PCE general; el subyacente es contexto. Las bandas HY/VIX son convenciones descriptivas calibradas en la propia historia, no significancia estadística ni probabilidades.
 - La actualización del navegador sólo consulta la publicación ya alojada. La falta de consulta de más de 30 horas es una alarma operativa distinta de la vigencia de la observación.
+
+## Incidente verificado el 21/10/2026
+La API FRED devolvió HTTP 200 con una página HTML de mantenimiento, no JSON. Fue reproducible con y sin las cabeceras no-cache; no demuestra fallo de clave ni causa de caché. La descarga se conservó sin publicar observaciones inválidas. Una consulta inicial detecta este mantenimiento global y suspende las restantes; quedan no consultadas, no se contabilizan como múltiples errores de datos. Al recuperar la API, esa misma consulta inicial se reutiliza y continúa el flujo normal. No hay cambio de proveedor ni evasión de acceso.
