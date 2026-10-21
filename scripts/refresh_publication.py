@@ -124,9 +124,10 @@ def known_failure_reason(started):
         report = json.loads((ROOT / 'refresh-status-FRED.json').read_text())
         if datetime.fromisoformat(report['checkedAt'].replace('Z', '+00:00')) < datetime.fromisoformat(started):
             return 'refresh-failed'
-        if any('failureReason=provider-maintenance' in str(error.get('error', ''))
-               for error in report.get('errors', [])):
-            return 'provider-maintenance'
+        for reason in ('provider-maintenance', 'provider-unexpected-response'):
+            if any('failureReason=' + reason in str(error.get('error', ''))
+                   for error in report.get('errors', [])):
+                return reason
     except (OSError, ValueError, KeyError, TypeError):
         pass
     return 'refresh-failed'
@@ -158,7 +159,7 @@ def refresh_publication(fred_only=False):
             'lastSuccessfulAt': previous.get('lastSuccessfulAt'),
             'lastSuccessfulMode': previous.get('lastSuccessfulMode'),
             'lastFullSuccessfulAt': previous.get('lastFullSuccessfulAt'),
-            'error': ('FRED está en mantenimiento. Se conservan los datos validados anteriores.' if reason == 'provider-maintenance' else 'No se completó la actualización. Se conservan los datos validados anteriores; consultar el registro de ejecución.'),
+            'error': ('FRED está en mantenimiento. Se conservan los datos validados anteriores.' if reason == 'provider-maintenance' else 'FRED devolvió una respuesta inesperada. No se publican datos de este intento; se conservan los datos validados anteriores.' if reason == 'provider-unexpected-response' else 'No se completó la actualización. Se conservan los datos validados anteriores; consultar el registro de ejecución.'),
             'lastFredSuccessfulAt': previous.get('lastFredSuccessfulAt'),
             'failedModules': [], 'retainedModules': False,
             'retainedSnapshot': True})

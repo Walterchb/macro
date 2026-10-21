@@ -11,3 +11,5 @@
 
 ## Incidente verificado el 21/10/2026
 La API FRED devolvió HTTP 200 con una página HTML de mantenimiento, no JSON. Fue reproducible con y sin las cabeceras no-cache; no demuestra fallo de clave ni causa de caché. La descarga se conservó sin publicar observaciones inválidas. Una consulta inicial detecta este mantenimiento global y suspende las restantes; quedan no consultadas, no se contabilizan como múltiples errores de datos. Al recuperar la API, esa misma consulta inicial se reutiliza y continúa el flujo normal. No hay cambio de proveedor ni evasión de acceso.
+
+A las 17:36 UTC del 21/10, la fuente cambió el texto de su página de mantenimiento. El detector reconoce la nueva frase verificada y también suspende preventivamente las restantes series si la primera respuesta es HTML desconocido, vacía o JSON sintácticamente inválido; en esos casos informa «respuesta inesperada», no mantenimiento no demostrado. Un error específico de la API dentro de JSON válido no se confunde con este circuito. No altera los errores ya observados ni acredita series no consultadas. El siguiente intento válido continúa sin bloqueo persistente.

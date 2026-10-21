@@ -197,7 +197,7 @@ def publish(snapshot,output=None):
     atomic_json(coverage_path,coverage)
 
 def fred_preflight(jobs, now):
-    """Reuse first real FRED download; stop global maintenance before submitting others."""
+    """Reuse first real FRED download; suspend on known maintenance or unexpected transport before submitting others."""
     for index, (fun, group, arg) in enumerate(jobs):
         if fun is not fetch_fred:
             continue
@@ -205,15 +205,18 @@ def fred_preflight(jobs, now):
         try:
             future.set_result(fun(arg, now))
         except FredError as error:
-            if 'failureReason=provider-maintenance' in str(error):
+            reason = next((cause for cause in ('provider-maintenance', 'provider-unexpected-response')
+                           if 'failureReason=' + cause in str(error)), None)
+            if reason:
                 remaining = sum(fun is fetch_fred for fun, _, _ in jobs) - 1
                 atomic_json(ROOT / 'refresh-status-FRED.json', {
                     'checkedAt': now.isoformat(), 'successes': 0,
-                    'failureReason': 'provider-maintenance', 'attemptedSeries': 1,
+                    'failureReason': reason, 'attemptedSeries': 1,
                     'notQueriedSeries': remaining,
                     'errors': [{'provider': 'FRED', 'code': group[0]['sourceCode'],
-                                'error': 'FRED: failureReason=provider-maintenance'}]})
-                raise RuntimeError('FRED en mantenimiento: una serie consultada; resto no consultado. Publicación anterior conservada.') from None
+                                'error': 'FRED: failureReason=' + reason}]})
+                description = 'FRED en mantenimiento' if reason == 'provider-maintenance' else 'FRED devolvió una respuesta inesperada; suspensión preventiva'
+                raise RuntimeError(description + ': una serie consultada; resto no consultado. Publicación anterior conservada.') from None
             future.set_exception(error)
         except Exception as error:
             future.set_exception(error)

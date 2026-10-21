@@ -188,6 +188,39 @@ class LatestVerificationTests(unittest.TestCase):
             self.assertEqual(report['attemptedSeries'], 1)
             self.assertEqual(fetch.call_count, 1)
 
+    def test_unknown_html_and_malformed_json_suspend_then_next_attempt_can_resume(self):
+        import tempfile, json
+        now = datetime.now(timezone.utc)
+        series = {'sourceCode': 'DGS10'}
+        for body in (b'<html>Unrecognized page</html>', b'{"broken":', b''):
+            with self.subTest(body=body), tempfile.TemporaryDirectory() as folder, patch.object(sync_data, 'ROOT', Path(folder)), \
+                 patch.object(sync_data, 'fetch_fred', side_effect=lambda *args: fred.decode_response(body, {'Content-Type': 'text/html'}, 200)) as fetch:
+                with self.assertRaisesRegex(RuntimeError, 'suspensión preventiva'):
+                    sync_data.fred_preflight([(fetch, [series], series)] * 58, now)
+                report = json.loads((Path(folder) / 'refresh-status-FRED.json').read_text())
+                self.assertEqual(report['failureReason'], 'provider-unexpected-response')
+                self.assertEqual(report['notQueriedSeries'], 57)
+                self.assertEqual(fetch.call_count, 1)
+                with patch.object(refresh, 'ROOT', Path(folder)):
+                    self.assertEqual(refresh.known_failure_reason(now.isoformat()), 'provider-unexpected-response')
+                fetch.side_effect = None
+                fetch.return_value = ['valid']
+                _, result = sync_data.fred_preflight([(fetch, [series], series)] * 58, now)
+                self.assertEqual(result.result(), ['valid'])
+                self.assertEqual(fetch.call_count, 2)
+
+    def test_proactive_maintenance_template_and_valid_api_error_distinction(self):
+        with self.assertRaisesRegex(fred.FredError, 'failureReason=provider-maintenance'):
+            fred.decode_response(b'<html><title>Site Maintenance | St. Louis Fed</title>This web site is currently undergoing proactive maintenance. We will be back soon.</html>')
+        # A syntactically valid API error remains a per-series error, not a transport incident.
+        with patch.object(fred, 'throttle'), patch.object(fred, 'urlopen', return_value=io.BytesIO(b'{"error_code":400,"error_message":"invalid series"}')):
+            with self.assertRaises(fred.FredError) as caught:
+                fred.get_page({}, 'test-key')
+        self.assertNotIn('provider-unexpected-response', str(caught.exception))
+        with patch.object(sync_data, 'fetch_fred', side_effect=caught.exception) as fetch:
+            _, future = sync_data.fred_preflight([(fetch, [{'sourceCode': 'X'}], {})], datetime.now(timezone.utc))
+            self.assertIs(future.exception(), caught.exception)
+
     def test_fred_only_cli_is_explicit_and_keeps_full_default(self):
         self.assertIn('--provider', refresh.DOWNLOADS[0][3])
         self.assertEqual(refresh.DOWNLOADS[0][3][-1], 'FRED')

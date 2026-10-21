@@ -6,3 +6,5 @@ test('failed attempt and mixed-date Treasury remain explicit',()=>{const ss=[s('
 test('partial auxiliary failure and malformed timestamp stay explicit',()=>{const h=synchronizationHTML([],{outcome:'succeeded-with-warnings',completedAt:'bad',failedModules:['agenda']});assert.match(h,/Consulta parcial/);assert.match(h,/agenda/);assert.match(h,/sin comprobar/)});
 
 test('upstream maintenance is explicit without claiming fresh data',()=>{const h=synchronizationHTML([],{outcome:'failed',failureReason:'provider-maintenance'});assert.match(h,/FRED informó mantenimiento/);assert.match(h,/no consultadas quedan pendientes/)});
+
+test('unknown provider response is not falsely called maintenance',()=>{const h=synchronizationHTML([],{outcome:'failed',failureReason:'provider-unexpected-response'});assert.match(h,/respuesta inesperada/);assert.match(h,/causa concreta no está confirmada/);assert.doesNotMatch(h,/FRED informó mantenimiento/)});

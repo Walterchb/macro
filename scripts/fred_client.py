@@ -50,12 +50,12 @@ def decode_response(body, headers=None, status=None):
         shape = 'markup-like'
     else:
         shape = 'other'
-    if shape == 'markup-like' and b'Site Maintenance | St. Louis Fed' in body and any(phrase in body for phrase in (b'currently performing maintenance on our site', b'currently performing scheduled maintenance on our site')):
+    if shape == 'markup-like' and b'Site Maintenance | St. Louis Fed' in body and any(phrase in body for phrase in (b'currently performing maintenance on our site', b'currently performing scheduled maintenance on our site', b'This web site is currently undergoing proactive maintenance.')):
         raise FredError('FRED: mantenimiento confirmado del proveedor (failureReason=provider-maintenance)')
     try:
         return json.loads(bytes(body).decode('utf-8-sig'))
     except (ValueError, UnicodeError):
-        raise FredError(f'FRED: JSON inválido (HTTP={status}; tipo={mime}; encoding={encoding or "none"}; bytes={wire_size}; formato={shape})') from None
+        raise FredError(f'FRED: JSON inválido (failureReason=provider-unexpected-response; HTTP={status}; tipo={mime}; encoding={encoding or "none"}; bytes={wire_size}; formato={shape})') from None
 
 
 def get_page(params, key):
@@ -103,7 +103,7 @@ def get_page(params, key):
         except (TimeoutError, URLError, OSError):
             message = 'FRED: fallo de conexión o tiempo de espera agotado'
         except (ValueError, UnicodeError):
-            raise FredError('FRED: JSON inválido') from None
+            raise FredError('FRED: JSON inválido (failureReason=provider-unexpected-response)') from None
         if attempt == ATTEMPTS - 1:
             raise FredError(message) from None
         time.sleep(max(retry_after, 2 ** attempt))
