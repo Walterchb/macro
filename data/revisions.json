@@ -1,1 +1,1 @@
-{"checkedAt":"2026-11-05T22:48:00.512122+00:00","revisions":[]}
+{"checkedAt":"2026-11-06T19:40:49.298128+00:00","revisions":[{"id":"fred_PAYEMS","count":2,"changes":[{"date":"2026-08-01","before":159015.0,"after":159068.0},{"date":"2026-09-01","before":159044.0,"after":159128.0}],"checkedAt":"2026-11-06T19:39:42.834318+00:00"},{"id":"fred_CES0500000003","count":1,"changes":[{"date":"2026-09-01","before":37.81,"after":37.86}],"checkedAt":"2026-11-06T19:39:42.834318+00:00"}]}
